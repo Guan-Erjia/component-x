@@ -1,0 +1,32 @@
+{
+  "name": "component-x",
+  "version": "0.0.1",
+  "description": "A native web component library",
+  "scripts": {
+    "dev": "vite --open --host",
+    "build": "tsc && vite build",
+    "preview": "tsc && vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Guan-Erjia/component-x.git"
+  },
+  "keywords": [
+    "web",
+    "component"
+  ],
+  "author": "Guan-Erjia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Guan-Erjia/component-x/issues"
+  },
+  "homepage": "https://github.com/Guan-Erjia/component-x#readme",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^20.12.2",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "sass": "^1.75.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10"
+  }
+}

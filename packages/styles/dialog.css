@@ -1,0 +1,16 @@
+x-dialog {
+  --dialog-padding: 20px 20px;
+  --dialog-title-size: 16px;
+  --dialog-title-color: black;
+  --dialog-title-weight: 600;
+  --dialog-border-width: 1px;
+  --dialog-border-color: rgb(110, 109, 109);
+  --dialog-border-style: solid;
+  --dialog-border-radius: 10px;
+  --dialog-background: rgb(246, 248, 248);
+  --dialog-backdrop-background: black;
+  --dialog-backdrop-opacity: 0.4;
+  --dialog-content-gap: 20px;
+  --dialog-width: 400px;
+  --dialog-margin-top: 100px;
+}

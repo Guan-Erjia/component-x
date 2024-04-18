@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./index.ts" type="module"></script>
+
+    <div style="margin-top: 10px">
+      <x-button>unset</x-button>
+      <x-button success>success</x-button>
+      <x-button style="width: 100px" warning>黄</x-button>
+      <x-button danger loading id="btn">
+        <span slot="loading"> 俊 </span>
+        杰
+      </x-button>
+      <x-button primary id="btn1">primary</x-button>
+    </div>
+
+    <div style="margin-top: 10px">
+      <x-button loading round plain>unset</x-button>
+      <x-button round success plain>success</x-button>
+      <x-button round warning plain>warning</x-button>
+      <x-button round danger plain>danger</x-button>
+      <x-button
+        round
+        primary
+        plain
+        onclick="document.querySelector('#xDialog').showModal()"
+        >开启弹窗</x-button
+      >
+    </div>
+
+    <x-dialog
+      id="xDialog"
+      header="黄俊杰的吊几把弹窗"
+      okText="Ok"
+      cancelText="cancel"
+      width="400px"
+      oncancel="console.log('cancel')"
+    >
+      <div>This modal dialog has a groovy backdrop!</div>
+    </x-dialog>
+
+    <script>
+      document
+        .querySelector("#xDialog")
+        .addEventListener("ok", (e) => console.log("ok"));
+    </script>
+    <style>
+      ::backdrop {
+        background-image: linear-gradient(
+          45deg,
+          magenta,
+          rebeccapurple,
+          dodgerblue,
+          green
+        );
+        opacity: 0.75;
+      }
+    </style>
+  </body>
+</html>
