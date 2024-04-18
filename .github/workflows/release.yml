@@ -24,7 +24,7 @@ jobs:
    - name: 构建
      run: pnpm build-lib
    - name: 打包
-     run: tar czvf ./dist/source.tar ./dist
+     run: tar czvf ./release/source.tar ./dist
    - name: 发布到Github Pages
      uses: crazy-max/ghaction-github-pages@v2.1.3
      with:
