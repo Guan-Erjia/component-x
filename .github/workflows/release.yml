@@ -5,7 +5,7 @@ on:
    - main
 permissions: write-all
 jobs:
- docs:
+ build-lib:
   runs-on: ubuntu-latest
   steps:
    - uses: actions/checkout@v4
@@ -24,11 +24,12 @@ jobs:
    - name: 构建
      run: pnpm build-lib
    - name: 打包
-     run: tar czvf ./source.tar ./dist
+     run: mkdir ./release
+     run: tar czvf ./release/source.tar ./dist
    - name: 发布到Github Pages
      uses: crazy-max/ghaction-github-pages@v2.1.3
      with:
       target_branch: release
-      build_dir: ./source.tar
+      build_dir: ./release
      env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
