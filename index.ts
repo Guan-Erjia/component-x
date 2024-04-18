@@ -1,3 +1,5 @@
 import "@/styles/index.css";
-import "./packages/components/button/index.vue";
-import "./packages/components/dialog/index.vue";
+import { XButton } from "./packages/components/button/index.vue";
+import { XDialog } from "./packages/components/dialog/index.vue";
+
+export { XButton, XDialog };

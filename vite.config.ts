@@ -1,24 +1,31 @@
 import { defineConfig } from "vite";
 import { ComponentXSfcLoader } from "./plugins/index";
 
-export default defineConfig({
-  // build: {
-  //   lib: {
-  //     entry: "./index.ts",
-  //     name: "ComponentX",
-  //     fileName: "ComponentX",
-  //   },
-  // },
-  base: "/component-x/",
-  resolve: {
-    alias: {
-      "@": "/packages",
+export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
+  console.log(command, mode);
+  const config = {
+    build: {},
+    base: "/component-x/",
+    resolve: {
+      alias: {
+        "@": "/packages",
+      },
     },
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {},
+    css: {
+      preprocessorOptions: {
+        scss: {},
+      },
     },
-  },
-  plugins: [ComponentXSfcLoader()],
+    plugins: [ComponentXSfcLoader()],
+  };
+  if (mode === "lib") {
+    config.build = {
+      lib: {
+        entry: "./index.ts",
+        name: "ComponentX",
+        fileName: "ComponentX",
+      },
+    };
+  }
+  return config;
 });

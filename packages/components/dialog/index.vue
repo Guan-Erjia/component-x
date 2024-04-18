@@ -82,7 +82,7 @@ x-dialog[center] {
 <script lang="ts">
 import { getClassNameFromAttr, getComponentTemplate } from "@/utils";
 
-class XDialog extends HTMLElement {
+export class XDialog extends HTMLElement {
   innerElement: HTMLDialogElement | undefined;
   attributeList: string[];
 
@@ -178,6 +178,5 @@ class XDialog extends HTMLElement {
   }
 }
 
-customElements.define("x-dialog", XDialog);
-
+export default XDialog
 </script>

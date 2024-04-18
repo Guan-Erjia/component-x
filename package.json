@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite --open --host",
     "build": "tsc && vite build",
+    "build-lib": "tsc && vite build --mode=lib",
     "preview": "tsc && vite preview"
   },
   "repository": {

@@ -197,7 +197,7 @@
 
 <script lang="ts">
 import { getClassNameFromAttr, getComponentTemplate } from "@/utils";
-class XButton extends HTMLElement {
+export class XButton extends HTMLElement {
   static get observedAttributes() {
     return ["plain", "primary", "warning", "danger", "success", "info"]; // 声明要监听的属性
   }
@@ -248,6 +248,4 @@ class XButton extends HTMLElement {
   }
 }
 
-customElements.define("x-button", XButton);
-export default XButton
 </script>
