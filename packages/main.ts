@@ -1,7 +1,3 @@
-import { XButton } from "./components/button/index.vue";
-import { XDialog } from "./components/dialog/index.vue";
-
-export default {
-  XButton,
-  XDialog,
-};
+export { XButton } from "./components/button/index.vue";
+export { XDialog } from "./components/dialog/index.vue";
+export { xComponentRegister } from "./utils/index";

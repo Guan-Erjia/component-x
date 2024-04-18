@@ -1,5 +1,6 @@
 import "@/styles/index.css";
-import XComponents from "./packages/main";
+import { XButton, XDialog } from "./packages/main";
+import { xComponentRegister } from "./packages/main";
 
-customElements.define("x-button", XComponents.XButton);
-customElements.define("x-dialog", XComponents.XDialog);
+xComponentRegister(XButton);
+xComponentRegister(XDialog);

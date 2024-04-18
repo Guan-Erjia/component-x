@@ -204,6 +204,8 @@ export class XButton extends HTMLElement {
 
   innerElement: HTMLButtonElement | undefined;
   attributeList: string[];
+  static name: string = 'x-button'
+
   constructor() {
     super();
     this.attributeList = [];

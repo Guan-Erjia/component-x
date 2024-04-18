@@ -86,6 +86,7 @@ export class XDialog extends HTMLElement {
   innerElement: HTMLDialogElement | undefined;
   attributeList: string[];
 
+  static name: string = 'x-dialog'
   static get observedAttributes() {
     return ["open", "header", "width"]; // 声明要监听的属性
   }

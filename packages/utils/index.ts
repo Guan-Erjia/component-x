@@ -17,3 +17,13 @@ export const getClassNameFromAttr = (
     .filter((i) => observer.includes(i))
     .map((i) => `x-${tagName}-${i}`)
     .join(" ");
+
+export function xComponentRegister(xcomp: any): void {
+  if (!xcomp.name) {
+    return console.error("未定义组件名称");
+  }
+  customElements.define(
+    xcomp.name,
+    xcomp as unknown as CustomElementConstructor
+  );
+}
