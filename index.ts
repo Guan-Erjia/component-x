@@ -1,5 +1,5 @@
 import "@/styles/index.css";
-import { XButton } from "./packages/components/button/index.vue";
-import { XDialog } from "./packages/components/dialog/index.vue";
+import XComponents from "./packages/main";
 
-export { XButton, XDialog };
+customElements.define("x-button", XComponents.XButton);
+customElements.define("x-dialog", XComponents.XDialog);

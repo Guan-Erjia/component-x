@@ -21,7 +21,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   if (mode === "lib") {
     config.build = {
       lib: {
-        entry: "./index.ts",
+        entry: "./packages/main.ts",
         name: "ComponentX",
         fileName: "ComponentX",
       },
