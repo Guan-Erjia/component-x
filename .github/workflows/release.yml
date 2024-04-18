@@ -23,8 +23,9 @@ jobs:
      run: pnpm install --no-frozen-lockfile
    - name: 构建
      run: pnpm build-lib
-   - name: 打包
+   - name: 创建文件夹
      run: mkdir ./release
+   - name: 打包
      run: tar czvf ./release/source.tar ./dist
    - name: 发布到Github Pages
      uses: crazy-max/ghaction-github-pages@v2.1.3
