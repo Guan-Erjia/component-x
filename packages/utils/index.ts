@@ -1,12 +1,3 @@
-export function getComponentTemplate(module: {
-  template: string;
-  style: string;
-}): HTMLTemplateElement {
-  const template = document.createElement("template");
-  template.innerHTML = module.style + module.template;
-  return template;
-}
-
 export const getClassNameFromAttr = (
   tagName: string,
   observer: string[],
@@ -26,4 +17,11 @@ export function xComponentRegister(xcomp: any): void {
     xcomp.name,
     xcomp as unknown as CustomElementConstructor
   );
+}
+
+export function InitComponentTemplate(this: any, html: string, style: string) {
+  const template = document.createElement("template");
+  template.innerHTML = html + style;
+  const shadowRoot = this.attachShadow({ mode: "open" });
+  shadowRoot.appendChild(template.content.cloneNode(true));
 }

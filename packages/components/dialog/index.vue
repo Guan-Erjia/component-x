@@ -80,7 +80,7 @@ x-dialog[center] {
 </template>
 
 <script lang="ts">
-import { getClassNameFromAttr, getComponentTemplate } from "@/utils";
+import { InitComponentTemplate, getClassNameFromAttr } from "@/utils";
 
 export class XDialog extends HTMLElement {
   innerElement: HTMLDialogElement | undefined;
@@ -93,12 +93,10 @@ export class XDialog extends HTMLElement {
 
   constructor() {
     super();
+    InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
     this.attributeList = [];
-    const template = getComponentTemplate({ template: __X_COMPONENT_TEMPLATE_CODE__, style: __X_COMPONENT_STYLE_CODE__ });
-    const shadowRoot = this.attachShadow({ mode: "open" });
-    shadowRoot.appendChild(template.content.cloneNode(true));
     this.innerElement = (this.shadowRoot as ShadowRoot)
-      .children[1] as HTMLDialogElement;
+      .children[0] as HTMLDialogElement;
     this.setInnerElementAttr();
     this.initEvent();
   }

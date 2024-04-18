@@ -196,7 +196,7 @@
 </template>
 
 <script lang="ts">
-import { getClassNameFromAttr, getComponentTemplate } from "@/utils";
+import { InitComponentTemplate, getClassNameFromAttr } from "@/utils";
 export class XButton extends HTMLElement {
   static get observedAttributes() {
     return ["plain", "primary", "warning", "danger", "success", "info"]; // 声明要监听的属性
@@ -208,12 +208,10 @@ export class XButton extends HTMLElement {
 
   constructor() {
     super();
+    InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
     this.attributeList = [];
-    const template = getComponentTemplate({ template: __X_COMPONENT_TEMPLATE_CODE__, style: __X_COMPONENT_STYLE_CODE__ });
-    const shadowRoot = this.attachShadow({ mode: "open" });
-    shadowRoot.appendChild(template.content.cloneNode(true));
     this.innerElement = (this.shadowRoot as ShadowRoot)
-      .children[1] as HTMLButtonElement;
+      .children[0] as HTMLButtonElement;
     this.setInnerElementAttr();
   }
 

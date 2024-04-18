@@ -40,7 +40,7 @@ function getScriptCode(code: string): string {
 
 export async function compileSFC(code: string, id: string): Promise<string> {
   const scriptCode = getScriptCode(code);
-  const templateCode = `const __X_COMPONENT_TEMPLATE_CODE__ = ${JSON.stringify(
+  const templateCode = `const __X_COMPONENT_HTML_CODE__ = ${JSON.stringify(
     compileTemplate(code)
   )}`;
   const stylesCode = `const __X_COMPONENT_STYLE_CODE__ = ${JSON.stringify(
