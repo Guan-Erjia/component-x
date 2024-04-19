@@ -11,7 +11,8 @@ x-dialog {
   --btn-border-width: 2px; /* 默认按钮边框宽度*/
   --btn-default-text: black; /* 默认按钮文本颜色*/
   --btn-default-hover-text: rgb(113, 113, 113); /* 默认按钮文本颜色*/
-  --btn-shadow: 0 2px 0 rgba(0, 0, 0, 0.02); /* 默认按钮阴影*/
+  --btn-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05); /* 默认按钮阴影*/
   --btn-font-weight: 400; /* 文字字重*/
   --btn-padding-block: 8px; /* 按钮纵向内间距*/
   --btn-padding-inline: 15px; /* 按钮横向内间距*/

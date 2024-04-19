@@ -6,10 +6,8 @@
 }
 
 .x-button {
-  display: inline-block;
   flex-shrink: 0;
   flex-grow: 1;
-  outline: none;
   cursor: pointer;
   text-align: center;
   border-color: var(--btn-border-color);
