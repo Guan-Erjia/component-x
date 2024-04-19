@@ -20,7 +20,8 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@/*": ["./packages/*"]
-    }
+    },
+    "experimentalDecorators": true
   },
   "include": ["packages"]
 }
