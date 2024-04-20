@@ -1,5 +1,21 @@
 @import url("./button.css");
 @import url("./dialog.css");
+@import url("./checkbox.css");
 * {
   line-height: 100%;
+  --default-color: black; /* 默认按钮文本颜色*/
+  --danger-color: red; /* 危险按钮文本颜色*/
+  --warning-color: orange; /* 危险按钮文本颜色*/
+  --success-color: darkturquoise; /* 危险按钮文本颜色*/
+  --primary-color: blue; /* 危险按钮文本颜色*/
+  --default-hover-color: rgb(113, 113, 113); /* 默认按钮文本颜色*/
+  --danger-hover-color: rgb(227, 62, 62);
+  --warning-hover-color: rgb(241, 169, 35);
+  --success-hover-color: rgb(35, 218, 221);
+  --primary-hover-color: rgb(89, 89, 239);
+  --danger-active-color: rgb(179, 3, 3);
+  --warning-active-color: rgb(196, 127, 0);
+  --success-active-color: rgb(0, 170, 172);
+  --primary-active-color: rgb(0, 0, 196);
+  --disable-bg-opacity: 0.5; /* disable高亮 */
 }

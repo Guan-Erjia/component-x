@@ -9,25 +9,10 @@ x-dialog {
   --btn-border-radius: 6px; /* 默认按钮边框圆角*/
   --btn-border-style: outset; /* 默认按钮边框样式*/
   --btn-border-width: 2px; /* 默认按钮边框宽度*/
-  --btn-default-text: black; /* 默认按钮文本颜色*/
-  --btn-default-hover-text: rgb(113, 113, 113); /* 默认按钮文本颜色*/
   --btn-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
     0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05); /* 默认按钮阴影*/
   --btn-font-weight: 400; /* 文字字重*/
   --btn-padding-block: 8px; /* 按钮纵向内间距*/
   --btn-padding-inline: 15px; /* 按钮横向内间距*/
-  --btn-danger-color: red; /* 危险按钮文本颜色*/
-  --btn-warning-color: orange; /* 危险按钮文本颜色*/
-  --btn-success-color: darkturquoise; /* 危险按钮文本颜色*/
-  --btn-primary-color: blue; /* 危险按钮文本颜色*/
-  --btn-danger-hover-color: rgb(227, 62, 62);
-  --btn-warning-hover-color: rgb(241, 169, 35);
-  --btn-success-hover-color: rgb(35, 218, 221);
-  --btn-primary-hover-color: rgb(89, 89, 239);
-  --btn-danger-active-color: rgb(179, 3, 3);
-  --btn-warning-active-color: rgb(196, 127, 0);
-  --btn-success-active-color: rgb(0, 170, 172);
-  --btn-primary-active-color: rgb(0, 0, 196);
-  --btn-disable-bg-opacity: 0.5; /* disable高亮 */
   --btn-plain-bg: white;
 }

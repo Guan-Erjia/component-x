@@ -106,7 +106,6 @@ export class XDialog extends HTMLElement {
     super();
     this.attributeList = [];
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.initEvent();
   }
 
   initEvent() {
@@ -179,10 +178,15 @@ export class XDialog extends HTMLElement {
     this.dispatchEvent(new Event("close"));
   }
 
+  connectedCallback() {
+    this.initEvent();
+  }
+
   attributeChangedCallback() {
     this.attributeList = this.getAttributeNames();
     this.setInnerElementAttr();
   }
+
 }
 
 export default XDialog

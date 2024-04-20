@@ -1,5 +1,6 @@
 import "@/styles/index.css";
-import { XButton, XDialog } from "./packages/main";
+import { XButton, XDialog, XCheckbox } from "./packages/main";
 
 XButton.register();
 XDialog.register();
+XCheckbox.register();

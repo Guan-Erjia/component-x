@@ -26,7 +26,7 @@
 
     <div style="margin-top: 10px">
       <x-button loading round plain>unset</x-button>
-      <x-button round success plain>success</x-button>
+      <x-button round success disabled plain>success</x-button>
       <x-button round warning plain>warning</x-button>
       <x-button round danger plain>danger</x-button>
       <x-button
@@ -61,10 +61,31 @@
       <div>This modal dialog has a filter backdrop!</div>
     </x-dialog>
 
+    <div style="margin-top: 10px">
+      <x-checkbox id="xCheckbox" checked primary>
+        <span>checkbox</span>
+      </x-checkbox>
+      <x-checkbox checked warning disabled>
+        <span>checkbox</span>
+      </x-checkbox>
+      <x-checkbox danger>
+        <span>checkbox</span>
+      </x-checkbox>
+      <x-checkbox checked success disabled>
+        <span>checkbox</span>
+      </x-checkbox>
+      <x-checkbox checked>
+        <span>checkbox</span>
+      </x-checkbox>
+    </div>
+
     <script>
       document
         .querySelector("#xDialog")
         .addEventListener("ok", (e) => console.log("ok"));
+      document
+        .querySelector("#xCheckbox")
+        .addEventListener("change", (e) => console.log(e));
     </script>
     <style>
       ::backdrop {

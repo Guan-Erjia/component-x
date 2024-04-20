@@ -84,90 +84,90 @@
     --btn-active-bg: var(--btn-default-active-bg);
 
     &-primary {
-      --btn-default-bg: var(--btn-primary-color);
-      --btn-border-color: var(--btn-primary-color);
-      --btn-hover-bg: var(--btn-primary-hover-color);
-      --btn-hover-border-color: var(--btn-primary-hover-color);
-      --btn-active-bg: var(--btn-primary-active-color);
-      --btn-active-border-color: var(--btn-primary-active-color);
+      --btn-default-bg: var(--primary-color);
+      --btn-border-color: var(--primary-color);
+      --btn-hover-bg: var(--primary-hover-color);
+      --btn-hover-border-color: var(--primary-hover-color);
+      --btn-active-bg: var(--primary-active-color);
+      --btn-active-border-color: var(--primary-active-color);
     }
 
     &-warning {
-      --btn-default-bg: var(--btn-warning-color);
-      --btn-border-color: var(--btn-warning-color);
-      --btn-hover-bg: var(--btn-warning-hover-color);
-      --btn-hover-border-color: var(--btn-warning-hover-color);
-      --btn-active-bg: var(--btn-warning-active-color);
-      --btn-active-border-color: var(--btn-warning-active-color);
+      --btn-default-bg: var(--warning-color);
+      --btn-border-color: var(--warning-color);
+      --btn-hover-bg: var(--warning-hover-color);
+      --btn-hover-border-color: var(--warning-hover-color);
+      --btn-active-bg: var(--warning-active-color);
+      --btn-active-border-color: var(--warning-active-color);
     }
 
     &-danger {
-      --btn-default-bg: var(--btn-danger-color);
-      --btn-border-color: var(--btn-danger-color);
-      --btn-hover-bg: var(--btn-danger-hover-color);
-      --btn-hover-border-color: var(--btn-danger-hover-color);
-      --btn-active-bg: var(--btn-danger-active-color);
-      --btn-active-border-color: var(--btn-danger-active-color);
+      --btn-default-bg: var(--danger-color);
+      --btn-border-color: var(--danger-color);
+      --btn-hover-bg: var(--danger-hover-color);
+      --btn-hover-border-color: var(--danger-hover-color);
+      --btn-active-bg: var(--danger-active-color);
+      --btn-active-border-color: var(--danger-active-color);
     }
 
     &-success {
-      --btn-default-bg: var(--btn-success-color);
-      --btn-border-color: var(--btn-success-color);
-      --btn-hover-bg: var(--btn-success-hover-color);
-      --btn-hover-border-color: var(--btn-success-hover-color);
-      --btn-active-bg: var(--btn-success-active-color);
-      --btn-active-border-color: var(--btn-success-active-color);
+      --btn-default-bg: var(--success-color);
+      --btn-border-color: var(--success-color);
+      --btn-hover-bg: var(--success-hover-color);
+      --btn-hover-border-color: var(--success-hover-color);
+      --btn-active-bg: var(--success-active-color);
+      --btn-active-border-color: var(--success-active-color);
     }
   }
 }
 
 :host([plain]) {
-  --btn-text: var(--btn-default-text);
-  --btn-hover-color: var(--btn-default-hover-text);
+  --btn-text: var(--default-color);
+  --btn-hover-color: var(--default-hover-color);
 
   .x-button {
     --btn-default-bg: var(--btn-plain-bg);
 
     &-primary {
-      --btn-text: var(--btn-primary-color);
-      --btn-border-color: var(--btn-primary-color);
-      --btn-hover-color: var(--btn-primary-hover-color);
-      --btn-hover-border-color: var(--btn-primary-hover-color);
-      --btn-active-color: var(--btn-primary-active-color);
-      --btn-active-border-color: var(--btn-primary-active-color);
+      --btn-text: var(--primary-color);
+      --btn-border-color: var(--primary-color);
+      --btn-hover-color: var(--primary-hover-color);
+      --btn-hover-border-color: var(--primary-hover-color);
+      --btn-active-color: var(--primary-active-color);
+      --btn-active-border-color: var(--primary-active-color);
     }
 
     &-warning {
-      --btn-text: var(--btn-warning-color);
-      --btn-border-color: var(--btn-warning-color);
-      --btn-hover-color: var(--btn-warning-hover-color);
-      --btn-hover-border-color: var(--btn-warning-hover-color);
-      --btn-active-color: var(--btn-warning-active-color);
-      --btn-active-border-color: var(--btn-warning-active-color);
+      --btn-text: var(--warning-color);
+      --btn-border-color: var(--warning-color);
+      --btn-hover-color: var(--warning-hover-color);
+      --btn-hover-border-color: var(--warning-hover-color);
+      --btn-active-color: var(--warning-active-color);
+      --btn-active-border-color: var(--warning-active-color);
     }
 
     &-danger {
-      --btn-text: var(--btn-danger-color);
-      --btn-border-color: var(--btn-danger-color);
-      --btn-hover-color: var(--btn-danger-hover-color);
-      --btn-hover-border-color: var(--btn-danger-hover-color);
-      --btn-active-color: var(--btn-danger-active-color);
-      --btn-active-border-color: var(--btn-danger-active-color);
+      --btn-text: var(--danger-color);
+      --btn-border-color: var(--danger-color);
+      --btn-hover-color: var(--danger-hover-color);
+      --btn-hover-border-color: var(--danger-hover-color);
+      --btn-active-color: var(--danger-active-color);
+      --btn-active-border-color: var(--danger-active-color);
     }
 
     &-success {
-      --btn-text: var(--btn-success-color);
-      --btn-border-color: var(--btn-success-color);
-      --btn-hover-color: var(--btn-success-hover-color);
-      --btn-hover-border-color: var(--btn-success-hover-color);
-      --btn-active-color: var(--btn-success-active-color);
-      --btn-active-border-color: var(--btn-success-active-color);
+      --btn-text: var(--success-color);
+      --btn-border-color: var(--success-color);
+      --btn-hover-color: var(--success-hover-color);
+      --btn-hover-border-color: var(--success-hover-color);
+      --btn-active-color: var(--success-active-color);
+      --btn-active-border-color: var(--success-active-color);
     }
   }
 }
 
 :host([disabled]) {
-  --btn-opacity: var(--btn-disable-bg-opacity);
+  --btn-opacity: var(--disable-bg-opacity);
 
   >button {
     cursor: not-allowed;
@@ -212,10 +212,10 @@ export class XButton extends HTMLElement {
     super();
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
     this.attributeList = [];
-    this.setInnerElementAttr();
   }
 
   connectedCallback() {
+    this.setInnerElementAttr();
     console.log("Custom element added to page.");
   }
 
