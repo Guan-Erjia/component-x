@@ -12,6 +12,7 @@
   padding-top: var(--checkbox-padding-block);
   padding-bottom: var(--checkbox-padding-block);
   cursor: pointer;
+  user-select: none;
 }
 
 .x-checkbox {
@@ -67,8 +68,11 @@ input[type=checkbox]:indeterminate {
 }
 
 :host([disabled]) {
-  opacity: var(--disable-bg-opacity);
   cursor: not-allowed;
+
+  .x-checkbox-content {
+    opacity: var(--disable-bg-opacity);
+  }
 }
 </style>
 <script lang="ts">
@@ -98,8 +102,7 @@ export class XCheckbox extends HTMLElement {
       if (!this.innerElement || this.attributeList.includes('disabled')) {
         return
       }
-      const checked = this.attributeList.includes('checked')
-      checked ? this.removeAttribute('checked') : this.setAttribute('checked', '')
+      this.attributeList.includes('checked') ? this.removeAttribute('checked') : this.setAttribute('checked', '')
     }
     if (this.innerElement && this.attributeList.includes('disabled')) {
       this.innerElement.onclick = e => e.preventDefault()
@@ -109,6 +112,7 @@ export class XCheckbox extends HTMLElement {
   syncStatus() {
     if (this.innerElement) {
       this.innerElement.checked = this.attributeList.includes('checked') ? true : false
+      this.innerElement.disabled = this.attributeList.includes('disabled') ? true : false
       this.dispatchEvent(new CustomEvent('change', { detail: this.innerElement?.checked }))
     }
   }
