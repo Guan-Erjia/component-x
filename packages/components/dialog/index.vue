@@ -52,10 +52,18 @@
   }
 }
 
-x-dialog[center] {
+:host([center]) {
   .x-dialog:-internal-dialog-in-top-layer {
     inset-block-start: 0;
     transform: none;
+  }
+}
+
+:host([filter]) {
+  .x-dialog::backdrop {
+    backdrop-filter: var(--dialog-filter);
+    background: unset;
+    opacity: unset;
   }
 }
 </style>
@@ -96,9 +104,8 @@ export class XDialog extends HTMLElement {
 
   constructor() {
     super();
-    InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
     this.attributeList = [];
-    this.setInnerElementAttr();
+    InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
     this.initEvent();
   }
 

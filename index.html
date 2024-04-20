@@ -11,7 +11,12 @@
     <div style="margin-top: 10px">
       <x-button>unset</x-button>
       <x-button success>success</x-button>
-      <x-button style="width: 100px" warning>黄</x-button>
+      <x-button
+        style="width: 100px"
+        warning
+        onclick="document.querySelector('#xDialog2').showModal()"
+        >黄</x-button
+      >
       <x-button danger loading id="btn">
         <span slot="loading"> 俊 </span>
         杰
@@ -42,6 +47,18 @@
       oncancel="console.log('cancel')"
     >
       <div>This modal dialog has a groovy backdrop!</div>
+    </x-dialog>
+
+    <x-dialog
+      id="xDialog2"
+      header="黄俊杰的吊几把弹窗2"
+      okText="Ok"
+      cancelText="cancel"
+      width="400px"
+      oncancel="console.log('cancel')"
+      filter
+    >
+      <div>This modal dialog has a filter backdrop!</div>
     </x-dialog>
 
     <script>

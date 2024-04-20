@@ -13,4 +13,5 @@ x-dialog {
   --dialog-content-gap: 20px;
   --dialog-width: 400px;
   --dialog-margin-top: 100px;
+  --dialog-filter: blur(2px);
 }
