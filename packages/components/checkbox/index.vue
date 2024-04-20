@@ -86,7 +86,7 @@ export class XCheckbox extends HTMLElement {
   static register: () => void
 
   static get observedAttributes() {
-    return ["checked", "primary", "warning", "danger", "success", 'disabled']; // 声明要监听的属性
+    return ["checked", "primary", "warning", "danger", "success", 'disabled', 'indeterminate']; // 声明要监听的属性
   }
 
   innerElement: HTMLInputElement | undefined;
@@ -103,6 +103,7 @@ export class XCheckbox extends HTMLElement {
         return
       }
       this.attributeList.includes('checked') ? this.removeAttribute('checked') : this.setAttribute('checked', '')
+      this.removeAttribute('indeterminate')
     }
     if (this.innerElement && this.attributeList.includes('disabled')) {
       this.innerElement.onclick = e => e.preventDefault()
@@ -113,6 +114,7 @@ export class XCheckbox extends HTMLElement {
     if (this.innerElement) {
       this.innerElement.checked = this.attributeList.includes('checked') ? true : false
       this.innerElement.disabled = this.attributeList.includes('disabled') ? true : false
+      this.innerElement.indeterminate = this.attributeList.includes('indeterminate') ? true : false
       this.dispatchEvent(new CustomEvent('change', { detail: this.innerElement?.checked }))
     }
   }
