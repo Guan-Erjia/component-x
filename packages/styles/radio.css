@@ -1,0 +1,6 @@
+x-radio {
+  --radio-padding-inline: 10px;
+  --radio-padding-block: 10px;
+  --radio-gap: 5px;
+  --radio-size: 14px;
+}

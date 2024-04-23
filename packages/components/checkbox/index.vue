@@ -23,22 +23,19 @@
   cursor: unset;
 }
 
-input[type=checkbox]:indeterminate {
-  background: lime;
-}
-
 .x-checkbox-content {
   display: inline-block;
   margin-left: var(--checkbox-gap);
   font-size: var(--checkbox-size);
   flex-shrink: 0;
   color: var(--checkbox-color);
+}
 
-  &:hover {
+:host(:not([disabled])) {
+  .x-checkbox-content:hover {
     color: var(--checkbox-hover-color);
   }
-
-  &:active {
+  .x-checkbox-content:active {
     color: var(--checkbox-active-color);
   }
 }
