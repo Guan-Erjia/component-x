@@ -27,7 +27,7 @@ jobs:
      run: mkdir ./release
    - name: 打包
      run: tar czvf ./release/source.tar ./dist
-   - name: 发布到Github Pages
+   - name: 发布到release分支
      uses: crazy-max/ghaction-github-pages@v2.1.3
      with:
       target_branch: release
