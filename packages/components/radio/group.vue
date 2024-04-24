@@ -59,7 +59,7 @@ export class XRadioGroup extends XComponent {
   }
 
   attributeChangedCallback() {
-    this.attributeList = this.getAttributeNames();
+    this.attributeList = new Set(this.getAttributeNames());
   }
 }
 

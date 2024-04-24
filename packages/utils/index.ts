@@ -1,10 +1,10 @@
 export const getClassNameFromAttr = (
   tagName: string,
   observer: string[],
-  attr: string[]
+  attr: Set<string>
 ): string =>
   `x-${tagName} ` +
-  attr
+  [...attr]
     .filter((i) => observer.includes(i))
     .map((i) => `x-${tagName}-${i}`)
     .join(" ");

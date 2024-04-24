@@ -95,14 +95,14 @@ export class XCheckbox extends XComponent {
   connectedCallback() {
     this.dispatchEvent(new CustomEvent('xCheckboxInit', { detail: this, bubbles: true }))
     this.onclick = () => {
-      if (!this.innerElement || this.attributeList.includes('disabled')) {
+      if (!this.innerElement || this.attributeList.has('disabled')) {
         return
       }
-      this.attributeList.includes('checked') ? this.removeAttribute('checked') : this.setAttribute('checked', '')
+      this.attributeList.has('checked') ? this.removeAttribute('checked') : this.setAttribute('checked', '')
       this.removeAttribute('indeterminate')
-      this.dispatchEvent(new CustomEvent('xCheckboxChange', { detail: { value: this.value, checked: this.attributeList.includes('checked') }, bubbles: true }))
+      this.dispatchEvent(new CustomEvent('xCheckboxChange', { detail: { value: this.value, checked: this.attributeList.has('checked') }, bubbles: true }))
     }
-    if (this.innerElement && this.attributeList.includes('disabled')) {
+    if (this.innerElement && this.attributeList.has('disabled')) {
       this.innerElement.onclick = e => e.preventDefault()
     }
   }
@@ -110,15 +110,15 @@ export class XCheckbox extends XComponent {
   syncStatus() {
     this.value = this.getAttribute('value')
     if (this.innerElement) {
-      this.innerElement.checked = this.attributeList.includes('checked') ? true : false
-      this.innerElement.disabled = this.attributeList.includes('disabled') ? true : false
-      this.innerElement.indeterminate = this.attributeList.includes('indeterminate') ? true : false
+      this.innerElement.checked = this.attributeList.has('checked') ? true : false
+      this.innerElement.disabled = this.attributeList.has('disabled') ? true : false
+      this.innerElement.indeterminate = this.attributeList.has('indeterminate') ? true : false
       this.dispatchEvent(new CustomEvent('change', { detail: this.innerElement?.checked }))
     }
   }
 
   attributeChangedCallback() {
-    this.attributeList = this.getAttributeNames();
+    this.attributeList = new Set(this.getAttributeNames());
     this.syncStatus()
   }
 }

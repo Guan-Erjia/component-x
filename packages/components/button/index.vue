@@ -233,15 +233,15 @@ export class XButton extends XComponent {
     );
     this.innerElement?.setAttribute("class", className);
     if (
-      this.attributeList.includes("disabled") ||
-      this.attributeList.includes("loading")
+      this.attributeList.has("disabled") ||
+      this.attributeList.has("loading")
     ) {
       this.onclick = null;
     }
   }
 
   attributeChangedCallback() {
-    this.attributeList = this.getAttributeNames();
+    this.attributeList = new Set(this.getAttributeNames());
     this.setInnerElementAttr();
   }
 }

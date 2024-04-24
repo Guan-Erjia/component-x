@@ -137,10 +137,10 @@ export class XDialog extends XComponent {
     const className = getClassNameFromAttr(
       "dialog",
       ["open"],
-      this.attributeList || []
+      this.attributeList
     );
     this.innerElement.setAttribute("class", className);
-    if (this.attributeList.includes("open")) {
+    if (this.attributeList.has("open")) {
       this.innerElement.showModal();
     } else {
       this.closeModal();
@@ -148,7 +148,7 @@ export class XDialog extends XComponent {
 
     // 目前没有api选择插槽内容，暂不优化渲染次数
     const headerText = this.innerElement.querySelector(".x-dialog-header-text");
-    if (this.attributeList.includes("header") && headerText) {
+    if (this.attributeList.has("header") && headerText) {
       headerText.innerHTML = this.getAttribute("header") || "";
     }
 
@@ -180,7 +180,7 @@ export class XDialog extends XComponent {
   }
 
   attributeChangedCallback() {
-    this.attributeList = this.getAttributeNames();
+    this.attributeList = new Set(this.getAttributeNames());
     this.setInnerElementAttr();
   }
 }

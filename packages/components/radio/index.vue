@@ -87,40 +87,38 @@ export class XRadio extends XComponent {
   }
 
   innerElement: HTMLInputElement | undefined;
-  attributeList: string[]
   value: string | null
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.attributeList = [];
     this.value = null
   }
 
   connectedCallback() {
     this.dispatchEvent(new CustomEvent('xRadioInit', { detail: this, bubbles: true }))
     this.onclick = () => {
-      if (!this.innerElement || this.attributeList.includes('disabled')) {
+      if (!this.innerElement || this.attributeList.has('disabled')) {
         return
       }
-      this.attributeList.includes('checked') ? {} : this.setAttribute('checked', '')
+      this.attributeList.has('checked') ? {} : this.setAttribute('checked', '')
       this.dispatchEvent(new CustomEvent('xRadioChange', { detail: this.value, bubbles: true }))
     }
-    if (this.innerElement && this.attributeList.includes('disabled')) {
+    if (this.innerElement && this.attributeList.has('disabled')) {
       this.innerElement.onclick = e => e.preventDefault()
     }
   }
 
   syncStatus() {
     if (this.innerElement) {
-      this.innerElement.checked = this.attributeList.includes('checked') ? true : false
-      this.innerElement.disabled = this.attributeList.includes('disabled') ? true : false
+      this.innerElement.checked = this.attributeList.has('checked') ? true : false
+      this.innerElement.disabled = this.attributeList.has('disabled') ? true : false
       this.value = this.getAttribute('value')
       this.dispatchEvent(new CustomEvent('change', { detail: this.value }))
     }
   }
 
   attributeChangedCallback() {
-    this.attributeList = this.getAttributeNames();
+    this.attributeList = new Set(this.getAttributeNames());
     this.syncStatus()
   }
 

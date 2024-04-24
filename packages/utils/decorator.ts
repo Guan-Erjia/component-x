@@ -8,10 +8,10 @@ export class XComponent extends HTMLElement {
   static name: string;
   static register: () => void;
   callbackList!: Array<() => void>;
-  attributeList!: string[];
+  attributeList!: Set<string>;
   constructor() {
     super();
-    this.attributeList = [];
+    this.attributeList = new Set();
     this.callbackList = [];
   }
 }

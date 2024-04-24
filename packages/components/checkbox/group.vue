@@ -35,7 +35,7 @@ export class XCheckboxGroup extends XComponent {
     e.stopPropagation()
     const payload: string[] = []
     this.checkboxSet.forEach((i: XCheckbox) => {
-      i.attributeList.includes('checked') && i.value && payload.push(i.value)
+      i.attributeList.has('checked') && i.value && payload.push(i.value)
     })
     this.dispatchEvent(new CustomEvent('change', { detail: payload }))
   }
@@ -52,7 +52,7 @@ export class XCheckboxGroup extends XComponent {
   }
 
   attributeChangedCallback() {
-    this.attributeList = this.getAttributeNames();
+    this.attributeList = new Set(this.getAttributeNames());
   }
 }
 
