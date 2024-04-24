@@ -35,6 +35,7 @@
   .x-radio-content:hover {
     color: var(--radio-hover-color);
   }
+
   .x-radio-content:active {
     color: var(--radio-active-color);
   }
@@ -75,14 +76,12 @@
 </style>
 <script lang="ts">
 import { InitComponentTemplate } from "@/utils";
-import { XRegister } from "@/utils/decorator";
+import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
-export class XRadio extends HTMLElement {
+export class XRadio extends XComponent {
 
   static name: string = 'x-radio'
-  static register: () => void
-
   static get observedAttributes() {
     return ["checked", "primary", "warning", "danger", "success", 'disabled', 'value']; // 声明要监听的属性
   }
@@ -98,11 +97,13 @@ export class XRadio extends HTMLElement {
   }
 
   connectedCallback() {
+    this.dispatchEvent(new CustomEvent('radioInit', { detail: this, bubbles: true }))
     this.onclick = () => {
       if (!this.innerElement || this.attributeList.includes('disabled')) {
         return
       }
       this.attributeList.includes('checked') ? {} : this.setAttribute('checked', '')
+      this.dispatchEvent(new CustomEvent('radioChange', { detail: this.value, bubbles: true }))
     }
     if (this.innerElement && this.attributeList.includes('disabled')) {
       this.innerElement.onclick = e => e.preventDefault()
@@ -121,6 +122,10 @@ export class XRadio extends HTMLElement {
   attributeChangedCallback() {
     this.attributeList = this.getAttributeNames();
     this.syncStatus()
+  }
+
+  switchStatus(checked: boolean) {
+    checked ? this.setAttribute('checked', '') : this.removeAttribute('checked')
   }
 }
 </script>

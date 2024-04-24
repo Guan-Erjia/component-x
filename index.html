@@ -80,21 +80,28 @@
     </div>
 
     <div style="margin-top: 10px">
-      <x-radio primary>
-        <span>checkbox</span>
-      </x-radio>
-      <x-radio warning disabled>
-        <span>checkbox</span>
-      </x-radio>
-      <x-radio danger>
-        <span>checkbox</span>
-      </x-radio>
-      <x-radio success disabled>
-        <span>checkbox</span>
-      </x-radio>
-      <x-radio>
-        <span>checkbox</span>
-      </x-radio>
+      <x-radio-group>
+        <x-radio primary value="1">
+          <span>checkbox</span>
+        </x-radio>
+        <x-radio warning disabled value="2">
+          <span>checkbox</span>
+        </x-radio>
+        <div>
+          <x-radio danger value="3">
+            <span>checkbox</span>
+          </x-radio>
+        </div>
+        <x-radio success disabled value="4">
+          <span>checkbox</span>
+        </x-radio>
+        <x-radio value="5">
+          <span>checkbox</span>
+        </x-radio>
+        <x-radio>
+          <span>no value</span>
+        </x-radio>
+      </x-radio-group>
     </div>
 
     <!-- <script>
