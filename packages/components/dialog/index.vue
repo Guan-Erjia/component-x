@@ -89,22 +89,19 @@
 
 <script lang="ts">
 import { InitComponentTemplate, getClassNameFromAttr } from "@/utils";
-import { XRegister } from "@/utils/decorator";
+import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
-export class XDialog extends HTMLElement {
-  innerElement: HTMLDialogElement | undefined;
-  attributeList: string[];
-
+export class XDialog extends XComponent {
   static name: string = 'x-dialog'
-  static register: () => void
   static get observedAttributes() {
     return ["open", "header", "width"]; // 声明要监听的属性
   }
 
+  innerElement: HTMLDialogElement | undefined;
+
   constructor() {
     super();
-    this.attributeList = [];
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
   }
 
@@ -140,7 +137,7 @@ export class XDialog extends HTMLElement {
     const className = getClassNameFromAttr(
       "dialog",
       ["open"],
-      this.attributeList
+      this.attributeList || []
     );
     this.innerElement.setAttribute("class", className);
     if (this.attributeList.includes("open")) {
@@ -186,7 +183,6 @@ export class XDialog extends HTMLElement {
     this.attributeList = this.getAttributeNames();
     this.setInnerElementAttr();
   }
-
 }
 
 export default XDialog

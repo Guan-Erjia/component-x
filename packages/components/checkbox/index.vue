@@ -74,24 +74,19 @@
 </style>
 <script lang="ts">
 import { InitComponentTemplate } from "@/utils";
-import { XRegister } from "@/utils/decorator";
+import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
-export class XCheckbox extends HTMLElement {
-
+export class XCheckbox extends XComponent {
   static name: string = 'x-checkbox'
-  static register: () => void
-
   static get observedAttributes() {
     return ["checked", "primary", "warning", "danger", "success", 'disabled', 'indeterminate']; // 声明要监听的属性
   }
 
   innerElement: HTMLInputElement | undefined;
-  attributeList: string[]
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.attributeList = [];
   }
 
   connectedCallback() {

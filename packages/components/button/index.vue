@@ -196,23 +196,20 @@
 
 <script lang="ts">
 import { InitComponentTemplate, getClassNameFromAttr } from "@/utils";
-import { XRegister } from "@/utils/decorator";
+import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
-export class XButton extends HTMLElement {
+export class XButton extends XComponent {
   static get observedAttributes() {
     return ["plain", "primary", "warning", "danger", "success", "info"]; // 声明要监听的属性
   }
+  static name: string = 'x-button'
 
   innerElement: HTMLButtonElement | undefined;
-  attributeList: string[];
-  static name: string = 'x-button'
-  static register: () => void
 
   constructor() {
     super();
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.attributeList = [];
   }
 
   connectedCallback() {
