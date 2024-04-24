@@ -22,8 +22,8 @@ export class XRadioGroup extends XComponent {
   }
 
   disconnectedCallback() {
-    this.removeEventListener('radioInit', this.initListener)
-    this.removeEventListener('radioChange', this.changeListener)
+    this.removeEventListener('xRadioInit', this.initListener)
+    this.removeEventListener('xRadioChange', this.changeListener)
     console.log("Custom element removed from page.");
   }
 
@@ -31,15 +31,14 @@ export class XRadioGroup extends XComponent {
     e.stopPropagation()
     const payload = e.detail
     // 没有value属性的剔除
-    if (payload.value) {
-      if (!this.radioMap.get(payload.value)) {
-        this.radioMap.set(payload.value, payload)
-      } else {
-        console.warn(`在group模式中，x-radio的value属性有重复`)
-      }
-    } else {
-      console.warn(`在group模式中，x-radio的value属性是必须的`)
+    if (!payload.value) {
+      return console.warn(`在group模式中，x-radio的value属性是必须的`)
     }
+
+    if (this.radioMap.get(payload.value)) {
+      return console.warn(`在group模式中，x-radio的value属性有重复`)
+    }
+    this.radioMap.set(payload.value, payload)
   }
 
   changeListener(e: any) {
@@ -55,9 +54,8 @@ export class XRadioGroup extends XComponent {
 
   connectedCallback() {
     // 包含的radio元素注册到上层group中
-    this.addEventListener('radioInit', this.initListener)
-
-    this.addEventListener('radioChange', this.changeListener)
+    this.addEventListener('xRadioInit', this.initListener)
+    this.addEventListener('xRadioChange', this.changeListener)
   }
 
   attributeChangedCallback() {

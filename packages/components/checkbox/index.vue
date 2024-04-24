@@ -35,6 +35,7 @@
   .x-checkbox-content:hover {
     color: var(--checkbox-hover-color);
   }
+
   .x-checkbox-content:active {
     color: var(--checkbox-active-color);
   }
@@ -80,22 +81,26 @@ import { XComponent, XRegister } from "@/utils/decorator";
 export class XCheckbox extends XComponent {
   static name: string = 'x-checkbox'
   static get observedAttributes() {
-    return ["checked", "primary", "warning", "danger", "success", 'disabled', 'indeterminate']; // 声明要监听的属性
+    return ["checked", "primary", "warning", "danger", "success", 'disabled', 'indeterminate', 'value']; // 声明要监听的属性
   }
 
   innerElement: HTMLInputElement | undefined;
+  value: string | null
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
+    this.value = null
   }
 
   connectedCallback() {
+    this.dispatchEvent(new CustomEvent('xCheckboxInit', { detail: this, bubbles: true }))
     this.onclick = () => {
       if (!this.innerElement || this.attributeList.includes('disabled')) {
         return
       }
       this.attributeList.includes('checked') ? this.removeAttribute('checked') : this.setAttribute('checked', '')
       this.removeAttribute('indeterminate')
+      this.dispatchEvent(new CustomEvent('xCheckboxChange', { detail: { value: this.value, checked: this.attributeList.includes('checked') }, bubbles: true }))
     }
     if (this.innerElement && this.attributeList.includes('disabled')) {
       this.innerElement.onclick = e => e.preventDefault()
@@ -103,6 +108,7 @@ export class XCheckbox extends XComponent {
   }
 
   syncStatus() {
+    this.value = this.getAttribute('value')
     if (this.innerElement) {
       this.innerElement.checked = this.attributeList.includes('checked') ? true : false
       this.innerElement.disabled = this.attributeList.includes('disabled') ? true : false

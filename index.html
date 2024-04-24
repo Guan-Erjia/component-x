@@ -62,21 +62,23 @@
     </x-dialog>
 
     <div style="margin-top: 10px">
-      <x-checkbox id="xCheckbox" checked primary>
-        <span>checkbox</span>
-      </x-checkbox>
-      <x-checkbox checked warning disabled>
-        <span>checkbox</span>
-      </x-checkbox>
-      <x-checkbox danger indeterminate>
-        <span>checkbox</span>
-      </x-checkbox>
-      <x-checkbox checked success disabled>
-        <span>checkbox</span>
-      </x-checkbox>
-      <x-checkbox checked>
-        <span>checkbox</span>
-      </x-checkbox>
+      <x-checkbox-group id="xCheckbox">
+        <x-checkbox primary value="1">
+          <span>checkbox</span>
+        </x-checkbox>
+        <x-checkbox warning disabled value="2">
+          <span>checkbox</span>
+        </x-checkbox>
+        <x-checkbox danger indeterminate value="3">
+          <span>checkbox</span>
+        </x-checkbox>
+        <x-checkbox checked success disabled value="4">
+          <span>checkbox</span>
+        </x-checkbox>
+        <x-checkbox checked value="5">
+          <span>checkbox</span>
+        </x-checkbox>
+      </x-checkbox-group>
     </div>
 
     <div style="margin-top: 10px">
@@ -102,14 +104,11 @@
       </x-radio-group>
     </div>
 
-    <!-- <script>
-      document
-        .querySelector("#xDialog")
-        .addEventListener("ok", (e) => console.log("ok"));
+    <script>
       document
         .querySelector("#xCheckbox")
-        .addEventListener("change", (e) => console.log(e));
-    </script> -->
+        .addEventListener("change", (e) => console.log(e.detail));
+    </script>
     <style>
       ::backdrop {
         background-image: linear-gradient(

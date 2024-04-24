@@ -97,13 +97,13 @@ export class XRadio extends XComponent {
   }
 
   connectedCallback() {
-    this.dispatchEvent(new CustomEvent('radioInit', { detail: this, bubbles: true }))
+    this.dispatchEvent(new CustomEvent('xRadioInit', { detail: this, bubbles: true }))
     this.onclick = () => {
       if (!this.innerElement || this.attributeList.includes('disabled')) {
         return
       }
       this.attributeList.includes('checked') ? {} : this.setAttribute('checked', '')
-      this.dispatchEvent(new CustomEvent('radioChange', { detail: this.value, bubbles: true }))
+      this.dispatchEvent(new CustomEvent('xRadioChange', { detail: this.value, bubbles: true }))
     }
     if (this.innerElement && this.attributeList.includes('disabled')) {
       this.innerElement.onclick = e => e.preventDefault()
