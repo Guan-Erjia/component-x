@@ -7,4 +7,5 @@ declare module "*.vue" {
   export const XButton;
   export const XCheckbox;
   export const XRadio;
+  export const XRadioGroup;
 }
