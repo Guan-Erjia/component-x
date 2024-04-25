@@ -1,6 +1,13 @@
-x-radio {
+x-radio,
+x-radio-button {
   --radio-padding-inline: 10px;
   --radio-padding-block: 10px;
   --radio-gap: 5px;
-  --radio-size: 14px;
+  --radio-size: 16px;
+  --radio-button-width: 60px;
+  --radio-button-color: blue;
+  --radio-button-padding-inline: 6px;
+  --radio-button-padding-block: 6px;
+  --radio-button-shadow: 0px 0px 1px black;
+  --radio-button-radius: 5px;
 }

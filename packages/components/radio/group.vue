@@ -1,7 +1,11 @@
 <template>
-  <slot></slot>
+  <slot class="x-radio-group"></slot>
 </template>
-
+<style lang="scss">
+.x-radio-group {
+  display: inline-flex;
+}
+</style>
 <script lang="ts">
 import { InitComponentTemplate } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";

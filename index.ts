@@ -6,6 +6,7 @@ import {
   XCheckboxGroup,
   XRadio,
   XRadioGroup,
+  XRadioButton,
 } from "./packages/main";
 
 XButton.register();
@@ -14,3 +15,4 @@ XCheckboxGroup.register();
 XCheckbox.register();
 XRadioGroup.register();
 XRadio.register();
+XRadioButton.register();

@@ -9,4 +9,5 @@ declare module "*.vue" {
   export const XCheckboxGroup;
   export const XRadio;
   export const XRadioGroup;
+  export const XRadioButton;
 }
