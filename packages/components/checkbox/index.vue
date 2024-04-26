@@ -112,9 +112,13 @@ export class XCheckbox extends XComponent {
     if (this.innerElement) {
       this.innerElement.checked = this.attributeList.has('checked') ? true : false
       this.innerElement.disabled = this.attributeList.has('disabled') ? true : false
-      this.innerElement.indeterminate = this.attributeList.has('indeterminate') ? true : false
+      this.innerElement.indeterminate = this.attributeList.has('indeterminate') && !this.attributeList.has('checked') ? true : false
       this.dispatchEvent(new CustomEvent('change', { detail: this.innerElement?.checked }))
     }
+  }
+
+  switchStatus(checked: boolean) {
+    checked ? this.setAttribute('checked', '') : this.removeAttribute('checked')
   }
 
   attributeChangedCallback() {

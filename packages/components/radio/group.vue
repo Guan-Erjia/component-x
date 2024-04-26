@@ -14,15 +14,17 @@ import { XComponent, XRegister } from "@/utils/decorator";
 export class XRadioGroup extends XComponent {
   static name: string = 'x-radio-group'
   static get observedAttributes() {
-    return []; // 声明要监听的属性
+    return ['value']; // 声明要监听的属性
   }
 
   innerElement: HTMLInputElement | undefined;
   radioMap: Map<string, any>
+  value: string | null
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
     this.radioMap = new Map()
+    this.value = null
   }
 
   disconnectedCallback() {
@@ -43,6 +45,9 @@ export class XRadioGroup extends XComponent {
       return console.warn(`在group模式中，x-radio的value属性有重复`)
     }
     this.radioMap.set(payload.value, payload)
+    if (this.value && payload.value === this.value) {
+      payload.switchStatus(true)
+    }
   }
 
   changeListener(e: any) {
@@ -54,6 +59,7 @@ export class XRadioGroup extends XComponent {
       }
     })
     this.dispatchEvent(new CustomEvent('change', { detail: e.target.value }))
+    this.setAttribute('value', e.target.value)
   }
 
   connectedCallback() {
@@ -64,6 +70,7 @@ export class XRadioGroup extends XComponent {
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
+    this.value = this.getAttribute('value')
   }
 }
 

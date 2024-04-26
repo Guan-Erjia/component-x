@@ -62,7 +62,7 @@
     </x-dialog>
 
     <div style="margin-top: 10px">
-      <x-checkbox-group id="xCheckbox">
+      <x-checkbox-group id="xCheckbox" value="1,2,3">
         <x-checkbox primary value="1">
           <span>checkbox</span>
         </x-checkbox>
@@ -72,17 +72,17 @@
         <x-checkbox danger indeterminate value="3">
           <span>checkbox</span>
         </x-checkbox>
-        <x-checkbox checked success disabled value="4">
+        <x-checkbox success disabled value="4">
           <span>checkbox</span>
         </x-checkbox>
-        <x-checkbox checked value="5">
+        <x-checkbox value="5">
           <span>checkbox</span>
         </x-checkbox>
       </x-checkbox-group>
     </div>
 
     <div style="margin-top: 10px">
-      <x-radio-group>
+      <x-radio-group value="3">
         <x-radio primary value="1">
           <span>radio1</span>
         </x-radio>
@@ -105,7 +105,7 @@
     </div>
 
     <div style="margin-top: 10px">
-      <x-radio-group>
+      <x-radio-group value="3">
         <x-radio-button primary plain value="1">
           <span>radio1</span>
         </x-radio-button>

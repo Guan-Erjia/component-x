@@ -15,11 +15,12 @@ import { XCheckbox } from "./index.vue";
 export class XCheckboxGroup extends XComponent {
   static name: string = 'x-checkbox-group'
   static get observedAttributes() {
-    return []; // 声明要监听的属性
+    return ['value']; // 声明要监听的属性
   }
 
   innerElement: HTMLInputElement | undefined;
   checkboxSet: Set<XCheckbox>
+  value: string[] | undefined
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
@@ -33,15 +34,21 @@ export class XCheckboxGroup extends XComponent {
       return console.warn(`在group模式中，x-checkbox的value属性是必须的`)
     }
     this.checkboxSet.add(payload)
+    if (this.value && this.value.includes(payload.value)) {
+      console.log(this.value)
+      console.log(payload)
+      payload.switchStatus(true)
+    }
   }
 
   changeListener(e: any) {
     e.stopPropagation()
-    const payload: string[] = []
+    const sent: string[] = []
     this.checkboxSet.forEach((i: XCheckbox) => {
-      i.attributeList.has('checked') && i.value && payload.push(i.value)
+      i.attributeList.has('checked') && i.value && sent.push(i.value)
     })
-    this.dispatchEvent(new CustomEvent('change', { detail: payload }))
+    this.dispatchEvent(new CustomEvent('change', { detail: sent }))
+    this.setAttribute('value', sent.join(','))
   }
 
   connectedCallback() {
@@ -57,6 +64,7 @@ export class XCheckboxGroup extends XComponent {
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
+    this.value = this.getAttribute('value')?.split(',')
   }
 }
 
