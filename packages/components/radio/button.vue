@@ -8,11 +8,11 @@
   align-items: center;
   cursor: pointer;
   user-select: none;
-  padding-left: var(--radio-button-padding-inline);
-  padding-right: var(--radio-button-padding-inline);
-  padding-top: var(--radio-button-padding-block);
-  padding-bottom: var(--radio-button-padding-block);
-  box-shadow: var(--radio-button-shadow) inset;
+  padding: var(--radio-button-padding-block) var(--radio-button-padding-inline);
+  border-width: var(--radio-button-border-width);
+  border-color: var(--radio-button-border-color);
+  border-style: solid;
+  margin-right: calc(-1 * var(--radio-button-border-width));
   width: var(--radio-button-width);
   height: var(--radio-button-height);
   font-size: var(--radio-size);
@@ -31,12 +31,9 @@
 
 :host([checked]) {
   position: relative;
-  border: 1px solid var(--radio-button-color);
+  border-color: var(--radio-button-color);
   box-shadow: none;
-  padding-left: calc(var(--radio-button-padding-inline) - 1px);
-  padding-right: calc(var(--radio-button-padding-inline) - 1px);
-  padding-top: calc(var(--radio-button-padding-block) - 1px);
-  padding-bottom: calc(var(--radio-button-padding-block) - 1px);
+  z-index: 10;
 }
 
 :host(:not([plain])[checked]) {

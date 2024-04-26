@@ -21,10 +21,7 @@
   font-size: var(--btn-font-size);
   font-weight: var(--btn-font-weight);
   line-height: var(--btn-line-height);
-  padding-left: var(--btn-padding-inline);
-  padding-right: var(--btn-padding-inline);
-  padding-top: var(--btn-padding-block);
-  padding-bottom: var(--btn-padding-block);
+  padding: var(--btn-padding-block) var(--btn-padding-inline);
   opacity: var(--btn-opacity);
 
   &-loading {

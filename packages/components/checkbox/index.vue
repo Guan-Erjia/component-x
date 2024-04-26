@@ -7,10 +7,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  padding-left: var(--checkbox-padding-inline);
-  padding-right: var(--checkbox-padding-inline);
-  padding-top: var(--checkbox-padding-block);
-  padding-bottom: var(--checkbox-padding-block);
+  padding: var(--checkbox-padding-block) var(--checkbox-padding-inline);
   cursor: pointer;
   user-select: none;
 }

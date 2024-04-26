@@ -7,10 +7,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  padding-left: var(--radio-padding-inline);
-  padding-right: var(--radio-padding-inline);
-  padding-top: var(--radio-padding-block);
-  padding-bottom: var(--radio-padding-block);
+  padding: var(--radio-padding-block) var(--radio-padding-inline);
   cursor: pointer;
   user-select: none;
 }
