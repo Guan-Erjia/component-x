@@ -4,6 +4,7 @@
 <style lang="scss">
 .x-radio-group {
   display: inline-flex;
+  align-items: center;
 }
 </style>
 <script lang="ts">

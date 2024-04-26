@@ -12,7 +12,7 @@
   padding-right: var(--radio-button-padding-inline);
   padding-top: var(--radio-button-padding-block);
   padding-bottom: var(--radio-button-padding-block);
-  box-shadow: var(--radio-button-shadow);
+  box-shadow: var(--radio-button-shadow) inset;
   width: var(--radio-button-width);
   height: var(--radio-button-height);
   font-size: var(--radio-size);
@@ -33,7 +33,10 @@
   position: relative;
   border: 1px solid var(--radio-button-color);
   box-shadow: none;
-  margin: -1px;
+  padding-left: calc(var(--radio-button-padding-inline) - 1px);
+  padding-right: calc(var(--radio-button-padding-inline) - 1px);
+  padding-top: calc(var(--radio-button-padding-block) - 1px);
+  padding-bottom: calc(var(--radio-button-padding-block) - 1px);
 }
 
 :host(:not([plain])[checked]) {
