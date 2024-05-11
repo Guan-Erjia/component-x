@@ -10,4 +10,7 @@ declare module "*.vue" {
   export const XRadio;
   export const XRadioGroup;
   export const XRadioButton;
+  export const XTabs;
+  export const XTabsItem;
+  export const XTabsTitle;
 }
