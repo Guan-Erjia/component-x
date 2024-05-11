@@ -1,3 +1,12 @@
+<style lang="scss">
+:host {
+  display: inline-block;
+}
+:host([active]) {
+  border-bottom: 3px solid red;
+}
+</style>
+
 <template>
   <slot></slot>
 </template>
@@ -16,11 +25,13 @@ export class XTabsTitle extends XComponent {
 
   innerElement: HTMLDialogElement | undefined;
   key: string | null
+  isActive: boolean
 
   constructor() {
     super();
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
     this.key = null
+    this.isActive = false
   }
 
 
@@ -28,7 +39,18 @@ export class XTabsTitle extends XComponent {
     if (!this.attributeList.has('key')) {
       console.warn('x-tabs-title必须传入key')
     }
+    this.dispatchEvent(new CustomEvent('xTabsTitleInit', { detail: this, bubbles: true }))
+    this.dispatchEvent(new CustomEvent('xTabsTitle', { detail: this, bubbles: true }))
     this.onclick = () => this.dispatchEvent(new CustomEvent('xTabsChange', { detail: this.key, bubbles: true }))
+  }
+
+  setActive(active: boolean) {
+    this.isActive = active
+    if (this.isActive) {
+      this.setAttribute('active', '')
+    } else {
+      this.removeAttribute('active')
+    }
   }
 
   attributeChangedCallback() {

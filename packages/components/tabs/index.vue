@@ -2,6 +2,7 @@
 :host {
   .x-tabs-title {
     display: block;
+    margin-bottom: 10px;
   }
 }
 </style>
@@ -23,28 +24,38 @@ export class XTabs extends XComponent {
   }
 
   innerElement: HTMLDialogElement | undefined;
-  tabsMap: Map<string, any>
+  itemsMap: Map<string, any>
+  titleMap: Map<string, any>
   key: string | null
 
   constructor() {
     super();
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.tabsMap = new Map()
+    this.titleMap = new Map()
+    this.itemsMap = new Map()
     this.key = null
   }
 
-
-  initListener(e: any) {
+  commonInit(e: any, type: 'title' | 'item') {
     e.stopPropagation()
     const payload = e.detail
-
-    if (this.tabsMap.get(payload.key)) {
-      return console.warn(`x-tabs-item的key属性有重复`)
+    const map = type === 'title' ? this.titleMap : this.itemsMap
+    if (map.get(payload.key)) {
+      return console.warn(`x-tabs-${type}的key属性有重复`)
     }
-    this.tabsMap.set(payload.key, payload)
+    map.set(payload.key, payload)
     if (this.key && payload.key === this.key) {
-      payload.setVisiable(true)
+      payload.setActive && payload.setActive(true)
+      payload.setVisiable && payload.setVisiable(true)
     }
+  }
+
+  initItem(e: any) {
+    this.commonInit(e, 'item')
+  }
+
+  initTitle(e: any) {
+    this.commonInit(e, 'title')
   }
 
   handleTitleChange(e: any) {
@@ -54,11 +65,18 @@ export class XTabs extends XComponent {
 
 
   handleChange() {
-    this.tabsMap.forEach((tabItem, key) => {
+    this.itemsMap.forEach((tabItem, key) => {
       if (key === this.key) {
         tabItem.setVisiable(true)
       } else {
         tabItem.setVisiable(false)
+      }
+    })
+    this.titleMap.forEach((tabItem, key) => {
+      if (key === this.key) {
+        tabItem.setActive(true)
+      } else {
+        tabItem.setActive(false)
       }
     })
     this.dispatchEvent(new CustomEvent('change', { detail: this.key }))
@@ -66,17 +84,18 @@ export class XTabs extends XComponent {
 
 
   connectedCallback() {
-    this.addEventListener('xTabsInit', this.initListener)
+    this.addEventListener('xTabsInit', this.initItem)
+    this.addEventListener('xTabsTitle', this.initTitle)
     this.addEventListener('xTabsChange', this.handleTitleChange)
   }
 
   disconnectedCallback() {
-    this.removeEventListener('xTabsInit', this.initListener)
+    this.removeEventListener('xTabsInit', this.initItem)
+    this.removeEventListener('xTabsTitle', this.initTitle)
     this.removeEventListener('xTabsChange', this.handleTitleChange)
   }
 
   attributeChangedCallback() {
-    this.attributeList = new Set(this.getAttributeNames());
     this.key = this.getAttribute('key')
     this.handleChange()
   }

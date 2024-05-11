@@ -2,10 +2,6 @@
 :host(:not([active])) {
   display: none;
 }
-
-:host([active]) {
-  display: unset;
-}
 </style>
 
 <template>
