@@ -7,6 +7,9 @@ import {
   XRadio,
   XRadioGroup,
   XRadioButton,
+  XTabs,
+  XTabsItem,
+  XTabsTitle,
 } from "./packages/main";
 
 XButton.register();
@@ -16,3 +19,6 @@ XCheckbox.register();
 XRadioGroup.register();
 XRadio.register();
 XRadioButton.register();
+XTabs.register();
+XTabsItem.register();
+XTabsTitle.register();

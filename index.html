@@ -119,6 +119,31 @@
       </x-radio-group>
     </div>
 
+    <div style="margin-top: 10px">
+      <x-tabs key="2">
+        <div slot="title">
+          <x-tabs-title key="1">
+            <span style="cursor: pointer">title1</span>
+          </x-tabs-title>
+          <x-tabs-title key="2">
+            <span style="cursor: pointer">title2</span>
+          </x-tabs-title>
+          <x-tabs-title key="3">
+            <span style="cursor: pointer">title3</span>
+          </x-tabs-title>
+        </div>
+        <x-tabs-item key="1">
+          <div style="background-color: seagreen; height: 200px">第一个</div>
+        </x-tabs-item>
+        <x-tabs-item key="2">
+          <div style="background-color: cornsilk; height: 200px">第二个</div>
+        </x-tabs-item>
+        <x-tabs-item key="3">
+          <div style="background-color: skyblue; height: 200px">第三个</div>
+        </x-tabs-item>
+      </x-tabs>
+    </div>
+
     <script>
       document
         .querySelector("#xCheckbox")

@@ -185,5 +185,4 @@ export class XDialog extends XComponent {
   }
 }
 
-export default XDialog
 </script>
