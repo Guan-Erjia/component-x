@@ -1,9 +1,13 @@
 <style lang="scss">
 :host {
   display: inline-block;
+  padding-bottom: var(--tabs-title-block);
+  padding-left: var(--tabs-title-inline);
+  padding-right: var(--tabs-title-inline);
 }
+
 :host([active]) {
-  border-bottom: 3px solid red;
+  border-bottom: var(--tabs-title-active);
 }
 </style>
 

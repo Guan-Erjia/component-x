@@ -1,8 +1,15 @@
 <style lang="scss">
 :host {
+  display: block;
+  border: var(--tabs-border);
+  padding: var(--tabs-padding);
+  border-radius: var(--tabs-radius);
+
   .x-tabs-title {
     display: block;
-    margin-bottom: 10px;
+    padding-bottom: var(--tabs-title-padding);
+    margin-bottom: var(--tabs-title-margin);
+    border-bottom: var(--tabs-br);
   }
 }
 </style>

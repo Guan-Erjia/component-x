@@ -10,7 +10,7 @@
 
 
 <script lang="ts">
-import { InitComponentTemplate, } from "@/utils";
+import { InitComponentTemplate } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister

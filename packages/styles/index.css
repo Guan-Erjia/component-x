@@ -2,6 +2,7 @@
 @import url("./dialog.css");
 @import url("./checkbox.css");
 @import url("./radio.css");
+@import url("./tabs.css");
 * {
   line-height: 100%;
   --default-color: black; /* 默认按钮文本颜色*/
