@@ -3,6 +3,9 @@
 @import url("./checkbox.css");
 @import url("./radio.css");
 @import url("./tabs.css");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 * {
   line-height: 100%;
   --default-color: black; /* 默认按钮文本颜色*/

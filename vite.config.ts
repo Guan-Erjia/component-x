@@ -1,5 +1,7 @@
 import { defineConfig } from "vite";
 import { ComponentXSfcLoader } from "./plugins/index";
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   console.log(command, mode);
@@ -14,6 +16,10 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
     css: {
       preprocessorOptions: {
         scss: {},
+      },
+      charset: false,
+      postcss: {
+        plugins: [tailwindcss, autoprefixer],
       },
     },
     plugins: [ComponentXSfcLoader()],
