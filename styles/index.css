@@ -3,7 +3,6 @@
 @import url("./checkbox.css");
 @import url("./radio.css");
 @import url("./tabs.css");
-@tailwind base;
 @tailwind components;
 @tailwind utilities;
 * {
