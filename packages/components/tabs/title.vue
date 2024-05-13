@@ -1,6 +1,7 @@
 <style lang="scss">
 :host {
   display: inline-block;
+  cursor: pointer;
   padding-bottom: var(--tabs-title-block);
   padding-left: var(--tabs-title-inline);
   padding-right: var(--tabs-title-inline);
