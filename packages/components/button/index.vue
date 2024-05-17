@@ -26,8 +26,8 @@
 
   &-loading {
     display: none;
-    width: calc(var(--control-size) - var(--control-line));
-    height: calc(var(--control-size) - var(--control-line));
+    width: var(--control-size);
+    height: var(--control-size);
     animation: spin 1s linear infinite;
     margin-left: calc(-1 * var(--control-size) / 2);
     margin-right: calc(var(--control-size) / 2);
