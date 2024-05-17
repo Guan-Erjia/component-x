@@ -22,4 +22,8 @@
   --success-active-color: rgb(0, 170, 172);
   --primary-active-color: rgb(0, 0, 196);
   --disable-bg-opacity: 0.5; /* disable高亮 */
+  --control-line: 2px;
+  --control-radius: 6px;
+  --control-size: 14px;
+  --control-weight: 500;
 }

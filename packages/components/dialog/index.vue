@@ -6,10 +6,10 @@
 
 .x-dialog {
   padding: var(--dialog-padding);
-  border-width: var(--dialog-border-width);
+  border-width: var(--control-line);
   border-style: var(--dialog-border-style);
   border-color: var(--dialog-border-color);
-  border-radius: var(--dialog-border-radius);
+  border-radius: var(--control-radius);
   background-color: var(--dialog-background);
   width: var(--dialog-width);
 

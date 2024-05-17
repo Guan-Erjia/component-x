@@ -12,26 +12,25 @@
   cursor: pointer;
   text-align: center;
   border-color: var(--btn-border-color);
-  border-radius: var(--btn-border-radius);
+  border-radius: var(--control-radius);
   border-style: var(--btn-border-style);
-  border-width: var(--btn-border-width);
+  border-width: var(--control-line);
   box-shadow: var(--btn-shadow);
   color: var(--btn-text);
   background-color: var(--btn-default-bg);
-  font-size: var(--btn-font-size);
-  font-weight: var(--btn-font-weight);
-  line-height: var(--btn-line-height);
+  font-size: var(--control-size);
+  font-weight: var(--control-weight);
+  line-height: var(--control-size);
   padding: var(--btn-padding-block) var(--btn-padding-inline);
   opacity: var(--btn-opacity);
 
   &-loading {
     display: none;
-    width: calc(var(--btn-font-size) - var(--btn-border-width));
-    height: calc(var(--btn-font-size) - var(--btn-border-width));
+    width: calc(var(--control-size) - var(--control-line));
+    height: calc(var(--control-size) - var(--control-line));
     animation: spin 1s linear infinite;
-    margin-left: calc(-1 * var(--btn-font-size) / 2);
-    margin-right: calc(var(--btn-font-size) / 2);
-    line-height: var(--btn-font-size);
+    margin-left: calc(-1 * var(--control-size) / 2);
+    margin-right: calc(var(--control-size) / 2);
 
     @keyframes spin {
       0% {

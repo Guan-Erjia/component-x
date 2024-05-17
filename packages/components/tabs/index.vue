@@ -1,9 +1,11 @@
 <style lang="scss">
 :host {
   display: block;
-  border: var(--tabs-border);
+  border-width: var(--control-line);
+  border-color: var(--tabs-border-color);
+  border-style: var(--tabs-border-style);
   padding: var(--tabs-padding);
-  border-radius: var(--tabs-radius);
+  border-radius: var(--control-radius);
 
   .x-tabs-title {
     display: block;

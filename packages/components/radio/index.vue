@@ -10,12 +10,13 @@
   padding: var(--radio-padding-block) var(--radio-padding-inline);
   cursor: pointer;
   user-select: none;
+  font-weight: var(--control-weight);
 }
 
 .x-radio {
   margin: 0;
-  width: var(--radio-size);
-  height: var(--radio-size);
+  width: var(--control-size);
+  height: var(--control-size);
   flex-shrink: 0;
   cursor: unset;
 }
@@ -23,7 +24,7 @@
 .x-radio-content {
   display: inline-block;
   margin-left: var(--radio-gap);
-  font-size: var(--radio-size);
+  font-size: var(--control-size);
   flex-shrink: 0;
   color: var(--radio-color);
 }

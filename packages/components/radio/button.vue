@@ -9,24 +9,25 @@
   cursor: pointer;
   user-select: none;
   padding: var(--radio-button-padding-block) var(--radio-button-padding-inline);
-  border-width: var(--radio-button-border-width);
+  border-width: var(--control-line);
   border-color: var(--radio-button-border-color);
   border-style: solid;
-  margin-right: calc(-1 * var(--radio-button-border-width));
+  margin-right: calc(-1 * var(--control-line));
   width: var(--radio-button-width);
   height: var(--radio-button-height);
-  font-size: var(--radio-size);
+  font-size: var(--control-size);
+  font-weight: var(--control-weight);
   flex-shrink: 0;
 }
 
 :host(:last-child) {
-  border-top-right-radius: var(--radio-button-radius);
-  border-bottom-right-radius: var(--radio-button-radius);
+  border-top-right-radius: var(--control-radius);
+  border-bottom-right-radius: var(--control-radius);
 }
 
 :host(:first-child) {
-  border-top-left-radius: var(--radio-button-radius);
-  border-bottom-left-radius: var(--radio-button-radius);
+  border-top-left-radius: var(--control-radius);
+  border-bottom-left-radius: var(--control-radius);
 }
 
 :host([checked]) {

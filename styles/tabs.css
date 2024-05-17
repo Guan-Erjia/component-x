@@ -1,11 +1,12 @@
 x-tabs {
-  --tabs-padding: 12px 8px 8px 8px;
-  --tabs-border: 1px solid lightgray;
-  --tabs-radius: 5px;
+  --tabs-padding: 8px 6px 6px 6px;
+  --tabs-border-color: lightgray;
+  --tabs-border-style: solid;
   --tabs-title-padding: 0px;
   --tabs-title-margin: 5px;
   --tabs-title-active: 3px solid red;
   --tabs-br: 1px solid gray;
   --tabs-title-inline: 10px;
   --tabs-title-block: 4px;
+  --tab-title-size: 15px;
 }

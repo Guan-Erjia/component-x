@@ -1,6 +1,5 @@
 x-checkbox {
   --checkbox-padding-inline: 10px;
-  --checkbox-padding-block: 10px;
+  --checkbox-padding-block: 6px;
   --checkbox-gap: 5px;
-  --checkbox-size: 14px;
 }

@@ -10,12 +10,13 @@
   padding: var(--checkbox-padding-block) var(--checkbox-padding-inline);
   cursor: pointer;
   user-select: none;
+  font-weight: var(--control-weight);
 }
 
 .x-checkbox {
   margin: 0;
-  width: var(--checkbox-size);
-  height: var(--checkbox-size);
+  width: var(--control-size);
+  height: var(--control-size);
   flex-shrink: 0;
   cursor: unset;
 }
@@ -23,7 +24,7 @@
 .x-checkbox-content {
   display: inline-block;
   margin-left: var(--checkbox-gap);
-  font-size: var(--checkbox-size);
+  font-size: var(--control-size);
   flex-shrink: 0;
   color: var(--checkbox-color);
 }
