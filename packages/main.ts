@@ -8,3 +8,4 @@ export { XRadioButton } from "./components/radio/button.vue";
 export { XTabs } from "./components/tabs/index.vue";
 export { XTabsItem } from "./components/tabs/item.vue";
 export { XTabsTitle } from "./components/tabs/title.vue";
+export { XSwitch } from "./components/switch/index.vue";

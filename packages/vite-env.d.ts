@@ -13,4 +13,5 @@ declare module "*.vue" {
   export const XTabs;
   export const XTabsItem;
   export const XTabsTitle;
+  export const XSwitch;
 }
