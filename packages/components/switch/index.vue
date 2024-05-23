@@ -13,7 +13,7 @@
 :host {
   position: relative;
   display: inline-block;
-  background-color: gray;
+  background-color: var(--switch-default-bg);
   padding: var(--control-line) 0;
   border-radius: calc(var(--control-size));
   width: calc(var(--control-size) * 2.5);
@@ -24,7 +24,7 @@
   .x-switch {
     width: var(--control-size);
     height: var(--control-size);
-    background-color: white;
+    background-color: var(--switch-btn);
     border-radius: 100%;
     position: absolute;
     transition: left 0.1s linear;
