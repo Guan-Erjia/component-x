@@ -61,35 +61,34 @@ export class XRadioButton extends XComponent {
 
   static name: string = 'x-radio-button'
   static get observedAttributes() {
-    return ["checked", "primary", "warning", "danger", "success", 'disabled', 'value']; // 声明要监听的属性
+    return ["checked", 'disabled', 'value']; // 声明要监听的属性
   }
 
   value: string | null
+  checked: boolean
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
     this.value = null
+    this.checked = false
   }
 
   connectedCallback() {
-    this.dispatchEvent(new CustomEvent('xRadioInit', { detail: this, bubbles: true }))
+    this.dispatchEvent(new CustomEvent('XRadioInit', { detail: this, bubbles: true }))
     this.onclick = () => {
-      if (this.attributeList.has('disabled')) {
+      if (this.attributeList.has('disabled') || this.checked) {
         return
       }
-      this.attributeList.has('checked') ? {} : this.setAttribute('checked', '')
-      this.dispatchEvent(new CustomEvent('xRadioChange', { detail: this.value, bubbles: true }))
+      this.setAttribute('checked', '')
+      this.dispatchEvent(new CustomEvent('change', { detail: this.value }))
+      this.dispatchEvent(new CustomEvent('XRadioChange', { detail: this.value, bubbles: true }))
     }
-  }
-
-  syncStatus() {
-    this.value = this.getAttribute('value')
-    this.dispatchEvent(new CustomEvent('change', { detail: this.value }))
   }
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
-    this.syncStatus()
+    this.checked = this.attributeList.has('checked')
+    this.value = this.getAttribute('value')
   }
 
   switchStatus(checked: boolean) {

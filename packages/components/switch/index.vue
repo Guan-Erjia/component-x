@@ -99,11 +99,11 @@ export class XSwitch extends XComponent {
 
   static name: string = 'x-switch'
   static get observedAttributes() {
-    return ["checked", "primary", "warning", "danger", "success", 'disabled', 'loading']; // 声明要监听的属性
+    return ["checked", 'disabled', 'loading']; // 声明要监听的属性
   }
 
   innerElement: HTMLInputElement | undefined;
-  checked: boolean | false
+  checked: boolean
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
@@ -123,6 +123,7 @@ export class XSwitch extends XComponent {
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
+    this.checked = this.attributeList.has('checked')
   }
 
   switchStatus(checked: boolean) {

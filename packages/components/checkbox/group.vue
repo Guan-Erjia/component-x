@@ -53,13 +53,13 @@ export class XCheckboxGroup extends XComponent {
 
   connectedCallback() {
     // 包含的checkbox元素注册到上层group中
-    this.addEventListener('xCheckboxInit', this.initListener)
-    this.addEventListener('xCheckboxChange', this.changeListener)
+    this.addEventListener('XCheckboxInit', this.initListener)
+    this.addEventListener('XCheckboxChange', this.changeListener)
   }
 
   disconnectedCallback() {
-    this.removeEventListener('xCheckboxInit', this.initListener)
-    this.removeEventListener('xCheckboxChange', this.changeListener)
+    this.removeEventListener('XCheckboxInit', this.initListener)
+    this.removeEventListener('XCheckboxChange', this.changeListener)
   }
 
   attributeChangedCallback() {

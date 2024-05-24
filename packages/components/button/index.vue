@@ -195,7 +195,7 @@ import { XComponent, XRegister } from "@/utils/decorator";
 @XRegister
 export class XButton extends XComponent {
   static get observedAttributes() {
-    return ["plain", "primary", "warning", "danger", "success", "info"]; // 声明要监听的属性
+    return ["primary", "warning", "danger", "success", "info", 'disabeld', 'loading']; // 声明要监听的属性
   }
   static name: string = 'x-button'
 

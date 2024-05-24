@@ -29,8 +29,8 @@ export class XRadioGroup extends XComponent {
   }
 
   disconnectedCallback() {
-    this.removeEventListener('xRadioInit', this.initListener)
-    this.removeEventListener('xRadioChange', this.changeListener)
+    this.removeEventListener('XRadioInit', this.initListener)
+    this.removeEventListener('XRadioChange', this.changeListener)
     console.log("Custom element removed from page.");
   }
 
@@ -65,8 +65,8 @@ export class XRadioGroup extends XComponent {
 
   connectedCallback() {
     // 包含的radio元素注册到上层group中
-    this.addEventListener('xRadioInit', this.initListener)
-    this.addEventListener('xRadioChange', this.changeListener)
+    this.addEventListener('XRadioInit', this.initListener)
+    this.addEventListener('XRadioChange', this.changeListener)
   }
 
   attributeChangedCallback() {
