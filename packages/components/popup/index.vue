@@ -256,17 +256,6 @@ export class XPopup extends XComponent {
     this.show = false
   }
 
-  connectedCallback() {
-    this.onclick = () => {
-      if (this.attributeList.has('disabled') || this.attributeList.has('loading')) {
-        return
-      }
-      this.switchStatus(!this.attributeList.has('show'))
-      this.dispatchEvent(new CustomEvent('change', { detail: { value: this.show } }))
-    }
-  }
-
-
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
     this.show = this.attributeList.has('show')
