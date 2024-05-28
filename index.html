@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body>
+  <body class="bg-slate-100">
     <script src="./index.ts" type="module"></script>
 
     <div class="mt-3">
@@ -138,6 +138,65 @@
       </x-switch>
       <x-switch warning loading checked></x-switch>
       <x-switch success checked></x-switch>
+    </div>
+
+    <div class="mt-6">
+      <x-popup>
+        <x-button success plain> noArrow </x-button>
+        <div slot="content" class="bg-red-300">Default Position</div>
+      </x-popup>
+      <x-popup class="ml-2" position="bottom">
+        <x-button danger plain> Bottom </x-button>
+        <div slot="content" class="bg-red-300">Bottom</div>
+      </x-popup>
+      <x-popup class="ml-2" position="lb" dark show>
+        <x-button warning plain> 位置示例 </x-button>
+        <div slot="content">
+          <div class="grid-cols-5 grid-rows-5 w-96 grid">
+            <div></div>
+            <div>tl</div>
+            <div>top</div>
+            <div>tr</div>
+            <div></div>
+            <div>lt</div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div>rt</div>
+            <div>left</div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div>right</div>
+            <div>lb</div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div>rb</div>
+            <div></div>
+            <div>bl</div>
+            <div>bottom</div>
+            <div>br</div>
+            <div></div>
+          </div>
+        </div>
+      </x-popup>
+      <x-popup class="ml-2" position="br">
+        <x-button primary plain> Right </x-button>
+        <div slot="content" class="bg-red-300">Right</div>
+      </x-popup>
+      <x-popup class="ml-2" position="lb">
+        <div class="-z-10 relative bg-slate-400 w-20 h-10">
+          <a href="">link exp</a>
+        </div>
+        <div slot="content" class="text-nowrap">
+          <div>This is a handsome link</div>
+          <p>what are going wanna do for this</p>
+          <p>what are going wanna do for this</p>
+          <p>what are going wanna do for this</p>
+          <p>what are going wanna do for this</p>
+        </div>
+      </x-popup>
     </div>
 
     <script>

@@ -9,3 +9,4 @@ export { XTabs } from "./components/tabs/index.vue";
 export { XTabsItem } from "./components/tabs/item.vue";
 export { XTabsTitle } from "./components/tabs/title.vue";
 export { XSwitch } from "./components/switch/index.vue";
+export { XPopup } from "./components/popup/index.vue";

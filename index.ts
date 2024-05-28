@@ -10,7 +10,8 @@ import {
   XTabs,
   XTabsItem,
   XTabsTitle,
-  XSwitch
+  XSwitch,
+  XPopup,
 } from "./packages/main";
 
 XButton.register();
@@ -24,3 +25,4 @@ XTabs.register();
 XTabsItem.register();
 XTabsTitle.register();
 XSwitch.register();
+XPopup.register();

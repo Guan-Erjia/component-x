@@ -1,0 +1,6 @@
+x-popup {
+  --popup-offset: 10px;
+  --popup-padding-block: 10px;
+  --popup-padding-inline: 20px;
+  --popup-arrow-size: 10px;
+}

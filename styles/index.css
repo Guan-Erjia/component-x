@@ -4,6 +4,7 @@
 @import url("./radio.css");
 @import url("./tabs.css");
 @import url("./switch.css");
+@import url("./popup.css");
 @tailwind components;
 @tailwind utilities;
 * {
