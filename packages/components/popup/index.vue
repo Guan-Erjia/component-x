@@ -249,11 +249,11 @@ export class XPopup extends XComponent {
   }
 
   innerElement: HTMLInputElement | undefined;
-  checked: boolean
+  show: boolean
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.checked = false
+    this.show = false
   }
 
   connectedCallback() {
@@ -261,19 +261,19 @@ export class XPopup extends XComponent {
       if (this.attributeList.has('disabled') || this.attributeList.has('loading')) {
         return
       }
-      this.switchStatus(!this.attributeList.has('checked'))
-      this.dispatchEvent(new CustomEvent('change', { detail: { value: this.checked } }))
+      this.switchStatus(!this.attributeList.has('show'))
+      this.dispatchEvent(new CustomEvent('change', { detail: { value: this.show } }))
     }
   }
 
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
-    this.checked = this.attributeList.has('checked')
+    this.show = this.attributeList.has('show')
   }
 
   switchStatus(checked: boolean) {
-    checked ? this.setAttribute('checked', '') : this.removeAttribute('checked')
+    checked ? this.setAttribute('show', '') : this.removeAttribute('show')
   }
 }
 </script>
