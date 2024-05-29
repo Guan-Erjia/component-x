@@ -30,24 +30,24 @@
   border-bottom-left-radius: var(--control-radius);
 }
 
-:host([checked]) {
+:host([aria-checked]) {
   position: relative;
   border-color: var(--radio-button-color);
   box-shadow: none;
   z-index: 10;
 }
 
-:host(:not([plain])[checked]) {
+:host(:not([plain])[aria-checked]) {
   background-color: var(--radio-button-color);
   color: white !important;
 }
 
-:host([plain][checked]) {
+:host([plain][aria-checked]) {
   background-color: white;
   color: var(--radio-button-color);
 }
 
-:host([disabled]) {
+:host([aria-disabled]) {
   cursor: not-allowed;
   opacity: var(--disable-bg-opacity);
 }
@@ -61,7 +61,7 @@ export class XRadioButton extends XComponent {
 
   static name: string = 'x-radio-button'
   static get observedAttributes() {
-    return ["checked", 'disabled', 'value']; // 声明要监听的属性
+    return ["aria-checked", 'aria-disabled', 'value']; // 声明要监听的属性
   }
 
   value: string | null
@@ -76,10 +76,10 @@ export class XRadioButton extends XComponent {
   connectedCallback() {
     this.dispatchEvent(new CustomEvent('XRadioInit', { detail: this, bubbles: true }))
     this.onclick = () => {
-      if (this.attributeList.has('disabled') || this.checked) {
+      if (this.attributeList.has('aria-disabled') || this.checked) {
         return
       }
-      this.setAttribute('checked', '')
+      this.setAttribute('aria-checked', '')
       this.dispatchEvent(new CustomEvent('change', { detail: this.value }))
       this.dispatchEvent(new CustomEvent('XRadioChange', { detail: this.value, bubbles: true }))
     }
@@ -87,12 +87,12 @@ export class XRadioButton extends XComponent {
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
-    this.checked = this.attributeList.has('checked')
+    this.checked = this.attributeList.has('aria-checked')
     this.value = this.getAttribute('value')
   }
 
   switchStatus(checked: boolean) {
-    checked ? this.setAttribute('checked', '') : this.removeAttribute('checked')
+    checked ? this.setAttribute('aria-checked', '') : this.removeAttribute('aria-checked')
   }
 }
 </script>

@@ -35,8 +35,6 @@ export class XCheckboxGroup extends XComponent {
     }
     this.checkboxSet.add(payload)
     if (this.value && this.value.includes(payload.value)) {
-      console.log(this.value)
-      console.log(payload)
       payload.switchStatus(true)
     }
   }

@@ -29,7 +29,7 @@
   color: var(--checkbox-color);
 }
 
-:host(:not([disabled])) {
+:host(:not([aria-disabled])) {
   .x-checkbox-content:hover {
     color: var(--checkbox-hover-color);
   }
@@ -63,7 +63,7 @@
   --checkbox-active-color: var(--success-active-color);
 }
 
-:host([disabled]) {
+:host([aria-disabled]) {
   cursor: not-allowed;
 
   .x-checkbox-content {
@@ -79,46 +79,45 @@ import { XComponent, XRegister } from "@/utils/decorator";
 export class XCheckbox extends XComponent {
   static name: string = 'x-checkbox'
   static get observedAttributes() {
-    return ["checked", 'disabled', 'indeterminate', 'value']; // 声明要监听的属性
+    return ["aria-checked", 'aria-disabled', 'value']; // 声明要监听的属性
   }
 
   innerElement: HTMLInputElement | undefined;
   value: string | null
-  checked: boolean
+  checked: string | null
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
     this.value = null
-    this.checked = false
+    this.checked = null
   }
 
   connectedCallback() {
     this.dispatchEvent(new CustomEvent('XCheckboxInit', { detail: this, bubbles: true }))
     this.onclick = () => {
-      if (!this.innerElement || this.attributeList.has('disabled')) {
+      if (!this.innerElement || this.attributeList.has('aria-disabled')) {
         return
       }
-      this.checked ? this.removeAttribute('checked') : this.setAttribute('checked', '')
-      this.removeAttribute('indeterminate')
+      this.checked === '' || this.checked === 'true' ? this.removeAttribute('aria-checked') : this.setAttribute('aria-checked', '')
       this.dispatchEvent(new CustomEvent('XCheckboxChange', { detail: { value: this.value, checked: this.checked }, bubbles: true }))
       this.dispatchEvent(new CustomEvent('change', { detail: this.checked }))
     }
   }
 
   switchStatus(checked: boolean) {
-    checked ? this.setAttribute('checked', '') : this.removeAttribute('checked')
+    checked ? this.setAttribute('aria-checked', '') : this.removeAttribute('aria-checked')
   }
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
     this.value = this.getAttribute('value')
-    this.checked = this.attributeList.has('checked')
+    this.checked = this.getAttribute('aria-checked')
     if (!this.innerElement) {
       return
     }
-    this.innerElement.checked = this.attributeList.has('checked')
-    this.innerElement.disabled = this.attributeList.has('disabled')
-    this.innerElement.indeterminate = this.attributeList.has('indeterminate') && !this.attributeList.has('checked')
+    this.innerElement.checked = this.checked === '' || this.checked === 'true'
+    this.innerElement.disabled = this.attributeList.has('aria-disabled')
+    this.innerElement.indeterminate = this.checked === 'mixed'
   }
 }
 </script>

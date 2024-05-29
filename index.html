@@ -24,7 +24,7 @@
     </div>
 
     <div class="mt-3">
-      <x-button round success disabled plain>success</x-button>
+      <x-button round success aria-disabled plain>success</x-button>
       <x-button loading round warning plain>warning</x-button>
       <x-button round danger plain>danger</x-button>
       <x-button
@@ -60,17 +60,17 @@
     </x-dialog>
 
     <div class="mt-3">
-      <x-checkbox-group id="xCheckbox" value="1,2,3">
+      <x-checkbox-group id="xCheckbox" value="1,2">
         <x-checkbox primary value="1">
           <span>check1</span>
         </x-checkbox>
-        <x-checkbox warning disabled value="2">
+        <x-checkbox warning aria-disabled value="2">
           <span>check2</span>
         </x-checkbox>
-        <x-checkbox danger indeterminate value="3">
+        <x-checkbox danger aria-checked="mixed" value="3">
           <span>check3</span>
         </x-checkbox>
-        <x-checkbox success disabled value="4">
+        <x-checkbox success aria-checked="mixed" aria-disabled value="4">
           <span>check4</span>
         </x-checkbox>
       </x-checkbox-group>
@@ -81,13 +81,13 @@
         <x-radio primary value="1">
           <span>radio1</span>
         </x-radio>
-        <x-radio warning disabled value="2">
+        <x-radio warning aria-disabled value="2">
           <span>radio2</span>
         </x-radio>
         <x-radio danger value="3">
           <span>radio3</span>
         </x-radio>
-        <x-radio success disabled value="4">
+        <x-radio success aria-disabled value="4">
           <span>radio4</span>
         </x-radio>
       </x-radio-group>
@@ -131,13 +131,13 @@
 
     <div class="mt-3">
       <x-switch primary></x-switch>
-      <x-switch primary disabled checked></x-switch>
-      <x-switch danger checked>
+      <x-switch primary aria-disabled aria-checked></x-switch>
+      <x-switch danger aria-checked>
         <span slot="checked">yes</span>
         <span slot="unchecked">no</span>
       </x-switch>
-      <x-switch warning loading checked></x-switch>
-      <x-switch success checked></x-switch>
+      <x-switch warning loading aria-checked></x-switch>
+      <x-switch success aria-checked></x-switch>
     </div>
 
     <div class="mt-6">

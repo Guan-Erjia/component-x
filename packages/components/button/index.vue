@@ -54,7 +54,7 @@
   }
 }
 
-:host(:not([disabled])) {
+:host(:not([aria-disabled])) {
   >button {
     &:hover {
       color: var(--btn-hover-color);
@@ -161,7 +161,7 @@
   }
 }
 
-:host([disabled]) {
+:host([aria-disabled]) {
   --btn-opacity: var(--disable-bg-opacity);
 
   >button {
@@ -169,7 +169,7 @@
   }
 }
 
-:host([disabled]:not([plain])) {
+:host([aria-disabled]:not([plain])) {
   --btn-hover-bg: var(--btn-default-bg);
   --btn-active-bg: var(--btn-default-bg);
 }
@@ -195,12 +195,10 @@ import { XComponent, XRegister } from "@/utils/decorator";
 @XRegister
 export class XButton extends XComponent {
   static get observedAttributes() {
-    return ["primary", "warning", "danger", "success", "info", 'disabeld', 'loading']; // 声明要监听的属性
+    return ["primary", "warning", "danger", "success", "info", 'aria-disabled', 'loading']; // 声明要监听的属性
   }
   static name: string = 'x-button'
-
   innerElement: HTMLButtonElement | undefined;
-
   constructor() {
     super();
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
@@ -227,7 +225,7 @@ export class XButton extends XComponent {
     );
     this.innerElement?.setAttribute("class", className);
     if (
-      this.attributeList.has("disabled") ||
+      this.attributeList.has("aria-disabled") ||
       this.attributeList.has("loading")
     ) {
       this.onclick = null;
