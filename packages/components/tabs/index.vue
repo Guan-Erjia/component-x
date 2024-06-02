@@ -75,18 +75,10 @@ export class XTabs extends XComponent {
 
   handleChange() {
     this.itemsMap.forEach((tabItem, key) => {
-      if (key === this.key) {
-        tabItem.setVisiable(true)
-      } else {
-        tabItem.setVisiable(false)
-      }
+      tabItem.setVisiable(key === this.key)
     })
     this.titleMap.forEach((tabItem, key) => {
-      if (key === this.key) {
-        tabItem.setActive(true)
-      } else {
-        tabItem.setActive(false)
-      }
+        tabItem.setActive(key === this.key)
     })
     this.dispatchEvent(new CustomEvent('change', { detail: this.key }))
   }
