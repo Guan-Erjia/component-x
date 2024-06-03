@@ -15,5 +15,5 @@ export function InitComponentTemplate(this: any, html: string, style: string) {
   const shadowRoot = this.attachShadow({ mode: "open" });
   shadowRoot.appendChild(template.content.cloneNode(true));
   this.innerElement = (this.shadowRoot as ShadowRoot)
-    .children[0] as HTMLButtonElement;
+    .children[0] as HTMLTemplateElement;
 }

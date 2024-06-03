@@ -12,6 +12,8 @@ import {
   XTabsTitle,
   XSwitch,
   XPopup,
+  XMenu,
+  XMenuItem,
 } from "./packages/main";
 
 XButton.register();
@@ -26,3 +28,5 @@ XTabsItem.register();
 XTabsTitle.register();
 XSwitch.register();
 XPopup.register();
+XMenu.register();
+XMenuItem.register();
