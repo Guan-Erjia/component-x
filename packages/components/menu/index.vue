@@ -4,6 +4,9 @@
 <style lang="scss">
 :host {
   display: block;
+  background-color: gainsboro;
+  padding-right: 10px;
+  border-radius: var(--control-radius);
 }
 </style>
 <script lang="ts">
@@ -13,30 +16,31 @@ import { XMenuItem } from "./item.vue";
 
 @XRegister
 export class XMenu extends XComponent {
-  static name: string = 'x-menu'
+  static name: string = "x-menu";
   static get observedAttributes() {
-    return ['']; // 声明要监听的属性
+    return [""]; // 声明要监听的属性
   }
 
   innerElement: HTMLInputElement | undefined;
-  checkboxSet: Set<XMenuItem>
-  value: string[] | undefined
+  checkboxSet: Set<XMenuItem>;
+  value: string[] | undefined;
   constructor() {
-    super()
-    InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.checkboxSet = new Set()
+    super();
+    InitComponentTemplate.call(
+      this,
+      __X_COMPONENT_HTML_CODE__,
+      __X_COMPONENT_STYLE_CODE__
+    );
+    this.checkboxSet = new Set();
   }
 
-  connectedCallback() {
-  }
+  connectedCallback() {}
 
-  disconnectedCallback() {
-  }
+  disconnectedCallback() {}
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
-    this.value = this.getAttribute('value')?.split(',')
+    this.value = this.getAttribute("value")?.split(",");
   }
 }
-
 </script>
