@@ -5,6 +5,7 @@
 @import url("./tabs.css");
 @import url("./switch.css");
 @import url("./popup.css");
+@import url("./menu.css");
 @tailwind components;
 @tailwind utilities;
 * {

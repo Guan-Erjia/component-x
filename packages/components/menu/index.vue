@@ -4,9 +4,8 @@
 <style lang="scss">
 :host {
   display: block;
-  background-color: gainsboro;
-  padding-right: 10px;
-  border-radius: var(--control-radius);
+  background-color: var(--menu-bg);
+  padding: var(--menu-content-block) var(--menu-content-inline);
 }
 </style>
 <script lang="ts">
@@ -34,7 +33,8 @@ export class XMenu extends XComponent {
     this.checkboxSet = new Set();
   }
 
-  connectedCallback() {}
+  connectedCallback() {
+  }
 
   disconnectedCallback() {}
 

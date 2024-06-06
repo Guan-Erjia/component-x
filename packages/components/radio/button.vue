@@ -18,6 +18,7 @@
   font-size: var(--control-size);
   font-weight: var(--control-weight);
   flex-shrink: 0;
+  transition: all 0.2s linear;
 }
 
 :host(:last-child) {

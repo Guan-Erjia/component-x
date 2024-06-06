@@ -24,7 +24,6 @@
 <style lang="scss">
 :host {
   display: block;
-  padding-left: 10px;
 }
 
 .x-menu-main {
@@ -33,11 +32,29 @@
   font-size: var(--control-size);
   align-items: center;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: var(--menu-padding-block) var(--menu-padding-inline);
+  transition: all 0.2s linear;
   .x-menu-label {
     flex-grow: 1;
   }
+  &:hover {
+    background-color: var(--menu-hover-color);
+    border-radius: var(--control-radius);
+  }
 }
+
+:host([aria-checked]) {
+  .x-menu-main {
+    background-color: var(--menu-active-color);
+  }
+}
+:host([aria-disabled]) {
+  .x-menu-main {
+    cursor: not-allowed;
+    opacity: var(--disable-bg-opacity);
+  }
+}
+
 .x-menu-children {
   display: grid;
   grid-template-rows: 0fr;
@@ -49,6 +66,7 @@
     padding-left: 0;
   }
 }
+
 .x-menu-arrow {
   display: inline-block;
   flex-grow: 0;
@@ -56,7 +74,13 @@
   transition: all 0.2s linear;
   font-size: var(--control-size);
 }
-:host([aria-expanded]) {
+:host(:not([aria-expanded])) {
+  .x-menu-arrow {
+    display: none;
+  }
+}
+
+:host([aria-expanded="true"]) {
   .x-menu-children {
     grid-template-rows: 1fr;
   }
@@ -78,8 +102,7 @@ export class XMenuItem extends XComponent {
 
   textElement: HTMLDivElement;
   mainElement: HTMLDivElement;
-  label: string;
-  expand: boolean;
+  gap: string;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -93,15 +116,20 @@ export class XMenuItem extends XComponent {
     this.mainElement = this.shadowRoot?.querySelector(
       ".x-menu-main"
     ) as HTMLDivElement;
-    this.label = "";
-    this.expand = false;
+    this.gap = "";
   }
 
   connectedCallback() {
     this.mainElement.onclick = () => {
-      this.expand
-        ? this.removeAttribute("aria-expanded")
-        : this.setAttribute("aria-expanded", "");
+      if (this.ariaExpanded !== null) {
+        this.setAttribute(
+          "aria-expanded",
+          this.ariaExpanded === "true" ? "false" : "true"
+        );
+      }
+      this.ariaChecked === null
+        ? this.setAttribute("aria-checked", "")
+        : this.removeAttribute("aria-checked");
     };
   }
 
@@ -109,9 +137,13 @@ export class XMenuItem extends XComponent {
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
-    this.label = this.getAttribute("aria-label") || "";
-    this.expand = this.attributeList.has("aria-expanded");
-    this.textElement.innerHTML = this.label;
+    this.textElement.innerHTML = this.ariaLabel || "";
+    this.gap = getComputedStyle(this).getPropertyValue("--menu-gap");
+    if (this.ariaLevel) {
+      this.mainElement.style.paddingLeft = `calc(var(--menu-padding-inline) + ${
+        this.ariaLevel || 0
+      } * ${this.gap})`;
+    }
   }
 }
 </script>

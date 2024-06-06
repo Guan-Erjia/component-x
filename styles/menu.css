@@ -1,0 +1,11 @@
+x-menu,
+x-menu-item {
+  --menu-bg: rgb(223, 221, 221);
+  --menu-hover-color: rgb(187, 187, 241);
+  --menu-active-color: rgb(130, 130, 239);
+  --menu-padding-block: 8px;
+  --menu-padding-inline: 10px;
+  --menu-gap: 15px;
+  --menu-content-block: 4px;
+  --menu-content-inline: 4px;
+}
