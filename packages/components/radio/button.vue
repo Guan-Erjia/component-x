@@ -18,7 +18,6 @@
   font-size: var(--control-size);
   font-weight: var(--control-weight);
   flex-shrink: 0;
-  transition: all 0.2s linear;
 }
 
 :host(:last-child) {
@@ -62,38 +61,24 @@ export class XRadioButton extends XComponent {
 
   static name: string = 'x-radio-button'
   static get observedAttributes() {
-    return ["aria-checked", 'aria-disabled', 'value']; // 声明要监听的属性
+    return ["aria-checked", 'aria-disabled', 'aria-valuetext']; // 声明要监听的属性
   }
 
-  value: string | null
-  checked: boolean
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.value = null
-    this.checked = false
   }
 
   connectedCallback() {
     this.dispatchEvent(new CustomEvent('XRadioInit', { detail: this, bubbles: true }))
     this.onclick = () => {
-      if (this.attributeList.has('aria-disabled') || this.checked) {
+      if (this.ariaDisabled !== null || this.ariaChecked !== null) {
         return
       }
       this.setAttribute('aria-checked', '')
-      this.dispatchEvent(new CustomEvent('change', { detail: this.value }))
-      this.dispatchEvent(new CustomEvent('XRadioChange', { detail: this.value, bubbles: true }))
+      this.dispatchEvent(new CustomEvent('XRadioChange', { detail: this, bubbles: true }))
+      this.dispatchEvent(new CustomEvent('change', { detail: this.ariaValueText }))
     }
-  }
-
-  attributeChangedCallback() {
-    this.attributeList = new Set(this.getAttributeNames());
-    this.checked = this.attributeList.has('aria-checked')
-    this.value = this.getAttribute('value')
-  }
-
-  switchStatus(checked: boolean) {
-    checked ? this.setAttribute('aria-checked', '') : this.removeAttribute('aria-checked')
   }
 }
 </script>

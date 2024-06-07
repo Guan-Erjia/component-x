@@ -33,13 +33,15 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--menu-padding-block) var(--menu-padding-inline);
-  transition: all 0.2s linear;
+  transition: background-color 0.2s linear;
+  border-radius: var(--control-radius);
+
   .x-menu-label {
     flex-grow: 1;
   }
+
   &:hover {
     background-color: var(--menu-hover-color);
-    border-radius: var(--control-radius);
   }
 }
 
@@ -48,6 +50,7 @@
     background-color: var(--menu-active-color);
   }
 }
+
 :host([aria-disabled]) {
   .x-menu-main {
     cursor: not-allowed;
@@ -60,7 +63,8 @@
   grid-template-rows: 0fr;
   overflow: hidden;
   transition: all 0.2s linear;
-  > ol {
+
+  >ol {
     min-height: 0;
     margin: 0;
     padding-left: 0;
@@ -74,6 +78,7 @@
   transition: all 0.2s linear;
   font-size: var(--control-size);
 }
+
 :host(:not([aria-expanded])) {
   .x-menu-arrow {
     display: none;
@@ -84,6 +89,7 @@
   .x-menu-children {
     grid-template-rows: 1fr;
   }
+
   .x-menu-arrow {
     transform: rotate(90deg);
   }
@@ -120,9 +126,13 @@ export class XMenuItem extends XComponent {
   }
 
   connectedCallback() {
+    this.dispatchEvent(new CustomEvent('XMenuItemInit', { detail: this, bubbles: true }))
     this.mainElement.onclick = () => {
+      if (this.ariaDisabled !== null) {
+        return
+      }
       if (this.ariaExpanded !== null) {
-        this.setAttribute(
+        return this.setAttribute(
           "aria-expanded",
           this.ariaExpanded === "true" ? "false" : "true"
         );
@@ -130,20 +140,30 @@ export class XMenuItem extends XComponent {
       this.ariaChecked === null
         ? this.setAttribute("aria-checked", "")
         : this.removeAttribute("aria-checked");
+      this.dispatchEvent(new CustomEvent('XMenuItemChange', { detail: this, bubbles: true }))
     };
+    this.addEventListener('XMenuItemInit', this.inherentListener)
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() {
+    this.removeEventListener('XMenuItemInit', this.inherentListener)
+  }
+
+
+  inherentListener(e: any) {
+    e.detail.ariaLevel = +e.detail.ariaLevel + 1
+  }
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
     this.textElement.innerHTML = this.ariaLabel || "";
     this.gap = getComputedStyle(this).getPropertyValue("--menu-gap");
-    if (this.ariaLevel) {
-      this.mainElement.style.paddingLeft = `calc(var(--menu-padding-inline) + ${
-        this.ariaLevel || 0
-      } * ${this.gap})`;
-    }
+    queueMicrotask(() => {
+      if (this.ariaLevel) {
+        this.mainElement.style.paddingLeft = `calc(var(--menu-padding-inline) + ${this.ariaLevel || 0
+          } * ${this.gap})`;
+      }
+    });
   }
 }
 </script>

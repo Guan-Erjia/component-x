@@ -21,7 +21,7 @@ export class XMenu extends XComponent {
   }
 
   innerElement: HTMLInputElement | undefined;
-  checkboxSet: Set<XMenuItem>;
+  curMenuItem: XMenuItem | null;
   value: string[] | undefined;
   constructor() {
     super();
@@ -30,13 +30,39 @@ export class XMenu extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
-    this.checkboxSet = new Set();
+    this.curMenuItem = null
+  }
+
+  initListener(e: any) {
+    e.stopPropagation()
+    const payload = e.detail
+    if (!payload.ariaValueText) {
+      return console.warn(`x-menu-item 的 ariaValueText 属性是必须的`)
+    }
+    if (payload.ariaValueText === this.ariaValueText) {
+      payload.ariaChecked = 'true'
+      if (!this.curMenuItem) {
+        this.curMenuItem = payload
+      }
+    }
+  }
+
+  changeListener(e: any) {
+    e.stopPropagation()
+    this.curMenuItem && this.curMenuItem.removeAttribute('aria-checked')
+    e.detail.ariaChecked = 'true'
+    this.curMenuItem = e.detail
   }
 
   connectedCallback() {
+    this.addEventListener('XMenuItemInit', this.initListener)
+    this.addEventListener('XMenuItemChange', this.changeListener)
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() {
+    this.removeEventListener('XMenuItemInit', this.initListener)
+    this.removeEventListener('XMenuItemChange', this.changeListener)
+  }
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());

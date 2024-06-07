@@ -99,35 +99,28 @@ export class XSwitch extends XComponent {
 
   static name: string = 'x-switch'
   static get observedAttributes() {
-    return ["aria-checked", 'aria-disabled', 'loading']; // 声明要监听的属性
+    return ["aria-checked", 'aria-disabled']; // 声明要监听的属性
   }
 
   innerElement: HTMLInputElement | undefined;
-  checked: boolean
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.checked = false
   }
 
   connectedCallback() {
     this.onclick = () => {
-      if (this.attributeList.has('aria-disabled') || this.attributeList.has('loading')) {
+      if (this.ariaDisabled !== null || this.attributeList.has('loading')) {
         return
       }
-      this.switchStatus(!this.attributeList.has('aria-checked'))
-      this.dispatchEvent(new CustomEvent('change', { detail: { value: this.checked } }))
+      this.ariaChecked = (this.ariaChecked === null ? 'true' : null)
+      this.dispatchEvent(new CustomEvent('change', { detail: { value: this.ariaChecked } }))
     }
   }
 
 
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
-    this.checked = this.attributeList.has('aria-checked')
-  }
-
-  switchStatus(checked: boolean) {
-    checked ? this.setAttribute('aria-checked', '') : this.removeAttribute('aria-checked')
   }
 }
 </script>
