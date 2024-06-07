@@ -1,5 +1,5 @@
 <template>
-  <input class="x-checkbox" type="checkbox">
+  <input class="x-checkbox" type="checkbox" />
   <slot class="x-checkbox-content"></slot>
 </template>
 <style lang="scss">
@@ -77,47 +77,48 @@ import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
 export class XCheckbox extends XComponent {
-  static name: string = 'x-checkbox'
+  static name: string = "x-checkbox";
   static get observedAttributes() {
-    return ["aria-checked", 'aria-disabled', 'value']; // 声明要监听的属性
+    return ["aria-checked", "aria-disabled", "aria-valuetext"]; // 声明要监听的属性
   }
 
   innerElement: HTMLInputElement | undefined;
-  value: string | null
-  checked: string | null
   constructor() {
-    super()
-    InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.value = null
-    this.checked = null
+    super();
+    InitComponentTemplate.call(
+      this,
+      __X_COMPONENT_HTML_CODE__,
+      __X_COMPONENT_STYLE_CODE__
+    );
   }
 
   connectedCallback() {
-    this.dispatchEvent(new CustomEvent('XCheckboxInit', { detail: this, bubbles: true }))
+    this.dispatchEvent(
+      new CustomEvent("XCheckboxInit", { detail: this, bubbles: true })
+    );
     this.onclick = () => {
-      if (!this.innerElement || this.attributeList.has('aria-disabled')) {
-        return
+      if (!this.innerElement || this.ariaDisabled !== null) {
+        return;
       }
-      this.checked === '' || this.checked === 'true' ? this.removeAttribute('aria-checked') : this.setAttribute('aria-checked', '')
-      this.dispatchEvent(new CustomEvent('XCheckboxChange', { detail: { value: this.value, checked: this.checked }, bubbles: true }))
-      this.dispatchEvent(new CustomEvent('change', { detail: this.checked }))
-    }
-  }
-
-  switchStatus(checked: boolean) {
-    checked ? this.setAttribute('aria-checked', '') : this.removeAttribute('aria-checked')
+      this.ariaChecked !== null && this.ariaChecked !== "mixed"
+        ? (this.ariaChecked = null)
+        : (this.ariaChecked = "");
+      this.dispatchEvent(
+        new CustomEvent("XCheckboxChange", { detail: this, bubbles: true })
+      );
+      this.dispatchEvent(
+        new CustomEvent("change", { detail: this.ariaChecked })
+      );
+    };
   }
 
   attributeChangedCallback() {
-    this.attributeList = new Set(this.getAttributeNames());
-    this.value = this.getAttribute('value')
-    this.checked = this.getAttribute('aria-checked')
     if (!this.innerElement) {
-      return
+      return;
     }
-    this.innerElement.checked = this.checked === '' || this.checked === 'true'
-    this.innerElement.disabled = this.attributeList.has('aria-disabled')
-    this.innerElement.indeterminate = this.checked === 'mixed'
+    this.innerElement.checked = this.ariaChecked !== null;
+    this.innerElement.disabled = this.ariaDisabled !== null;
+    this.innerElement.indeterminate = this.ariaChecked === "mixed";
   }
 }
 </script>

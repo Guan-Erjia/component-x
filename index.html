@@ -60,17 +60,22 @@
     </x-dialog>
 
     <div class="mt-3">
-      <x-checkbox-group id="xCheckbox" value="1,2">
-        <x-checkbox primary value="1">
+      <x-checkbox-group id="xCheckbox" aria-valuetext="1,2">
+        <x-checkbox primary aria-valuetext="1">
           <span>check1</span>
         </x-checkbox>
-        <x-checkbox warning aria-disabled value="2">
+        <x-checkbox warning aria-disabled aria-valuetext="2">
           <span>check2</span>
         </x-checkbox>
-        <x-checkbox danger aria-checked="mixed" value="3">
+        <x-checkbox danger aria-checked="mixed" aria-valuetext="3">
           <span>check3</span>
         </x-checkbox>
-        <x-checkbox success aria-checked="mixed" aria-disabled value="4">
+        <x-checkbox
+          success
+          aria-checked="mixed"
+          aria-disabled
+          aria-valuetext="4"
+        >
           <span>check4</span>
         </x-checkbox>
       </x-checkbox-group>
@@ -105,25 +110,25 @@
     </div>
 
     <div class="mt-3">
-      <x-tabs key="2">
+      <x-tabs aria-valuetext="2">
         <div slot="title">
-          <x-tabs-title key="1">
+          <x-tabs-title aria-valuetext="1">
             <span>title1</span>
           </x-tabs-title>
-          <x-tabs-title key="2">
+          <x-tabs-title aria-valuetext="2">
             <span>title2</span>
           </x-tabs-title>
-          <x-tabs-title key="3">
+          <x-tabs-title aria-valuetext="3">
             <span>title3</span>
           </x-tabs-title>
         </div>
-        <x-tabs-item key="1">
+        <x-tabs-item aria-valuetext="1">
           <div class="bg-green-200 h-36">第一个</div>
         </x-tabs-item>
-        <x-tabs-item key="2">
+        <x-tabs-item aria-valuetext="2">
           <div class="bg-cyan-200 h-36">第二个</div>
         </x-tabs-item>
-        <x-tabs-item key="3">
+        <x-tabs-item aria-valuetext="3">
           <div class="bg-yellow-300 h-36">第三个</div>
         </x-tabs-item>
       </x-tabs>

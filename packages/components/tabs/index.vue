@@ -20,86 +20,84 @@
   <slot></slot>
 </template>
 
-
 <script lang="ts">
-import { InitComponentTemplate, } from "@/utils";
+import { InitComponentTemplate } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
 export class XTabs extends XComponent {
-  static name: string = 'x-tabs'
+  static name: string = "x-tabs";
   static get observedAttributes() {
-    return ["key"]; // 声明要监听的属性
+    return ["aria-valuetext"]; // 声明要监听的属性
   }
 
   innerElement: HTMLDialogElement | undefined;
-  itemsMap: Map<string, any>
-  titleMap: Map<string, any>
-  key: string | null
+  itemsMap: Map<string, any>;
+  titleMap: Map<string, any>;
 
   constructor() {
     super();
-    InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.titleMap = new Map()
-    this.itemsMap = new Map()
-    this.key = null
+    InitComponentTemplate.call(
+      this,
+      __X_COMPONENT_HTML_CODE__,
+      __X_COMPONENT_STYLE_CODE__
+    );
+    this.titleMap = new Map();
+    this.itemsMap = new Map();
   }
 
-  commonInit(e: any, type: 'title' | 'item') {
-    e.stopPropagation()
-    const payload = e.detail
-    const map = type === 'title' ? this.titleMap : this.itemsMap
-    if (map.get(payload.key)) {
-      return console.warn(`x-tabs-${type}的key属性有重复`)
+  commonInit(e: any, type: "title" | "item") {
+    e.stopPropagation();
+    const payload = e.detail;
+    const map = type === "title" ? this.titleMap : this.itemsMap;
+    if (map.get(payload.ariaValueText)) {
+      return console.warn(`x-tabs-${type}的 ariaValueText 属性有重复`);
     }
-    map.set(payload.key, payload)
-    if (this.key && payload.key === this.key) {
-      payload.setActive && payload.setActive(true)
-      payload.setVisiable && payload.setVisiable(true)
+    map.set(payload.ariaValueText, payload);
+    if (payload.ariaValueText === this.ariaValueText) {
+      payload.ariaCurrent = "";
     }
   }
 
   initItem(e: any) {
-    this.commonInit(e, 'item')
+    this.commonInit(e, "item");
   }
 
   initTitle(e: any) {
-    this.commonInit(e, 'title')
+    this.commonInit(e, "title");
   }
 
   handleTitleChange(e: any) {
-    e.stopPropagation()
-    this.setAttribute('key', e.detail)
+    e.stopPropagation();
+    this.ariaValueText = e.detail;
   }
-
 
   handleChange() {
     this.itemsMap.forEach((tabItem, key) => {
-      tabItem.setVisiable(key === this.key)
-    })
-    this.titleMap.forEach((tabItem, key) => {
-        tabItem.setActive(key === this.key)
-    })
-    this.dispatchEvent(new CustomEvent('change', { detail: this.key }))
+      tabItem.ariaCurrent = key === this.ariaValueText ? "" : null;
+    });
+    this.titleMap.forEach((title, key) => {
+      title.ariaCurrent = key === this.ariaValueText ? "" : null;
+    });
+    this.dispatchEvent(
+      new CustomEvent("change", { detail: this.ariaValueText })
+    );
   }
 
-
   connectedCallback() {
-    this.addEventListener('xTabsInit', this.initItem)
-    this.addEventListener('xTabsTitle', this.initTitle)
-    this.addEventListener('xTabsChange', this.handleTitleChange)
+    this.addEventListener("xTabsItemInit", this.initItem);
+    this.addEventListener("xTabsTitleInit", this.initTitle);
+    this.addEventListener("xTabsChange", this.handleTitleChange);
   }
 
   disconnectedCallback() {
-    this.removeEventListener('xTabsInit', this.initItem)
-    this.removeEventListener('xTabsTitle', this.initTitle)
-    this.removeEventListener('xTabsChange', this.handleTitleChange)
+    this.removeEventListener("xTabsItemInit", this.initItem);
+    this.removeEventListener("xTabsTitleInit", this.initTitle);
+    this.removeEventListener("xTabsChange", this.handleTitleChange);
   }
 
   attributeChangedCallback() {
-    this.key = this.getAttribute('key')
-    this.handleChange()
+    this.handleChange();
   }
 }
-
 </script>

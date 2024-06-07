@@ -13,57 +13,62 @@ import { XCheckbox } from "./index.vue";
 
 @XRegister
 export class XCheckboxGroup extends XComponent {
-  static name: string = 'x-checkbox-group'
+  static name: string = "x-checkbox-group";
   static get observedAttributes() {
-    return ['value']; // 声明要监听的属性
+    return ["aria-valuetext"]; // 声明要监听的属性
   }
 
   innerElement: HTMLInputElement | undefined;
-  checkboxSet: Set<XCheckbox>
-  value: string[] | undefined
+  checkboxSet: Set<XCheckbox>;
+  value: string[];
   constructor() {
-    super()
-    InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.checkboxSet = new Set()
+    super();
+    InitComponentTemplate.call(
+      this,
+      __X_COMPONENT_HTML_CODE__,
+      __X_COMPONENT_STYLE_CODE__
+    );
+    this.checkboxSet = new Set();
+    this.value = [];
   }
 
   initListener(e: any) {
-    e.stopPropagation()
-    const payload = e.detail
-    if (!payload.value) {
-      return console.warn(`在group模式中，x-checkbox的value属性是必须的`)
+    e.stopPropagation();
+    const payload = e.detail;
+    if (!payload.ariaValueText) {
+      return console.warn(`在group模式中，x-checkbox的value属性是必须的`);
     }
-    this.checkboxSet.add(payload)
-    if (this.value && this.value.includes(payload.value)) {
-      payload.switchStatus(true)
+    this.checkboxSet.add(payload);
+    if (this.value.includes(payload.ariaValueText)) {
+      payload.ariaChecked = "";
     }
   }
 
   changeListener(e: any) {
-    e.stopPropagation()
-    const sent: string[] = []
-    this.checkboxSet.forEach((i: XCheckbox) => {
-      i.attributeList.has('checked') && i.value && sent.push(i.value)
-    })
-    this.dispatchEvent(new CustomEvent('change', { detail: sent }))
-    this.setAttribute('value', sent.join(','))
+    e.stopPropagation();
+    const payload = e.detail;
+    if (this.value.includes(payload.ariaValueText)) {
+      this.value = this.value.filter((i) => i !== payload.ariaValueText);
+    } else {
+      this.value.push(payload.ariaValueText);
+    }
+    this.dispatchEvent(
+      new CustomEvent("change", { detail: this.value.join(",") })
+    );
+    this.setAttribute("aria-valuetext", this.value.join(","));
+    console.log(this.value);
   }
 
   connectedCallback() {
     // 包含的checkbox元素注册到上层group中
-    this.addEventListener('XCheckboxInit', this.initListener)
-    this.addEventListener('XCheckboxChange', this.changeListener)
+    this.addEventListener("XCheckboxInit", this.initListener);
+    this.addEventListener("XCheckboxChange", this.changeListener);
+    this.value = (this.ariaValueText || "").split(",");
   }
 
   disconnectedCallback() {
-    this.removeEventListener('XCheckboxInit', this.initListener)
-    this.removeEventListener('XCheckboxChange', this.changeListener)
-  }
-
-  attributeChangedCallback() {
-    this.attributeList = new Set(this.getAttributeNames());
-    this.value = this.getAttribute('value')?.split(',')
+    this.removeEventListener("XCheckboxInit", this.initListener);
+    this.removeEventListener("XCheckboxChange", this.changeListener);
   }
 }
-
 </script>
