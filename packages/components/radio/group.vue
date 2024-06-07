@@ -20,11 +20,12 @@ export class XRadioGroup extends XComponent {
     return ['aria-valuetext']; // 声明要监听的属性
   }
 
-  innerElement: HTMLInputElement | undefined;
   curRadio: XRadio | XRadioButton | null;
-  constructor() {
+  radioMap: Set<XRadio | XRadioButton>
+    constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
+    this.radioMap = new Set()
     this.curRadio = null
   }
 
@@ -41,6 +42,11 @@ export class XRadioGroup extends XComponent {
       return console.warn(`在group模式中，x-radio的 ariaValueText 属性是必须的`)
     }
 
+    if (this.radioMap.has(payload)) {
+      return console.warn(`在group模式中，x-radio的 ariaValueText 属性有重复`)
+    }
+
+    this.radioMap.add(payload);
     if (payload.ariaValueText === this.ariaValueText) {
       payload.ariaChecked = 'true'
       if (!this.curRadio) {
@@ -50,18 +56,24 @@ export class XRadioGroup extends XComponent {
   }
 
   changeListener(e: any) {
-    if (this.curRadio) {
-      this.curRadio.ariaChecked = null
-      this.curRadio = e.detail
-      this.dispatchEvent(new CustomEvent('change', { detail: e.target.value }))
-      this.ariaValueText = this.curRadio?.ariaValueText || null
-    }
+      this.ariaValueText = e.detail.ariaValueText
+      this.dispatchEvent(new CustomEvent('change', { detail: e.detail.value }))
   }
 
   connectedCallback() {
     // 包含的radio元素注册到上层group中
     this.addEventListener('XRadioInit', this.initListener)
     this.addEventListener('XRadioChange', this.changeListener)
+  }
+
+  attributeChangedCallback() {
+    this.radioMap.forEach(radio=> {
+      if (this.ariaValueText === radio.ariaValueText) {
+        radio.ariaChecked = "";
+      } else {
+        radio.ariaChecked = null;
+      }
+    })
   }
 }
 

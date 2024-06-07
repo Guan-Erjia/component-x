@@ -248,7 +248,6 @@ export class XPopup extends XComponent {
     return ['placement']; // 声明要监听的属性
   }
 
-  innerElement: HTMLInputElement | undefined;
   show: boolean
   constructor() {
     super()

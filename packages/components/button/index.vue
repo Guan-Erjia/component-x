@@ -216,15 +216,8 @@ export class XButton extends XComponent {
     );
   }
 
-  connectedCallback() {
-    this.setInnerElementAttr();
-  }
-
-  disconnectedCallback() {}
-
-  adoptedCallback() {}
-
-  setInnerElementAttr() {
+  attributeChangedCallback() {
+    this.attributeList = new Set(this.getAttributeNames());
     const className = getClassNameFromAttr(
       "button",
       ["plain", "success", "primary", "danger", "warning"],
@@ -234,11 +227,6 @@ export class XButton extends XComponent {
     if (this.ariaDisabled !== null || this.attributeList.has("loading")) {
       this.onclick = null;
     }
-  }
-
-  attributeChangedCallback() {
-    this.attributeList = new Set(this.getAttributeNames());
-    this.setInnerElementAttr();
   }
 }
 </script>

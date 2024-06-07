@@ -20,7 +20,6 @@ export class XMenu extends XComponent {
     return [""]; // 声明要监听的属性
   }
 
-  innerElement: HTMLInputElement | undefined;
   curMenuItem: XMenuItem | null;
   value: string[] | undefined;
   constructor() {

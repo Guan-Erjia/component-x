@@ -102,7 +102,6 @@ export class XSwitch extends XComponent {
     return ["aria-checked", 'aria-disabled']; // 声明要监听的属性
   }
 
-  innerElement: HTMLInputElement | undefined;
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)

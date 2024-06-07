@@ -13,7 +13,7 @@
   background-color: var(--dialog-background);
   width: var(--dialog-width);
 
-  &-header {
+  .header {
     display: flex;
     width: 100%;
     align-items: center;
@@ -34,13 +34,13 @@
     }
   }
 
-  &-content {
+  .content {
     padding-top: var(--dialog-content-gap);
     padding-bottom: var(--dialog-content-gap);
     display: block;
   }
 
-  &-footer {
+  .footer {
     width: 100%;
     display: block;
     text-align: right;
@@ -70,119 +70,93 @@
 
 <template>
   <dialog class="x-dialog">
-    <slot class="x-dialog-header" name="header">
-      <div class="x-dialog-header-text"></div>
-      <svg class="x-dialog-header-close" fill-rule="evenodd" viewBox="64 64 896 896" focusable="false" data-icon="close"
-        width="1em" height="1em" fill="currentColor" aria-hidden="true">
+    <slot class="header" name="header">
+      <div class="header-text"></div>
+      <svg
+        class="header-close"
+        fill-rule="evenodd"
+        viewBox="64 64 896 896"
+        focusable="false"
+        data-icon="close"
+        width="1em"
+        height="1em"
+        fill="currentColor"
+        aria-hidden="true"
+      >
         <path
-          d="M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7 57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7 287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0 010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0 010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512 454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z">
-        </path>
+          d="M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7 57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7 287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0 010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0 010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512 454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z"
+        ></path>
       </svg>
     </slot>
-    <slot class="x-dialog-content"></slot>
-    <slot class="x-dialog-footer" name="footer">
-      <x-button round class="x-dialog-footer-cancel">取消</x-button>
-      <x-button primary round class="x-dialog-footer-ok">确认</x-button>
+    <slot class="content"></slot>
+    <slot class="footer" name="footer">
+      <x-button round class="footer-cancel">取消</x-button>
+      <x-button primary round class="footer-ok">确认</x-button>
     </slot>
   </dialog>
 </template>
 
 <script lang="ts">
-import { InitComponentTemplate, getClassNameFromAttr } from "@/utils";
+import { InitComponentTemplate } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
 export class XDialog extends XComponent {
-  static name: string = 'x-dialog'
+  static name: string = "x-dialog";
   static get observedAttributes() {
-    return ["open", "header", "width"]; // 声明要监听的属性
+    return ["aria-modal", "header", "width"]; // 声明要监听的属性
   }
 
-  innerElement: HTMLDialogElement | undefined;
+  inner: HTMLDialogElement | undefined;
 
   constructor() {
     super();
-    InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
+    InitComponentTemplate.call(
+      this,
+      __X_COMPONENT_HTML_CODE__,
+      __X_COMPONENT_STYLE_CODE__
+    );
   }
 
-  initEvent() {
-    if (!this.innerElement) {
+  connectedCallback() {
+    if (!this.inner) {
       return;
     }
-    (
-      this.innerElement.querySelector(
-        ".x-dialog-footer-cancel"
-      ) as HTMLButtonElement
-    ).onclick = () => {
-      this.dispatchEvent(new Event("cancel"));
-    };
-    (
-      this.innerElement.querySelector(
-        ".x-dialog-footer-ok"
-      ) as HTMLButtonElement
-    ).onclick = () => {
+    (this.inner.querySelector(".footer-cancel") as HTMLElement).onclick =
+      () => {
+        this.dispatchEvent(new Event("cancel"));
+      };
+    (this.inner.querySelector(".footer-ok") as HTMLElement).onclick = () => {
       this.dispatchEvent(new Event("ok"));
     };
     addEventListener("keyup", (e) => {
       if (e.code === "Escape") {
-        this.closeModal();
+        this.ariaModal = null;
       }
     });
-  }
 
-  setInnerElementAttr() {
-    if (!this.innerElement) {
-      return;
-    }
-    const className = getClassNameFromAttr(
-      "dialog",
-      ["open"],
-      this.attributeList
-    );
-    this.innerElement.setAttribute("class", className);
-    if (this.attributeList.has("open")) {
-      this.innerElement.showModal();
-    } else {
-      this.closeModal();
-    }
-
-    // 目前没有api选择插槽内容，暂不优化渲染次数
-    const headerText = this.innerElement.querySelector(".x-dialog-header-text");
-    if (this.attributeList.has("header") && headerText) {
-      headerText.innerHTML = this.getAttribute("header") || "";
-    }
-
-    const closeBtn: HTMLElement | null = this.innerElement.querySelector(
-      ".x-dialog-header-close"
-    );
-    if (closeBtn) {
-      closeBtn.onclick = () => this.closeModal();
-    }
-    if (this.innerElement.style) {
-      this.innerElement.style.width = this.getAttribute("width") || "";
-    }
-  }
-
-  showModal() {
-    if (!this.getAttribute("open")) {
-      this.setAttribute("open", "");
-    }
-  }
-
-  closeModal() {
-    this.removeAttribute("open");
-    this.innerElement?.close();
-    this.dispatchEvent(new Event("close"));
-  }
-
-  connectedCallback() {
-    this.initEvent();
+    (this.inner.querySelector(".header-close") as HTMLElement).onclick = () =>
+      (this.ariaModal = null);
   }
 
   attributeChangedCallback() {
-    this.attributeList = new Set(this.getAttributeNames());
-    this.setInnerElementAttr();
+    if (!this.inner) {
+      return;
+    }
+    const headerText = this.inner.querySelector(".header-text");
+    if (headerText) {
+      headerText.innerHTML = this.getAttribute("header") || "";
+    }
+    if (this.inner.style) {
+      this.inner.style.width = this.getAttribute("width") || "";
+    }
+    if (this.ariaModal !== null) {
+      this.inner.showModal();
+      this.dispatchEvent(new Event("open"));
+    } else {
+      this.inner.close();
+      this.dispatchEvent(new Event("close"));
+    }
   }
 }
-
 </script>

@@ -19,7 +19,6 @@ export class XTabsItem extends XComponent {
     return ["aria-valuetext", "aria-current"]; // 声明要监听的属性
   }
 
-  innerElement: HTMLDialogElement | undefined;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -38,8 +37,5 @@ export class XTabsItem extends XComponent {
     );
   }
 
-  attributeChangedCallback() {
-    this.attributeList = new Set(this.getAttributeNames());
-  }
 }
 </script>

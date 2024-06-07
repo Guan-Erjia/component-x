@@ -31,7 +31,6 @@ export class XTabs extends XComponent {
     return ["aria-valuetext"]; // 声明要监听的属性
   }
 
-  innerElement: HTMLDialogElement | undefined;
   itemsMap: Map<string, any>;
   titleMap: Map<string, any>;
 
@@ -72,18 +71,6 @@ export class XTabs extends XComponent {
     this.ariaValueText = e.detail;
   }
 
-  handleChange() {
-    this.itemsMap.forEach((tabItem, key) => {
-      tabItem.ariaCurrent = key === this.ariaValueText ? "" : null;
-    });
-    this.titleMap.forEach((title, key) => {
-      title.ariaCurrent = key === this.ariaValueText ? "" : null;
-    });
-    this.dispatchEvent(
-      new CustomEvent("change", { detail: this.ariaValueText })
-    );
-  }
-
   connectedCallback() {
     this.addEventListener("xTabsItemInit", this.initItem);
     this.addEventListener("xTabsTitleInit", this.initTitle);
@@ -97,7 +84,15 @@ export class XTabs extends XComponent {
   }
 
   attributeChangedCallback() {
-    this.handleChange();
+    this.itemsMap.forEach((tabItem, key) => {
+      tabItem.ariaCurrent = key === this.ariaValueText ? "" : null;
+    });
+    this.titleMap.forEach((title, key) => {
+      title.ariaCurrent = key === this.ariaValueText ? "" : null;
+    });
+    this.dispatchEvent(
+      new CustomEvent("change", { detail: this.ariaValueText })
+    );
   }
 }
 </script>

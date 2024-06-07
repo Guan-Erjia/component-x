@@ -56,19 +56,28 @@ export class XCheckboxGroup extends XComponent {
       new CustomEvent("change", { detail: this.value.join(",") })
     );
     this.setAttribute("aria-valuetext", this.value.join(","));
-    console.log(this.value);
   }
 
   connectedCallback() {
     // 包含的checkbox元素注册到上层group中
     this.addEventListener("XCheckboxInit", this.initListener);
     this.addEventListener("XCheckboxChange", this.changeListener);
-    this.value = (this.ariaValueText || "").split(",");
   }
 
   disconnectedCallback() {
     this.removeEventListener("XCheckboxInit", this.initListener);
     this.removeEventListener("XCheckboxChange", this.changeListener);
+  }
+
+  attributeChangedCallback() {
+    this.value = (this.ariaValueText || "").split(",");
+    this.checkboxSet.forEach((checkbox) => {
+      if (this.value.includes(checkbox.ariaValueText || "")) {
+        checkbox.ariaChecked = "";
+      } else {
+        checkbox.ariaChecked = null;
+      }
+    });
   }
 }
 </script>

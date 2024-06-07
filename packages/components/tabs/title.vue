@@ -28,8 +28,6 @@ export class XTabsTitle extends XComponent {
     return ["aria-valuetext", "aria-current"]; // 声明要监听的属性
   }
 
-  innerElement: HTMLDialogElement | undefined;
-
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -50,10 +48,6 @@ export class XTabsTitle extends XComponent {
       this.dispatchEvent(
         new CustomEvent("xTabsChange", { detail: this.ariaValueText, bubbles: true })
       );
-  }
-
-  attributeChangedCallback() {
-    this.attributeList = new Set(this.getAttributeNames());
   }
 }
 </script>
