@@ -9,24 +9,21 @@
     <script src="./index.ts" type="module"></script>
 
     <div class="mt-3">
-      <x-button success>success</x-button>
+      <x-button primary id="btn1">primary</x-button>
       <x-button
         class="w-20"
         warning
         onclick="document.querySelector('#xDialog2').ariaHasPopup = ''"
         >黄</x-button
       >
-      <x-button danger loading id="btn">
+      <x-button danger aria-busy id="btn">
         <span slot="loading"> 俊 </span>
         杰
       </x-button>
-      <x-button primary id="btn1">primary</x-button>
+      <x-button success>success</x-button>
     </div>
 
     <div class="mt-3">
-      <x-button round success aria-disabled plain>success</x-button>
-      <x-button loading round warning plain>warning</x-button>
-      <x-button round danger plain>danger</x-button>
       <x-button
         round
         primary
@@ -34,6 +31,10 @@
         onclick="document.querySelector('#xDialog').ariaHasPopup = ''"
         >开启弹窗</x-button
       >
+      <x-button aria-busy round warning plain>warning</x-button>
+      <x-button round danger plain>danger</x-button>
+
+      <x-button round success aria-disabled plain>success</x-button>
     </div>
 
     <x-dialog

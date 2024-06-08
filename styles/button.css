@@ -1,14 +1,15 @@
 x-button,
 x-dialog {
-  --btn-default-bg: rgb(146, 146, 146); /* 默认按钮背景色*/
-  --btn-default-hover-bg: rgb(200, 200, 200);
-  --btn-default-active-bg: rgb(90, 89, 89);
+  --btn-bg: rgb(146, 146, 146); /* 默认按钮背景色*/
+  --btn-hover-bg: rgb(200, 200, 200);
+  --btn-active-bg: rgb(222, 220, 220);
   --btn-border-color: #d9d9d9; /* 默认按钮边框颜色*/
-  --btn-border-style: outset; /* 默认按钮边框样式*/
+  --btn-border-style: solid; /* 默认按钮边框样式*/
   --btn-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
     0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05); /* 默认按钮阴影*/
   --btn-font-weight: 400; /* 文字字重*/
   --btn-padding-block: 6px; /* 按钮纵向内间距*/
   --btn-padding-inline: 10px; /* 按钮横向内间距*/
   --btn-plain-bg: white;
+  --btn-loading-gap: 6px;
 }

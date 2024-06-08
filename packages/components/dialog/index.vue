@@ -90,7 +90,7 @@
     </slot>
     <slot class="content"></slot>
     <slot class="footer" name="footer">
-      <x-button round class="footer-cancel">取消</x-button>
+      <x-button success class="footer-cancel">取消</x-button>
       <x-button primary round class="footer-ok">确认</x-button>
     </slot>
   </dialog>
