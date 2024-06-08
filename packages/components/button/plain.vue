@@ -5,13 +5,13 @@
   align-items: center;
   user-select: none;
   cursor: pointer;
-  color: white;
-  border-color: var(--btn-border-color);
+  color: var(--btn-color);
+  border-color: var(--btn-color);
   border-radius: var(--btn-border-radius);
   border-style: var(--btn-border-style);
   border-width: var(--control-line);
   box-shadow: var(--btn-shadow);
-  background-color: var(--btn-bg);
+  background-color: var(--btn-bg-color);
   font-size: var(--control-size);
   font-weight: var(--control-weight);
   padding: var(--btn-padding-block) var(--btn-padding-inline);
@@ -45,40 +45,40 @@
 }
 
 :host([primary]) {
-  --btn-bg: var(--primary-color);
-  --btn-hover-bg: var(--primary-hover-color);
-  --btn-active-bg: var(--primary-active-color);
+  --btn-color: var(--primary-color);
+  --btn-hover-color: var(--primary-hover-color);
+  --btn-active-color: var(--primary-active-color);
 }
 
 :host([warning]) {
-  --btn-bg: var(--warning-color);
-  --btn-hover-bg: var(--warning-hover-color);
-  --btn-active-bg: var(--warning-active-color);
+  --btn-color: var(--warning-color);
+  --btn-hover-color: var(--warning-hover-color);
+  --btn-active-color: var(--warning-active-color);
 }
 
 :host([danger]) {
-  --btn-bg: var(--danger-color);
-  --btn-hover-bg: var(--danger-hover-color);
-  --btn-active-bg: var(--danger-active-color);
+  --btn-color: var(--danger-color);
+  --btn-hover-color: var(--danger-hover-color);
+  --btn-active-color: var(--danger-active-color);
 }
 :host([success]) {
-  --btn-bg: var(--success-color);
-  --btn-hover-bg: var(--success-hover-color);
-  --btn-active-bg: var(--success-active-color);
+  --btn-color: var(--success-color);
+  --btn-hover-color: var(--success-hover-color);
+  --btn-active-color: var(--success-active-color);
 }
 
 :host(:not([primary]):not([success]):not([danger]):not([warning])) {
-  --btn-bg: var(--btn-default-color);
-  --btn-hover-bg: var(--btn-default-hover);
-  --btn-active-bg: var(--btn-default-active);
+  --btn-color: var(--btn-default-color);
+  --btn-hover-color: var(--btn-default-hover);
+  --btn-active-color: var(--btn-default-active);
 }
 
 :host(:not([aria-disabled]):hover) {
-  --btn-bg: var(--btn-hover-bg) !important;
+  --btn-color: var(--btn-hover-color) !important;
 }
 
 :host(:not([aria-disabled]):active) {
-  --btn-bg: var(--btn-active-bg) !important;
+  --btn-color: var(--btn-active-color) !important;
 }
 
 :host([aria-disabled]) {
@@ -103,11 +103,11 @@ import { InitComponentTemplate } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
-export class XButton extends XComponent {
+export class XButtonPlain extends XComponent {
   static get observedAttributes() {
     return [];
   }
-  static name: string = "x-button";
+  static name: string = "x-button-plain";
   root?: HTMLButtonElement;
   constructor() {
     super();

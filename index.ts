@@ -1,6 +1,7 @@
 import "./styles/index.css";
 import {
   XButton,
+  XButtonPlain,
   XDialog,
   XCheckbox,
   XCheckboxGroup,
@@ -17,6 +18,7 @@ import {
 } from "./packages/main";
 
 XButton.register();
+XButtonPlain.register();
 XDialog.register();
 XCheckboxGroup.register();
 XCheckbox.register();

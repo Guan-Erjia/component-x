@@ -1,4 +1,5 @@
 export { XButton } from "./components/button/index.vue";
+export { XButtonPlain } from "./components/button/plain.vue";
 export { XDialog } from "./components/dialog/index.vue";
 export { XCheckbox } from "./components/checkbox/index.vue";
 export { XCheckboxGroup } from "./components/checkbox/group.vue";
