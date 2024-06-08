@@ -104,7 +104,7 @@ import { XComponent, XRegister } from "@/utils/decorator";
 export class XDialog extends XComponent {
   static name: string = "x-dialog";
   static get observedAttributes() {
-    return ["aria-modal", "header", "width"]; // 声明要监听的属性
+    return ["aria-haspopup", "header", "width"]; // 声明要监听的属性
   }
 
   root?: HTMLDialogElement;
@@ -128,7 +128,7 @@ export class XDialog extends XComponent {
 
     addEventListener("keyup", (e) => {
       if (e.code === "Escape") {
-        this.ariaModal = null;
+        this.ariaHasPopup = null;
       }
     });
 
@@ -137,7 +137,7 @@ export class XDialog extends XComponent {
     this.footerOk = this.root.querySelector(".footer-ok") ?? undefined;
     this.footerCancel = this.root.querySelector(".footer-cancel") ?? undefined;
     if (this.headerClose) {
-      this.headerClose.onclick = () => (this.ariaModal = null);
+      this.headerClose.onclick = () => (this.ariaHasPopup = null);
     }
     if (this.footerOk) {
       this.footerOk.onclick = () => XDispatch.call(this, "ok");
@@ -156,8 +156,8 @@ export class XDialog extends XComponent {
     }
     this.root.style.width = this.getAttribute("width") || "";
 
-    if (attr === "aria-modal") {
-      if (this.ariaModal !== null) {
+    if (attr === "aria-haspopup") {
+      if (this.ariaHasPopup !== null) {
         this.root.showModal();
         XDispatch.call(this, "open");
       } else {
