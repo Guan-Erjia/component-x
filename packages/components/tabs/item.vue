@@ -9,14 +9,14 @@
 </template>
 
 <script lang="ts">
-import { InitComponentTemplate } from "@/utils";
+import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
 export class XTabsItem extends XComponent {
   static name: string = "x-tabs-item";
   static get observedAttributes() {
-    return ["aria-valuetext", "aria-current"]; // 声明要监听的属性
+    return []; // 声明要监听的属性
   }
 
   constructor() {
@@ -32,10 +32,7 @@ export class XTabsItem extends XComponent {
     if (this.ariaValueText === null) {
       console.warn("x-tabs-item必须传入 ariaValueText");
     }
-    this.dispatchEvent(
-      new CustomEvent("xTabsItemInit", { detail: this, bubbles: true })
-    );
+    XDispatch.call(this, "xTabsItemInit", this, true);
   }
-
 }
 </script>

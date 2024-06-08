@@ -72,7 +72,7 @@
 }
 </style>
 <script lang="ts">
-import { InitComponentTemplate } from "@/utils";
+import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
@@ -82,7 +82,7 @@ export class XCheckbox extends XComponent {
     return ["aria-checked", "aria-disabled", "aria-valuetext"]; // 声明要监听的属性
   }
 
-  innerElement: HTMLInputElement | undefined;
+  root?: HTMLInputElement;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -93,32 +93,26 @@ export class XCheckbox extends XComponent {
   }
 
   connectedCallback() {
-    this.dispatchEvent(
-      new CustomEvent("XCheckboxInit", { detail: this, bubbles: true })
-    );
+    XDispatch.call(this, "XCheckboxInit", this, true);
     this.onclick = () => {
-      if (!this.innerElement || this.ariaDisabled !== null) {
+      if (!this.root || this.ariaDisabled !== null) {
         return;
       }
       this.ariaChecked !== null && this.ariaChecked !== "mixed"
         ? (this.ariaChecked = null)
         : (this.ariaChecked = "");
-      this.dispatchEvent(
-        new CustomEvent("XCheckboxChange", { detail: this, bubbles: true })
-      );
-      this.dispatchEvent(
-        new CustomEvent("change", { detail: this.ariaChecked })
-      );
+      XDispatch.call(this, "XCheckboxChange", this, true);
+      XDispatch.call(this, "change", this.ariaChecked);
     };
   }
 
   attributeChangedCallback() {
-    if (!this.innerElement) {
+    if (!this.root) {
       return;
     }
-    this.innerElement.checked = this.ariaChecked !== null;
-    this.innerElement.disabled = this.ariaDisabled !== null;
-    this.innerElement.indeterminate = this.ariaChecked === "mixed";
+    this.root.checked = this.ariaChecked !== null;
+    this.root.disabled = this.ariaDisabled !== null;
+    this.root.indeterminate = this.ariaChecked === "mixed";
   }
 }
 </script>

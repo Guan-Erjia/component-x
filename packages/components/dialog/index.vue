@@ -97,7 +97,7 @@
 </template>
 
 <script lang="ts">
-import { InitComponentTemplate } from "@/utils";
+import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
@@ -107,8 +107,11 @@ export class XDialog extends XComponent {
     return ["aria-modal", "header", "width"]; // 声明要监听的属性
   }
 
-  inner: HTMLDialogElement | undefined;
-
+  root?: HTMLDialogElement;
+  headerElement?: HTMLElement;
+  headerClose?: HTMLElement;
+  footerOk?: HTMLElement;
+  footerCancel?: HTMLElement;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -119,43 +122,48 @@ export class XDialog extends XComponent {
   }
 
   connectedCallback() {
-    if (!this.inner) {
+    if (!this.root) {
       return;
     }
-    (this.inner.querySelector(".footer-cancel") as HTMLElement).onclick =
-      () => {
-        this.dispatchEvent(new Event("cancel"));
-      };
-    (this.inner.querySelector(".footer-ok") as HTMLElement).onclick = () => {
-      this.dispatchEvent(new Event("ok"));
-    };
+
     addEventListener("keyup", (e) => {
       if (e.code === "Escape") {
         this.ariaModal = null;
       }
     });
 
-    (this.inner.querySelector(".header-close") as HTMLElement).onclick = () =>
-      (this.ariaModal = null);
+    this.headerElement = this.root.querySelector(".header-text") ?? undefined;
+    this.headerClose = this.root.querySelector(".header-close") ?? undefined;
+    this.footerOk = this.root.querySelector(".footer-ok") ?? undefined;
+    this.footerCancel = this.root.querySelector(".footer-cancel") ?? undefined;
+    if (this.headerClose) {
+      this.headerClose.onclick = () => (this.ariaModal = null);
+    }
+    if (this.footerOk) {
+      this.footerOk.onclick = () => XDispatch.call(this, "ok");
+    }
+    if (this.footerCancel) {
+      this.footerCancel.onclick = () => XDispatch.call(this, "cancel");
+    }
   }
 
-  attributeChangedCallback() {
-    if (!this.inner) {
+  attributeChangedCallback(attr: string) {
+    if (!this.root) {
       return;
     }
-    const headerText = this.inner.querySelector(".header-text");
-    if (headerText) {
-      headerText.innerHTML = this.getAttribute("header") || "";
+    if (this.headerElement) {
+      this.headerElement.innerHTML = this.getAttribute("header") || "";
     }
-    if (this.inner.style) {
-      this.inner.style.width = this.getAttribute("width") || "";
-    }
-    if (this.ariaModal !== null) {
-      this.inner.showModal();
-      this.dispatchEvent(new Event("open"));
-    } else {
-      this.inner.close();
-      this.dispatchEvent(new Event("close"));
+    this.root.style.width = this.getAttribute("width") || "";
+
+    if (attr === "aria-modal") {
+      if (this.ariaModal !== null) {
+        this.root.showModal();
+        XDispatch.call(this, "open");
+      } else {
+        this.root.close();
+        XDispatch.call(this, "close");
+      }
     }
   }
 }

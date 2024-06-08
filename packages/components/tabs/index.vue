@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { InitComponentTemplate } from "@/utils";
+import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
@@ -90,9 +90,7 @@ export class XTabs extends XComponent {
     this.titleMap.forEach((title, key) => {
       title.ariaCurrent = key === this.ariaValueText ? "" : null;
     });
-    this.dispatchEvent(
-      new CustomEvent("change", { detail: this.ariaValueText })
-    );
+    XDispatch.call(this, 'change', this.ariaValueText)
   }
 }
 </script>

@@ -20,8 +20,7 @@ export class XMenu extends XComponent {
     return [""]; // 声明要监听的属性
   }
 
-  curMenuItem: XMenuItem | null;
-  value: string[] | undefined;
+  curMenuItem?: XMenuItem;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -29,43 +28,41 @@ export class XMenu extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
-    this.curMenuItem = null
   }
 
   initListener(e: any) {
-    e.stopPropagation()
-    const payload = e.detail
+    e.stopPropagation();
+    const payload = e.detail;
     if (!payload.ariaValueText) {
-      return console.warn(`x-menu-item 的 ariaValueText 属性是必须的`)
+      return console.warn(`x-menu-item 的 ariaValueText 属性是必须的`);
     }
     if (payload.ariaValueText === this.ariaValueText) {
-      payload.ariaChecked = 'true'
+      payload.ariaChecked = "";
       if (!this.curMenuItem) {
-        this.curMenuItem = payload
+        this.curMenuItem = payload;
       }
     }
   }
 
   changeListener(e: any) {
-    e.stopPropagation()
-    this.curMenuItem && this.curMenuItem.removeAttribute('aria-checked')
-    e.detail.ariaChecked = 'true'
-    this.curMenuItem = e.detail
+    e.stopPropagation();
+    if (this.curMenuItem) {
+      this.curMenuItem.ariaChecked = null;
+    }
+    e.detail.ariaChecked = "";
+    this.curMenuItem = e.detail;
   }
 
   connectedCallback() {
-    this.addEventListener('XMenuItemInit', this.initListener)
-    this.addEventListener('XMenuItemChange', this.changeListener)
+    this.addEventListener("XMenuItemInit", this.initListener);
+    this.addEventListener("XMenuItemChange", this.changeListener);
   }
 
   disconnectedCallback() {
-    this.removeEventListener('XMenuItemInit', this.initListener)
-    this.removeEventListener('XMenuItemChange', this.changeListener)
+    this.removeEventListener("XMenuItemInit", this.initListener);
+    this.removeEventListener("XMenuItemChange", this.changeListener);
   }
 
-  attributeChangedCallback() {
-    this.attributeList = new Set(this.getAttributeNames());
-    this.value = this.getAttribute("value")?.split(",");
-  }
+  attributeChangedCallback() {}
 }
 </script>

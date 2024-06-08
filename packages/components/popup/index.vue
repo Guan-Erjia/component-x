@@ -45,7 +45,7 @@
   display: block;
 }
 
-:host([show]) {
+:host([aria-checked]) {
   .x-popup-border {
     display: block;
   }
@@ -245,23 +245,12 @@ export class XPopup extends XComponent {
 
   static name: string = 'x-popup'
   static get observedAttributes() {
-    return ['placement']; // 声明要监听的属性
+    return []; // 声明要监听的属性
   }
 
-  show: boolean
   constructor() {
     super()
     InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
-    this.show = false
-  }
-
-  attributeChangedCallback() {
-    this.attributeList = new Set(this.getAttributeNames());
-    this.show = this.attributeList.has('show')
-  }
-
-  switchStatus(checked: boolean) {
-    checked ? this.setAttribute('show', '') : this.removeAttribute('show')
   }
 }
 </script>

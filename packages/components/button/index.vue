@@ -206,7 +206,7 @@ export class XButton extends XComponent {
     ]; // 声明要监听的属性
   }
   static name: string = "x-button";
-  innerElement: HTMLButtonElement | undefined;
+  root?: HTMLButtonElement;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -223,7 +223,7 @@ export class XButton extends XComponent {
       ["plain", "success", "primary", "danger", "warning"],
       this.attributeList
     );
-    this.innerElement?.setAttribute("class", className);
+    this.root?.setAttribute("class", className);
     if (this.ariaDisabled !== null || this.attributeList.has("loading")) {
       this.onclick = null;
     }

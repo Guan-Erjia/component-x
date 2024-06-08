@@ -18,14 +18,14 @@
 </template>
 
 <script lang="ts">
-import { InitComponentTemplate } from "@/utils";
+import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
 export class XTabsTitle extends XComponent {
   static name: string = "x-tabs-title";
   static get observedAttributes() {
-    return ["aria-valuetext", "aria-current"]; // 声明要监听的属性
+    return []; // 声明要监听的属性
   }
 
   constructor() {
@@ -41,13 +41,10 @@ export class XTabsTitle extends XComponent {
     if (this.ariaValueText === null) {
       console.warn("x-tabs-title必须传入 ariaValueText");
     }
-    this.dispatchEvent(
-      new CustomEvent("xTabsTitleInit", { detail: this, bubbles: true })
-    );
+    XDispatch.call(this, "xTabsTitleInit", this, true);
+
     this.onclick = () =>
-      this.dispatchEvent(
-        new CustomEvent("xTabsChange", { detail: this.ariaValueText, bubbles: true })
-      );
+      XDispatch.call(this, "xTabsChange", this.ariaValueText, true);
   }
 }
 </script>

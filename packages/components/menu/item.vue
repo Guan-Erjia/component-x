@@ -64,7 +64,7 @@
   overflow: hidden;
   transition: all 0.2s linear;
 
-  >ol {
+  > ol {
     min-height: 0;
     margin: 0;
     padding-left: 0;
@@ -96,7 +96,7 @@
 }
 </style>
 <script lang="ts">
-import { InitComponentTemplate } from "@/utils";
+import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
@@ -126,32 +126,28 @@ export class XMenuItem extends XComponent {
   }
 
   connectedCallback() {
-    this.dispatchEvent(new CustomEvent('XMenuItemInit', { detail: this, bubbles: true }))
+    XDispatch.call(this, "XMenuItemInit", this, true);
     this.mainElement.onclick = () => {
       if (this.ariaDisabled !== null) {
-        return
+        return;
       }
       if (this.ariaExpanded !== null) {
-        return this.setAttribute(
-          "aria-expanded",
-          this.ariaExpanded === "true" ? "false" : "true"
-        );
+        this.ariaExpanded = this.ariaExpanded === "true" ? "false" : "true";
+        return;
       }
-      this.ariaChecked === null
-        ? this.setAttribute("aria-checked", "")
-        : this.removeAttribute("aria-checked");
-      this.dispatchEvent(new CustomEvent('XMenuItemChange', { detail: this, bubbles: true }))
+
+      this.ariaChecked = this.ariaChecked === null ? "" : null;
+      XDispatch.call(this, "XMenuItemChange", this, true);
     };
-    this.addEventListener('XMenuItemInit', this.inherentListener)
+    this.addEventListener("XMenuItemInit", this.inherentListener);
   }
 
   disconnectedCallback() {
-    this.removeEventListener('XMenuItemInit', this.inherentListener)
+    this.removeEventListener("XMenuItemInit", this.inherentListener);
   }
 
-
   inherentListener(e: any) {
-    e.detail.ariaLevel = +e.detail.ariaLevel + 1
+    e.detail.ariaLevel = +e.detail.ariaLevel + 1;
   }
 
   attributeChangedCallback() {
@@ -160,8 +156,9 @@ export class XMenuItem extends XComponent {
     this.gap = getComputedStyle(this).getPropertyValue("--menu-gap");
     queueMicrotask(() => {
       if (this.ariaLevel) {
-        this.mainElement.style.paddingLeft = `calc(var(--menu-padding-inline) + ${this.ariaLevel || 0
-          } * ${this.gap})`;
+        this.mainElement.style.paddingLeft = `calc(var(--menu-padding-inline) + ${
+          this.ariaLevel || 0
+        } * ${this.gap})`;
       }
     });
   }

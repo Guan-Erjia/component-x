@@ -7,7 +7,7 @@
 }
 </style>
 <script lang="ts">
-import { InitComponentTemplate } from "@/utils";
+import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 import { XCheckbox } from "./index.vue";
 
@@ -18,7 +18,7 @@ export class XCheckboxGroup extends XComponent {
     return ["aria-valuetext"]; // 声明要监听的属性
   }
 
-  innerElement: HTMLInputElement | undefined;
+  root?: HTMLInputElement;
   checkboxSet: Set<XCheckbox>;
   value: string[];
   constructor() {
@@ -52,9 +52,6 @@ export class XCheckboxGroup extends XComponent {
     } else {
       this.value.push(payload.ariaValueText);
     }
-    this.dispatchEvent(
-      new CustomEvent("change", { detail: this.value.join(",") })
-    );
     this.setAttribute("aria-valuetext", this.value.join(","));
   }
 
@@ -78,6 +75,7 @@ export class XCheckboxGroup extends XComponent {
         checkbox.ariaChecked = null;
       }
     });
+    XDispatch.call(this, "change", this.value.join(","));
   }
 }
 </script>

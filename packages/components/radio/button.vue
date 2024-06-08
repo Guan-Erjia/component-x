@@ -53,32 +53,35 @@
 }
 </style>
 <script lang="ts">
-import { InitComponentTemplate } from "@/utils";
+import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
 export class XRadioButton extends XComponent {
-
-  static name: string = 'x-radio-button'
+  static name: string = "x-radio-button";
   static get observedAttributes() {
-    return ["aria-checked", 'aria-disabled', 'aria-valuetext']; // 声明要监听的属性
+    return []; // 声明要监听的属性
   }
 
   constructor() {
-    super()
-    InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
+    super();
+    InitComponentTemplate.call(
+      this,
+      __X_COMPONENT_HTML_CODE__,
+      __X_COMPONENT_STYLE_CODE__
+    );
   }
 
   connectedCallback() {
-    this.dispatchEvent(new CustomEvent('XRadioInit', { detail: this, bubbles: true }))
+    XDispatch.call(this, "XRadioInit", this, true);
     this.onclick = () => {
       if (this.ariaDisabled !== null || this.ariaChecked !== null) {
-        return
+        return;
       }
-      this.setAttribute('aria-checked', '')
-      this.dispatchEvent(new CustomEvent('XRadioChange', { detail: this, bubbles: true }))
-      this.dispatchEvent(new CustomEvent('change', { detail: this.ariaValueText }))
-    }
+      this.ariaChecked = "";
+      XDispatch.call(this, "XRadioChange", this, true);
+      XDispatch.call(this, "change", this.ariaValueText);
+    };
   }
 }
 </script>

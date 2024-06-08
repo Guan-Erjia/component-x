@@ -3,8 +3,8 @@
     <slot class="x-switch-loading" name="loading">
       <svg viewBox="0 0 1024 1024" fill="currentColor">
         <path
-          d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z">
-        </path>
+          d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"
+        ></path>
       </svg>
     </slot>
   </div>
@@ -83,7 +83,6 @@
   opacity: var(--disable-bg-opacity);
 }
 
-
 :host([loading]) {
   .x-switch-loading {
     display: inline-block;
@@ -91,35 +90,35 @@
 }
 </style>
 <script lang="ts">
-import { InitComponentTemplate } from "@/utils";
+import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
 export class XSwitch extends XComponent {
-
-  static name: string = 'x-switch'
+  static name: string = "x-switch";
   static get observedAttributes() {
-    return ["aria-checked", 'aria-disabled']; // 声明要监听的属性
+    return []; // 声明要监听的属性
   }
 
   constructor() {
-    super()
-    InitComponentTemplate.call(this, __X_COMPONENT_HTML_CODE__, __X_COMPONENT_STYLE_CODE__)
+    super();
+    InitComponentTemplate.call(
+      this,
+      __X_COMPONENT_HTML_CODE__,
+      __X_COMPONENT_STYLE_CODE__
+    );
   }
 
   connectedCallback() {
     this.onclick = () => {
-      if (this.ariaDisabled !== null || this.attributeList.has('loading')) {
-        return
+      if (this.ariaDisabled !== null || this.attributeList.has("loading")) {
+        return;
       }
-      this.ariaChecked = (this.ariaChecked === null ? 'true' : null)
-      this.dispatchEvent(new CustomEvent('change', { detail: { value: this.ariaChecked } }))
-    }
+      this.ariaChecked = this.ariaChecked === null ? "" : null;
+      XDispatch.call(this, "change", this.ariaChecked);
+    };
   }
 
-
-  attributeChangedCallback() {
-    this.attributeList = new Set(this.getAttributeNames());
-  }
+  attributeChangedCallback() {}
 }
 </script>
