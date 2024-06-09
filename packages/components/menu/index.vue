@@ -6,6 +6,7 @@
   display: block;
   background-color: var(--menu-bg);
   padding: var(--menu-content-block) var(--menu-content-inline);
+  height: fit-content;
 }
 </style>
 <script lang="ts">
