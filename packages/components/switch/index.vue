@@ -1,5 +1,5 @@
 <template>
-  <div class="x-switch">
+  <div id="point">
     <slot id="loading" name="loading">
       <x-busy />
     </slot>
@@ -10,40 +10,40 @@
   position: relative;
   display: inline-block;
   background-color: var(--switch-default-bg);
-  padding: var(--control-line) 0;
+  padding: var(--control-line);
   border-radius: calc(var(--control-size));
   width: calc(var(--control-size) * 2.5);
   height: var(--control-size);
   cursor: pointer;
   user-select: none;
+}
 
-  .x-switch {
-    width: var(--control-size);
-    height: var(--control-size);
-    background-color: var(--switch-btn);
-    border-radius: 100%;
-    position: absolute;
-    transition: left 0.1s linear;
-  }
+#point {
+  width: var(--control-size);
+  height: var(--control-size);
+  background-color: var(--switch-btn);
+  border-radius: 100%;
+  transition: all 0.1s linear;
+  display: flex;
 }
 
 #loading {
   display: none;
   height: var(--control-size);
-  transform: translateY(-50%);
+  transform: translateY(0px);
 }
 
 :host([aria-checked]) {
   background-color: var(--radio-color);
 
-  .x-switch {
-    left: calc(var(--control-size) * 1.5 - var(--control-line));
+  #point {
+    float: left;
   }
 }
 
 :host(:not([aria-checked])) {
-  .x-switch {
-    left: var(--control-line);
+  #point {
+    float: right;
   }
 }
 
@@ -70,7 +70,7 @@
 
 :host([aria-busy]) {
   #loading {
-    display: inline-block;
+    display: contents;
   }
 }
 </style>
