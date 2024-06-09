@@ -6,6 +6,7 @@
   border-style: var(--tabs-border-style);
   padding: var(--tabs-padding);
   border-radius: var(--control-radius);
+  height: fit-content;
 
   .x-tabs-title {
     display: block;
@@ -90,7 +91,7 @@ export class XTabs extends XComponent {
     this.titleMap.forEach((title, key) => {
       title.ariaCurrent = key === this.ariaValueText ? "" : null;
     });
-    XDispatch.call(this, 'change', this.ariaValueText)
+    XDispatch.call(this, "change", this.ariaValueText);
   }
 }
 </script>

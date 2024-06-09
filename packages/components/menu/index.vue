@@ -1,5 +1,5 @@
 <template>
-  <slot class="x-menu"></slot>
+  <slot></slot>
 </template>
 <style lang="scss">
 :host {

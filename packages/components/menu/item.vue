@@ -1,21 +1,21 @@
 <template>
   <div class="x-menu-main">
-    <div class="x-menu-label">
+    <div id="label">
       <slot name="prefix">
         <span>😊</span>
       </slot>
-      <slot name="label">
-        <span id="x-menu-text"></span>
+      <slot name="text">
+        <span id="text"></span>
       </slot>
       <slot name="suffix">
         <span>😆</span>
       </slot>
     </div>
-    <slot name="expand" class="x-menu-arrow">
+    <slot name="expand" id="arrow">
       <span>></span>
     </slot>
   </div>
-  <div class="x-menu-children">
+  <div id="children">
     <ol>
       <slot></slot>
     </ol>
@@ -35,8 +35,9 @@
   padding: var(--menu-padding-block) var(--menu-padding-inline);
   transition: background-color 0.2s linear;
   border-radius: var(--control-radius);
+  height: var(--control-size);
 
-  .x-menu-label {
+  #label {
     flex-grow: 1;
   }
 
@@ -58,7 +59,7 @@
   }
 }
 
-.x-menu-children {
+#children {
   display: grid;
   grid-template-rows: 0fr;
   overflow: hidden;
@@ -71,7 +72,7 @@
   }
 }
 
-.x-menu-arrow {
+#arrow {
   display: inline-block;
   flex-grow: 0;
   flex-shrink: 0;
@@ -80,17 +81,17 @@
 }
 
 :host(:not([aria-expanded])) {
-  .x-menu-arrow {
+  #arrow {
     display: none;
   }
 }
 
 :host([aria-expanded="true"]) {
-  .x-menu-children {
+  #children {
     grid-template-rows: 1fr;
   }
 
-  .x-menu-arrow {
+  #arrow {
     transform: rotate(90deg);
   }
 }
@@ -107,7 +108,7 @@ export class XMenuItem extends XComponent {
   }
 
   textElement: HTMLDivElement;
-  mainElement: HTMLDivElement;
+  root?: HTMLDivElement;
   gap: string;
   constructor() {
     super();
@@ -117,28 +118,28 @@ export class XMenuItem extends XComponent {
       __X_COMPONENT_STYLE_CODE__
     );
     this.textElement = this.shadowRoot?.querySelector(
-      "#x-menu-text"
-    ) as HTMLDivElement;
-    this.mainElement = this.shadowRoot?.querySelector(
-      ".x-menu-main"
+      "#text"
     ) as HTMLDivElement;
     this.gap = "";
   }
 
   connectedCallback() {
     XDispatch.call(this, "XMenuItemInit", this, true);
-    this.mainElement.onclick = () => {
-      if (this.ariaDisabled !== null) {
-        return;
-      }
-      if (this.ariaExpanded !== null) {
-        this.ariaExpanded = this.ariaExpanded === "true" ? "false" : "true";
-        return;
-      }
+    if (this.root) {
+      this.root.onclick = () => {
+        if (this.ariaDisabled !== null) {
+          return;
+        }
+        if (this.ariaExpanded !== null) {
+          this.ariaExpanded = this.ariaExpanded === "true" ? "false" : "true";
+          return;
+        }
 
-      this.ariaChecked = this.ariaChecked === null ? "" : null;
-      XDispatch.call(this, "XMenuItemChange", this, true);
-    };
+        this.ariaChecked = this.ariaChecked === null ? "" : null;
+        XDispatch.call(this, "XMenuItemChange", this, true);
+      };
+    }
+
     this.addEventListener("XMenuItemInit", this.inherentListener);
   }
 
@@ -155,8 +156,8 @@ export class XMenuItem extends XComponent {
     this.textElement.innerHTML = this.ariaLabel || "";
     this.gap = getComputedStyle(this).getPropertyValue("--menu-gap");
     queueMicrotask(() => {
-      if (this.ariaLevel) {
-        this.mainElement.style.paddingLeft = `calc(var(--menu-padding-inline) + ${
+      if (this.ariaLevel && this.root) {
+        this.root.style.paddingLeft = `calc(var(--menu-padding-inline) + ${
           this.ariaLevel || 0
         } * ${this.gap})`;
       }

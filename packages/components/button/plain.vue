@@ -23,7 +23,7 @@
   height: var(--control-size);
   flex-shrink: 0;
   margin-right: var(--btn-loading-gap);
-  transform: translateY(-30%);
+  transform: translateY((calc(-0.4 * var(--control-size)))) ;
 }
 
 :host([aria-busy]) {
