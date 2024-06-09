@@ -9,30 +9,54 @@
 #left,
 #right {
   position: absolute;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 100%;
-  width: 40px;
-  height: 40px;
+  transform: var(--swiper-btn-transform);
+  background-color: var(--swiper-btn-color);
+  border-radius: var(--swiper-btn-radius);
+  width: var(--swiper-btn-size);
+  height: var(--swiper-btn-size);
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  > div {
+    width: var(--swiper-arrow-size);
+    height: var(--swiper-arrow-size);
+    border-style: solid;
+    border-color: var(--swiper-arrow-color);
+    border-top-width: var(--swiper-arrow-width);
+    border-right-width: var(--swiper-arrow-width);
+    border-left-width: 0;
+    border-bottom-width: 0;
+  }
 }
 #left {
-  left: 10px;
+  left: var(--swiper-btn-margin);
   top: 50%;
+  > div {
+    transform: rotate(-135deg);
+  }
 }
 #right {
-  right: 10px;
+  right: var(--swiper-btn-margin);
   top: 50%;
+  > div {
+    transform: rotate(45deg);
+  }
 }
 </style>
 <template>
   <slot></slot>
-  <div id="left"></div>
-  <div id="right"></div>
+  <div id="left">
+    <div></div>
+  </div>
+  <div id="right">
+    <div></div>
+  </div>
 </template>
 
 <script lang="ts">
-import { InitComponentTemplate, XDispatch } from "@/utils";
+import { InitComponentTemplate } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 import { XSwiperItem } from "./item.vue";
 
@@ -47,6 +71,7 @@ export class XSwiper extends XComponent {
   curIndex: number;
   timeout: number;
   root?: HTMLElement;
+  hover: boolean;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -57,6 +82,7 @@ export class XSwiper extends XComponent {
     this.itemList = [];
     this.curIndex = 0;
     this.timeout = 0;
+    this.hover = false;
   }
 
   initListener(e: any) {
@@ -71,30 +97,51 @@ export class XSwiper extends XComponent {
     }
   }
 
+  switchNext() {
+    clearTimeout(this.timeout);
+    this.curIndex += 1;
+    if (this.itemList.length === this.curIndex) {
+      this.curIndex = 0;
+    }
+    this.ariaValueText = this.itemList[this.curIndex].ariaValueText;
+  }
+
+  switchPrev() {
+    clearTimeout(this.timeout);
+    this.curIndex -= 1;
+    if (this.curIndex < 0) {
+      this.curIndex = this.itemList.length - 1;
+    }
+    this.ariaValueText = this.itemList[this.curIndex].ariaValueText;
+  }
+
   connectedCallback() {
     this.addEventListener("XSwiperItemInit", this.initListener);
     const leftBtn = this.shadowRoot?.querySelector("#left") as HTMLElement;
     const rightBtn = this.shadowRoot?.querySelector("#right") as HTMLElement;
-    leftBtn.onclick = () => {
-      clearTimeout(this.timeout);
-      this.curIndex -= 1;
-      if (this.curIndex < 0) {
-        this.curIndex = this.itemList.length - 1;
+    leftBtn.onclick = () => this.switchPrev();
+    rightBtn.onclick = () => this.switchNext();
+
+    this.onmouseover = () => {
+      if (this.ariaValueNow === null) {
+        return;
       }
-      this.ariaValueText = this.itemList[this.curIndex].ariaValueText;
+      clearTimeout(this.timeout);
+      this.hover = true;
     };
-    rightBtn.onclick = () => {
-      clearTimeout(this.timeout);
-      this.curIndex += 1;
-      if (this.itemList.length === this.curIndex) {
-        this.curIndex = 0;
+    this.onmouseleave = () => {
+      if (this.ariaValueNow === null) {
+        return;
       }
-      this.ariaValueText = this.itemList[this.curIndex].ariaValueText;
+      this.hover = false;
+      this.attributeChangedCallback();
     };
   }
 
   disconnectedCallback() {
     this.removeEventListener("XSwiperItemInit", this.initListener);
+    this.onmouseover = null;
+    this.onmouseleave = null;
   }
 
   attributeChangedCallback() {
@@ -102,15 +149,10 @@ export class XSwiper extends XComponent {
       tabItem.ariaCurrent =
         tabItem.ariaValueText === this.ariaValueText ? "" : null;
     });
-    XDispatch.call(this, "change", this.ariaValueText);
-
-    this.timeout = setTimeout(() => {
-      this.curIndex += 1;
-      if (this.itemList.length === this.curIndex) {
-        this.curIndex = 0;
-      }
-      this.ariaValueText = this.itemList[this.curIndex].ariaValueText;
-    }, 1000);
+    if (this.ariaValueNow && this.ariaValueNow !== null)
+      this.timeout = setTimeout(() => {
+        this.switchNext();
+      }, +this.ariaValueNow);
   }
 }
 </script>

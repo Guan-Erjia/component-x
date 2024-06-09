@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 #inner {
   height: 80%;
