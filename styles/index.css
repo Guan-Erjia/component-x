@@ -6,7 +6,6 @@
 @import url("./switch.css");
 @import url("./popup.css");
 @import url("./menu.css");
-@import url("./swiper.css");
 @tailwind components;
 @tailwind utilities;
 * {
