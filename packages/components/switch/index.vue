@@ -96,7 +96,7 @@ export class XSwitch extends XComponent {
 
   connectedCallback() {
     this.onclick = () => {
-      if (this.ariaDisabled !== null || this.attributeList.has("loading")) {
+      if (this.ariaDisabled !== null || this.ariaBusy !== null) {
         return;
       }
       this.ariaChecked = this.ariaChecked === null ? "" : null;
