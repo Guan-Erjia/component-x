@@ -1,11 +1,22 @@
 <style lang="scss">
+:host {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#inner {
+  height: 80%;
+}
 :host(:not([aria-current])) {
   display: none;
 }
 </style>
 
 <template>
-  <slot></slot>
+  <img id="inner" src="" alt="" />
 </template>
 
 <script lang="ts">
@@ -18,7 +29,7 @@ export class XSwiperItem extends XComponent {
   static get observedAttributes() {
     return []; // 声明要监听的属性
   }
-
+  root?: HTMLImageElement;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -26,6 +37,7 @@ export class XSwiperItem extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
+    console.log(this.ariaPlaceholder);
   }
 
   connectedCallback() {
@@ -33,6 +45,15 @@ export class XSwiperItem extends XComponent {
       console.warn("x-swiper-item必须传入 ariaValueText");
     }
     XDispatch.call(this, "XSwiperItemInit", this, true);
+    if (this.root) {
+      this.root.src = this.ariaPlaceholder || "";
+    }
+  }
+
+  attributeChangedCallback() {
+    if (this.root) {
+      this.root.src = this.ariaPlaceholder || "";
+    }
   }
 }
 </script>

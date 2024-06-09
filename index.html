@@ -109,6 +109,10 @@
         <x-radio-button plain aria-valuetext="3"> radio3 </x-radio-button>
         <x-radio-button plain aria-valuetext="4"> radio4 </x-radio-button>
       </x-radio-group>
+
+      <x-busy></x-busy>
+      <x-busy aria-setsize="28px"></x-busy>
+      <x-busy aria-setsize="68px"></x-busy>
     </div>
 
     <div class="mt-3 flex">
@@ -197,17 +201,10 @@
         <span slot="unchecked">no</span>
       </x-switch>
       <x-switch warning aria-busy aria-checked></x-switch>
-      <x-switch success></x-switch>
-    </div>
 
-    <div class="mt-3">
-      <x-popup>
+      <x-popup no-arrow>
         <x-button success plain> noArrow </x-button>
         <div slot="content" class="bg-red-300">Default Position</div>
-      </x-popup>
-      <x-popup class="ml-2" position="bottom">
-        <x-button danger plain> Bottom </x-button>
-        <div slot="content" class="bg-red-300">Bottom</div>
       </x-popup>
       <x-popup class="ml-2" position="rt" dark>
         <x-button warning plain> 位置示例 </x-button>
@@ -245,21 +242,31 @@
         <x-button primary plain> Right </x-button>
         <div slot="content" class="bg-red-300">Right</div>
       </x-popup>
-      <x-popup class="ml-2" position="lb">
-        <div class="-z-10 relative bg-slate-400 w-20 h-10">
-          <a href="">link exp</a>
-        </div>
-        <div slot="content" class="text-nowrap">
-          <div>This is a handsome link</div>
-          <p>what are going wanna do for this</p>
-          <p>what are going wanna do for this</p>
-          <p>what are going wanna do for this</p>
-          <p>what are going wanna do for this</p>
-        </div>
-      </x-popup>
-      <x-busy></x-busy>
-      <x-busy aria-setsize="28px"></x-busy>
-      <x-busy aria-setsize="68px"></x-busy>
+    </div>
+
+    <div class="mt-3">
+      <x-swiper class="w-[300px] h-[200px] border-gray-300 border-solid" aria-valuetext="2">
+        <x-swiper-item
+          aria-valuetext="1"
+          aria-placeholder="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        ></x-swiper-item>
+        <x-swiper-item
+          aria-valuetext="2"
+          aria-placeholder="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
+        ></x-swiper-item>
+        <x-swiper-item
+          aria-valuetext="3"
+          aria-placeholder="https://pinia.vuejs.org/logo.svg"
+        ></x-swiper-item>
+        <x-swiper-item
+          aria-valuetext="4"
+          aria-placeholder="https://v2.cn.vuejs.org/images/logo.svg"
+        ></x-swiper-item>
+        <x-swiper-item
+          aria-valuetext="5"
+          aria-placeholder="https://lingjing-online.cdn.bcebos.com/v1/lingjing-online/appavatar/2024-06-09/755fb338-a7c7-4d1a-b668-ab0ce42be97e.jpg"
+        ></x-swiper-item>
+      </x-swiper>
     </div>
 
     <script>
