@@ -41,10 +41,10 @@ export class XTabsTitle extends XComponent {
     if (this.ariaValueText === null) {
       console.warn("x-tabs-title必须传入 ariaValueText");
     }
-    XDispatch.call(this, "xTabsTitleInit", this, true);
+    XDispatch.call(this, "XTabsTitleInit", this, true);
 
     this.onclick = () =>
-      XDispatch.call(this, "xTabsChange", this.ariaValueText, true);
+      XDispatch.call(this, "XTabsChange", this.ariaValueText, true);
   }
 }
 </script>

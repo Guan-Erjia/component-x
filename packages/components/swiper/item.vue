@@ -13,8 +13,8 @@ import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
-export class XTabsItem extends XComponent {
-  static name: string = "x-tabs-item";
+export class XSwiperItem extends XComponent {
+  static name: string = "x-swiper-item";
   static get observedAttributes() {
     return []; // 声明要监听的属性
   }
@@ -30,9 +30,9 @@ export class XTabsItem extends XComponent {
 
   connectedCallback() {
     if (this.ariaValueText === null) {
-      console.warn("x-tabs-item必须传入 ariaValueText");
+      console.warn("x-swiper-item必须传入 ariaValueText");
     }
-    XDispatch.call(this, "XTabsItemInit", this, true);
+    XDispatch.call(this, "XSwiperItemInit", this, true);
   }
 }
 </script>

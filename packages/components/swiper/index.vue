@@ -8,15 +8,8 @@
   border-radius: var(--control-radius);
   height: fit-content;
 }
-#title {
-  display: block;
-  padding-bottom: var(--tabs-title-padding);
-  margin-bottom: var(--tabs-title-margin);
-  border-bottom: var(--tabs-br);
-}
 </style>
 <template>
-  <slot name="title" id="title"></slot>
   <slot></slot>
 </template>
 
@@ -25,7 +18,7 @@ import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 
 @XRegister
-export class XTabs extends XComponent {
+export class XSwiper extends XComponent {
   static name: string = "x-tabs";
   static get observedAttributes() {
     return ["aria-valuetext"]; // 声明要监听的属性
@@ -72,15 +65,13 @@ export class XTabs extends XComponent {
   }
 
   connectedCallback() {
-    this.addEventListener("XTabsItemInit", this.initItem);
-    this.addEventListener("XTabsTitleInit", this.initTitle);
-    this.addEventListener("XTabsChange", this.handleTitleChange);
+    this.addEventListener("XSwiperItemInit", this.initItem);
+    this.addEventListener("XSwiperChange", this.handleTitleChange);
   }
 
   disconnectedCallback() {
-    this.removeEventListener("XTabsItemInit", this.initItem);
-    this.removeEventListener("XTabsTitleInit", this.initTitle);
-    this.removeEventListener("XTabsChange", this.handleTitleChange);
+    this.removeEventListener("XSwiperItemInit", this.initItem);
+    this.removeEventListener("XSwiperChange", this.handleTitleChange);
   }
 
   attributeChangedCallback() {

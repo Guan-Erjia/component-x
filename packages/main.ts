@@ -14,3 +14,5 @@ export { XSwitch } from "./components/switch/index.vue";
 export { XPopup } from "./components/popup/index.vue";
 export { XMenu } from "./components/menu/index.vue";
 export { XMenuItem } from "./components/menu/item.vue";
+export { XSwiper } from "./components/swiper/index.vue";
+export { XSwiperItem } from "./components/swiper/item.vue";

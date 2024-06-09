@@ -1,8 +1,6 @@
 <template>
   <div id="point">
-    <slot id="loading" name="loading">
-      <x-busy />
-    </slot>
+    <x-busy id="loading" />
   </div>
 </template>
 <style lang="scss">
@@ -10,40 +8,46 @@
   position: relative;
   display: inline-block;
   background-color: var(--switch-default-bg);
-  padding: var(--control-line);
+  padding: var(--control-line) 0;
   border-radius: calc(var(--control-size));
   width: calc(var(--control-size) * 2.5);
   height: var(--control-size);
   cursor: pointer;
   user-select: none;
 }
-
 #point {
   width: var(--control-size);
   height: var(--control-size);
   background-color: var(--switch-btn);
   border-radius: 100%;
-  transition: all 0.1s linear;
+  position: absolute;
+  transition: left 0.1s linear;
   display: flex;
+  align-items: center;
 }
 
 #loading {
-  display: none;
   height: var(--control-size);
-  transform: translateY(0px);
+  visibility: hidden;
+}
+
+:host([aria-busy]) {
+  #loading {
+    visibility: visible;
+  }
 }
 
 :host([aria-checked]) {
   background-color: var(--radio-color);
 
   #point {
-    float: left;
+    left: calc(var(--control-size) * 1.5 - var(--control-line));
   }
 }
 
 :host(:not([aria-checked])) {
   #point {
-    float: right;
+    left: var(--control-line);
   }
 }
 
@@ -66,12 +70,6 @@
 :host([aria-disabled]) {
   cursor: not-allowed;
   opacity: var(--disable-bg-opacity);
-}
-
-:host([aria-busy]) {
-  #loading {
-    display: contents;
-  }
 }
 </style>
 <script lang="ts">
