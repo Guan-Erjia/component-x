@@ -10,18 +10,23 @@
 @tailwind utilities;
 * {
   line-height: 100%;
-  --danger-color: red; /* 危险按钮文本颜色*/
-  --warning-color: orange; /* 危险按钮文本颜色*/
-  --success-color: darkturquoise; /* 危险按钮文本颜色*/
+
+  --default-color: rgb(115, 115, 115); /* 默认按钮背景色*/
+  --default-hover: rgb(183, 182, 182);
+  --default-active: rgb(171, 169, 169);
   --primary-color: blue; /* 危险按钮文本颜色*/
-  --danger-hover-color: rgb(247, 86, 86);
-  --warning-hover-color: rgb(253, 192, 77);
-  --success-hover-color: rgb(35, 218, 221);
   --primary-hover-color: rgb(89, 89, 239);
-  --danger-active-color: rgb(179, 3, 3);
-  --warning-active-color: rgb(196, 127, 0);
-  --success-active-color: rgb(0, 170, 172);
   --primary-active-color: rgb(0, 0, 196);
+  --warning-color: orange; /* 危险按钮文本颜色*/
+  --warning-hover-color: rgb(253, 192, 77);
+  --warning-active-color: rgb(196, 127, 0);
+  --success-color: darkturquoise; /* 危险按钮文本颜色*/
+  --success-hover-color: rgb(35, 218, 221);
+  --success-active-color: rgb(0, 170, 172);
+  --danger-color: red; /* 危险按钮文本颜色*/
+  --danger-hover-color: rgb(247, 86, 86);
+  --danger-active-color: rgb(179, 3, 3);
+
   --disable-bg-opacity: 0.5; /* disable高亮 */
   --control-line: 2px;
   --control-radius: 6px;

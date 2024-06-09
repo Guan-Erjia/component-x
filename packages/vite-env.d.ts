@@ -4,6 +4,7 @@ declare const __X_COMPONENT_STYLE_CODE__: string;
 
 declare module "*.vue" {
   export const XDialog;
+  export const XBusy;
   export const XButton;
   export const XButtonPlain;
   export const XCheckbox;

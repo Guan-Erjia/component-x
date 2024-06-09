@@ -1,5 +1,6 @@
 import "./styles/index.css";
 import {
+  XBusy,
   XButton,
   XButtonPlain,
   XDialog,
@@ -17,6 +18,7 @@ import {
   XMenuItem,
 } from "./packages/main";
 
+XBusy.register();
 XButton.register();
 XButtonPlain.register();
 XDialog.register();

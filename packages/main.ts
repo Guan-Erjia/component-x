@@ -1,3 +1,4 @@
+export { XBusy } from "./components/busy/index.vue";
 export { XButton } from "./components/button/index.vue";
 export { XButtonPlain } from "./components/button/plain.vue";
 export { XDialog } from "./components/dialog/index.vue";

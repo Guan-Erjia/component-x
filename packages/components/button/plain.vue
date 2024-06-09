@@ -20,18 +20,10 @@
 
 #loading {
   display: none;
-  width: var(--control-size);
   height: var(--control-size);
-  animation: spin 1s linear infinite;
   flex-shrink: 0;
   margin-right: var(--btn-loading-gap);
-
-  @keyframes spin {
-    100% {
-      transform: rotate(360deg);
-      transform-origin: 50% 50%;
-    }
-  }
+  transform: translateY(-30%);
 }
 
 :host([aria-busy]) {
@@ -68,9 +60,9 @@
 }
 
 :host(:not([primary]):not([success]):not([danger]):not([warning])) {
-  --btn-color: var(--btn-default-color);
-  --btn-hover-color: var(--btn-default-hover);
-  --btn-active-color: var(--btn-default-active);
+  --btn-color: var(--default-color);
+  --btn-hover-color: var(--default-hover);
+  --btn-active-color: var(--default-active);
 }
 
 :host(:not([aria-disabled]):hover) {
@@ -89,11 +81,7 @@
 
 <template>
   <slot id="loading" name="loading">
-    <svg style="height: 90%" viewBox="0 0 1024 1024" fill="currentColor">
-      <path
-        d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"
-      ></path>
-    </svg>
+    <x-busy />
   </slot>
   <slot id="content"></slot>
 </template>

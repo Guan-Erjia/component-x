@@ -17,11 +17,11 @@
         >黄</x-button
       >
       <x-button danger aria-busy round id="btn">
-        <span slot="loading"> 俊 </span>
-        杰
+        <span slot="loading"> <x-busy white /> </span>
+        俊杰
       </x-button>
-      <x-button success>success</x-button>
-      <x-button>default</x-button>
+      <x-button aria-busy success>success</x-button>
+      <x-button aria-busy>default</x-button>
     </div>
 
     <div class="mt-3">
@@ -111,8 +111,8 @@
       </x-radio-group>
     </div>
 
-    <div class="mt-3">
-      <x-tabs aria-valuetext="2">
+    <div class="mt-3 flex">
+      <x-tabs aria-valuetext="2" class="w-60 mr-10">
         <div slot="title">
           <x-tabs-title aria-valuetext="1">
             <span>title1</span>
@@ -134,78 +134,7 @@
           <div class="bg-yellow-300 h-36">第三个</div>
         </x-tabs-item>
       </x-tabs>
-    </div>
-
-    <div class="mt-3">
-      <x-switch primary></x-switch>
-      <x-switch primary aria-disabled aria-checked></x-switch>
-      <x-switch danger aria-checked>
-        <span slot="checked">yes</span>
-        <span slot="unchecked">no</span>
-      </x-switch>
-      <x-switch warning loading aria-checked></x-switch>
-      <x-switch success aria-checked></x-switch>
-    </div>
-
-    <div class="mt-6">
-      <x-popup>
-        <x-button success plain> noArrow </x-button>
-        <div slot="content" class="bg-red-300">Default Position</div>
-      </x-popup>
-      <x-popup class="ml-2" position="bottom">
-        <x-button danger plain> Bottom </x-button>
-        <div slot="content" class="bg-red-300">Bottom</div>
-      </x-popup>
-      <x-popup class="ml-2" position="rt" dark>
-        <x-button warning plain> 位置示例 </x-button>
-        <div slot="content">
-          <div class="grid-cols-5 grid-rows-5 w-96 grid">
-            <div></div>
-            <div>tl</div>
-            <div>top</div>
-            <div>tr</div>
-            <div></div>
-            <div>lt</div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div>rt</div>
-            <div>left</div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div>right</div>
-            <div>lb</div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div>rb</div>
-            <div></div>
-            <div>bl</div>
-            <div>bottom</div>
-            <div>br</div>
-            <div></div>
-          </div>
-        </div>
-      </x-popup>
-      <x-popup class="ml-2" position="br">
-        <x-button primary plain> Right </x-button>
-        <div slot="content" class="bg-red-300">Right</div>
-      </x-popup>
-      <x-popup class="ml-2" position="lb">
-        <div class="-z-10 relative bg-slate-400 w-20 h-10">
-          <a href="">link exp</a>
-        </div>
-        <div slot="content" class="text-nowrap">
-          <div>This is a handsome link</div>
-          <p>what are going wanna do for this</p>
-          <p>what are going wanna do for this</p>
-          <p>what are going wanna do for this</p>
-          <p>what are going wanna do for this</p>
-        </div>
-      </x-popup>
-
-      <x-menu class="w-60" aria-valuetext="子菜单2-1">
+      <x-menu class="w-60 inline-block" aria-valuetext="子菜单2-1">
         <x-menu-item
           aria-label="菜单1"
           aria-valuetext="菜单1"
@@ -277,6 +206,80 @@
           ></x-menu-item>
         </x-menu-item>
       </x-menu>
+    </div>
+
+    <div class="mt-3">
+      <x-switch primary></x-switch>
+      <x-switch primary aria-disabled aria-checked></x-switch>
+      <x-switch danger aria-checked>
+        <span slot="checked">yes</span>
+        <span slot="unchecked">no</span>
+      </x-switch>
+      <x-switch warning aria-busy aria-checked></x-switch>
+      <x-switch success aria-checked></x-switch>
+    </div>
+
+    <div class="mt-6">
+      <x-popup>
+        <x-button success plain> noArrow </x-button>
+        <div slot="content" class="bg-red-300">Default Position</div>
+      </x-popup>
+      <x-popup class="ml-2" position="bottom">
+        <x-button danger plain> Bottom </x-button>
+        <div slot="content" class="bg-red-300">Bottom</div>
+      </x-popup>
+      <x-popup class="ml-2" position="rt" dark>
+        <x-button warning plain> 位置示例 </x-button>
+        <div slot="content">
+          <div class="grid-cols-5 grid-rows-5 w-96 grid">
+            <div></div>
+            <div>tl</div>
+            <div>top</div>
+            <div>tr</div>
+            <div></div>
+            <div>lt</div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div>rt</div>
+            <div>left</div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div>right</div>
+            <div>lb</div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div>rb</div>
+            <div></div>
+            <div>bl</div>
+            <div>bottom</div>
+            <div>br</div>
+            <div></div>
+          </div>
+        </div>
+      </x-popup>
+      <x-popup class="ml-2" position="br">
+        <x-button primary plain> Right </x-button>
+        <div slot="content" class="bg-red-300">Right</div>
+      </x-popup>
+      <x-popup class="ml-2" position="lb">
+        <div class="-z-10 relative bg-slate-400 w-20 h-10">
+          <a href="">link exp</a>
+        </div>
+        <div slot="content" class="text-nowrap">
+          <div>This is a handsome link</div>
+          <p>what are going wanna do for this</p>
+          <p>what are going wanna do for this</p>
+          <p>what are going wanna do for this</p>
+          <p>what are going wanna do for this</p>
+        </div>
+      </x-popup>
+      <x-busy></x-busy>
+      <x-busy aria-setsize="18px"></x-busy>
+      <x-busy aria-setsize="28px"></x-busy>
+      <x-busy aria-setsize="38px"></x-busy>
     </div>
 
     <script>
