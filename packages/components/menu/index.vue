@@ -21,7 +21,7 @@ export class XMenu extends XComponent {
     return ["aria-valuetext"]; // 声明要监听的属性
   }
 
-  childMap: Map<string, XMenuItem>;
+  childSet: Set<XMenuItem>;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -29,7 +29,7 @@ export class XMenu extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
-    this.childMap = new Map();
+    this.childSet = new Set();
   }
 
   initListener(e: any) {
@@ -38,10 +38,7 @@ export class XMenu extends XComponent {
     if (!payload.ariaValueText) {
       return console.warn(`x-menu-item 的 ariaValueText 属性是必须的`);
     }
-    if (this.childMap.has(payload.ariaValueText)) {
-      return console.warn(`x-menu-item 的 ariaValueText 属性有重复`);
-    }
-    this.childMap.set(payload.ariaValueText, payload);
+    this.childSet.add(payload);
     if (payload.ariaValueText === this.ariaValueText) {
       payload.ariaChecked = "";
     }
@@ -63,7 +60,7 @@ export class XMenu extends XComponent {
   }
 
   attributeChangedCallback() {
-    this.childMap.forEach((payload) => {
+    this.childSet.forEach((payload) => {
       if (payload.ariaValueText === this.ariaValueText) {
         payload.ariaChecked = "";
       } else {

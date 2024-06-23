@@ -19,7 +19,7 @@ export class XCheckboxGroup extends XComponent {
   }
 
   root?: HTMLInputElement;
-  checkboxSet: Set<XCheckbox>;
+  childSet: Set<XCheckbox>;
   value: string[];
   constructor() {
     super();
@@ -28,7 +28,7 @@ export class XCheckboxGroup extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
-    this.checkboxSet = new Set();
+    this.childSet = new Set();
     this.value = [];
   }
 
@@ -38,7 +38,7 @@ export class XCheckboxGroup extends XComponent {
     if (!payload.ariaValueText) {
       return console.warn(`在group模式中，x-checkbox的value属性是必须的`);
     }
-    this.checkboxSet.add(payload);
+    this.childSet.add(payload);
     if (this.value.includes(payload.ariaValueText)) {
       payload.ariaChecked = "";
     }
@@ -68,11 +68,11 @@ export class XCheckboxGroup extends XComponent {
 
   attributeChangedCallback() {
     this.value = (this.ariaValueText || "").split(",");
-    this.checkboxSet.forEach((checkbox) => {
-      if (this.value.includes(checkbox.ariaValueText || "")) {
-        checkbox.ariaChecked = "";
+    this.childSet.forEach((child) => {
+      if (this.value.includes(child.ariaValueText || "")) {
+        child.ariaChecked = "";
       } else {
-        checkbox.ariaChecked = null;
+        child.ariaChecked = null;
       }
     });
     XDispatch.call(this, "change", this.value.join(","));

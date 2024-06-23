@@ -20,7 +20,7 @@ export class XRadioGroup extends XComponent {
     return ["aria-valuetext"]; // 声明要监听的属性
   }
 
-  radioMap: Set<XRadio | XRadioButton>;
+  childSet: Set<XRadio | XRadioButton>;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -28,7 +28,7 @@ export class XRadioGroup extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
-    this.radioMap = new Set();
+    this.childSet = new Set();
   }
 
   initListener(e: any) {
@@ -41,11 +41,11 @@ export class XRadioGroup extends XComponent {
       );
     }
 
-    if (this.radioMap.has(payload)) {
+    if (this.childSet.has(payload)) {
       return console.warn(`在group模式中，x-radio的 ariaValueText 属性有重复`);
     }
 
-    this.radioMap.add(payload);
+    this.childSet.add(payload);
     if (payload.ariaValueText === this.ariaValueText) {
       payload.ariaChecked = "";
     }
@@ -68,7 +68,7 @@ export class XRadioGroup extends XComponent {
   }
 
   attributeChangedCallback() {
-    this.radioMap.forEach((i) => {
+    this.childSet.forEach((i) => {
       i.ariaChecked = this.ariaValueText === i.ariaValueText ? "" : null;
     });
   }
