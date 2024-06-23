@@ -104,12 +104,11 @@ import { XComponent, XRegister } from "@/utils/decorator";
 export class XMenuItem extends XComponent {
   static name: string = "x-menu-item";
   static get observedAttributes() {
-    return ["aria-label", "aria-disabled", "aria-expanded"]; // 声明要监听的属性
+    return ["aria-label", "aria-expanded"]; // 声明要监听的属性
   }
 
   textElement: HTMLDivElement;
   root?: HTMLDivElement;
-  gap: string;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -120,7 +119,6 @@ export class XMenuItem extends XComponent {
     this.textElement = this.shadowRoot?.querySelector(
       "#text"
     ) as HTMLDivElement;
-    this.gap = "";
   }
 
   connectedCallback() {
@@ -134,12 +132,9 @@ export class XMenuItem extends XComponent {
           this.ariaExpanded = this.ariaExpanded === "true" ? "false" : "true";
           return;
         }
-
-        this.ariaChecked = this.ariaChecked === null ? "" : null;
         XDispatch.call(this, "XMenuItemChange", this, true);
       };
     }
-
     this.addEventListener("XMenuItemInit", this.inherentListener);
   }
 
@@ -154,12 +149,11 @@ export class XMenuItem extends XComponent {
   attributeChangedCallback() {
     this.attributeList = new Set(this.getAttributeNames());
     this.textElement.innerHTML = this.ariaLabel || "";
-    this.gap = getComputedStyle(this).getPropertyValue("--menu-gap");
     queueMicrotask(() => {
-      if (this.ariaLevel && this.root) {
+      if (this.root) {
         this.root.style.paddingLeft = `calc(var(--menu-padding-inline) + ${
           this.ariaLevel || 0
-        } * ${this.gap})`;
+        } * var(--menu-gap))`;
       }
     });
   }

@@ -18,10 +18,10 @@ import { XMenuItem } from "./item.vue";
 export class XMenu extends XComponent {
   static name: string = "x-menu";
   static get observedAttributes() {
-    return [""]; // 声明要监听的属性
+    return ["aria-valuetext"]; // 声明要监听的属性
   }
 
-  curMenuItem?: XMenuItem;
+  childMap: Map<string, XMenuItem>;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -29,6 +29,7 @@ export class XMenu extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
+    this.childMap = new Map();
   }
 
   initListener(e: any) {
@@ -37,21 +38,19 @@ export class XMenu extends XComponent {
     if (!payload.ariaValueText) {
       return console.warn(`x-menu-item 的 ariaValueText 属性是必须的`);
     }
+    if (this.childMap.has(payload.ariaValueText)) {
+      return console.warn(`x-menu-item 的 ariaValueText 属性有重复`);
+    }
+    console.log(this.childMap);
+    this.childMap.set(payload.ariaValueText, payload);
     if (payload.ariaValueText === this.ariaValueText) {
       payload.ariaChecked = "";
-      if (!this.curMenuItem) {
-        this.curMenuItem = payload;
-      }
     }
   }
 
   changeListener(e: any) {
     e.stopPropagation();
-    if (this.curMenuItem) {
-      this.curMenuItem.ariaChecked = null;
-    }
-    e.detail.ariaChecked = "";
-    this.curMenuItem = e.detail;
+    this.ariaValueText = e.detail.ariaValueText;
   }
 
   connectedCallback() {
@@ -64,6 +63,14 @@ export class XMenu extends XComponent {
     this.removeEventListener("XMenuItemChange", this.changeListener);
   }
 
-  attributeChangedCallback() {}
+  attributeChangedCallback() {
+    this.childMap.forEach((payload) => {
+      if (payload.ariaValueText === this.ariaValueText) {
+        payload.ariaChecked = "";
+      } else {
+        payload.ariaChecked = null;
+      }
+    });
+  }
 }
 </script>
