@@ -41,7 +41,6 @@ export class XMenu extends XComponent {
     if (this.childMap.has(payload.ariaValueText)) {
       return console.warn(`x-menu-item 的 ariaValueText 属性有重复`);
     }
-    console.log(this.childMap);
     this.childMap.set(payload.ariaValueText, payload);
     if (payload.ariaValueText === this.ariaValueText) {
       payload.ariaChecked = "";

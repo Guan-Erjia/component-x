@@ -21,4 +21,5 @@ declare module "*.vue" {
   export const XMenuItem;
   export const XSwiper;
   export const XSwiperItem;
+  export const XDrawer;
 }

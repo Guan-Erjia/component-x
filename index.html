@@ -14,11 +14,11 @@
         class="w-20"
         warning
         onclick="document.querySelector('#xDialog2').ariaHasPopup = ''"
-        >黄</x-button
+        >蒙层弹窗</x-button
       >
       <x-button danger aria-busy round id="btn">
         <span slot="loading"> <x-busy white /> </span>
-        俊杰
+        danger
       </x-button>
       <x-button aria-busy success>success</x-button>
       <x-button aria-busy>default</x-button>
@@ -32,10 +32,19 @@
         >开启弹窗</x-button-plain
       >
       <x-button-plain aria-busy round warning>warning</x-button-plain>
-      <x-button-plain round danger>danger</x-button-plain>
+      <x-button-plain
+        round
+        danger
+        onclick="document.querySelector('#xDrawer').ariaHasPopup = ''"
+        >开启抽屉</x-button-plain
+      >
 
       <x-button-plain round success aria-disabled>success</x-button-plain>
-      <x-button-plain round>default</x-button-plain>
+      <x-button-plain
+        round
+        onclick="document.querySelector('#xDrawer2').ariaHasPopup = ''"
+        >开启蒙层抽屉</x-button-plain
+      >
     </div>
 
     <x-dialog
@@ -60,6 +69,29 @@
     >
       <div>This modal dialog has a filter backdrop!</div>
     </x-dialog>
+
+    <x-drawer
+      id="xDrawer"
+      header="普通抽屉"
+      okText="Ok"
+      cancelText="cancel"
+      width="300px"
+      oncancel="console.log('cancel')"
+    >
+      <div>This modal dialog has a groovy backdrop!</div>
+    </x-drawer>
+
+    <x-drawer
+      id="xDrawer2"
+      header="长风的神奇抽屉"
+      okText="Ok"
+      cancelText="cancel"
+      width="300px"
+      oncancel="console.log('cancel')"
+      filter
+    >
+      <div>This modal dialog has a filter backdrop!</div>
+    </x-drawer>
 
     <div class="mt-3">
       <x-checkbox-group id="xCheckbox" aria-valuetext="1,2">

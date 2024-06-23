@@ -1,5 +1,6 @@
 x-button,
 x-button-plain,
+x-drawer,
 x-dialog {
   --btn-border-color: #d9d9d9; /* 默认按钮边框颜色*/
   --btn-border-style: solid; /* 默认按钮边框样式*/

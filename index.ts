@@ -16,6 +16,7 @@ import {
   XPopup,
   XMenu,
   XMenuItem,
+  XDrawer,
 } from "./packages/main";
 
 XBusy.register();
@@ -34,3 +35,4 @@ XSwitch.register();
 XPopup.register();
 XMenu.register();
 XMenuItem.register();
+XDrawer.register();

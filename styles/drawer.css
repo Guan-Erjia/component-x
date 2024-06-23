@@ -1,0 +1,15 @@
+x-drawer {
+  --drawer-padding: 20px 20px;
+  --drawer-title-size: 16px;
+  --drawer-title-color: black;
+  --drawer-title-weight: 600;
+  --drawer-border-color: rgb(110, 109, 109);
+  --drawer-border-style: solid;
+  --drawer-background: rgb(246, 248, 248);
+  --drawer-backdrop-background: black;
+  --drawer-backdrop-opacity: 0.4;
+  --drawer-content-gap: 20px;
+  --drawer-width: 400px;
+  --drawer-margin-top: 100px;
+  --drawer-filter: blur(2px);
+}
