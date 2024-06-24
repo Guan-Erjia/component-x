@@ -19,7 +19,7 @@ declare module "*.vue" {
   export const XPopup;
   export const XMenu;
   export const XMenuItem;
-  export const XSwiper;
-  export const XSwiperItem;
+  export const XCarosel;
+  export const XCarouselItem;
   export const XDrawer;
 }
