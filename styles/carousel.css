@@ -1,0 +1,10 @@
+x-carousel {
+  --carousel-btn-size: 32px;
+  --carousel-btn-radius: 100%;
+  --carousel-btn-color: rgba(0, 0, 0, 0.2);
+  --carousel-btn-transform: translateY(-50%);
+  --carousel-btn-margin: 10px;
+  --carousel-arrow-width: 3px;
+  --carousel-arrow-size: 30%;
+  --carousel-arrow-color: rgba(0, 0, 0, 0.5);
+}

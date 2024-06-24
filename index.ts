@@ -17,6 +17,8 @@ import {
   XMenu,
   XMenuItem,
   XDrawer,
+  XCarosel,
+  XCarouselItem,
 } from "./packages/main";
 
 XBusy.register();
@@ -36,3 +38,5 @@ XPopup.register();
 XMenu.register();
 XMenuItem.register();
 XDrawer.register();
+XCarosel.register();
+XCarouselItem.register();
