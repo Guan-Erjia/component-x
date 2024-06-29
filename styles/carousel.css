@@ -4,6 +4,7 @@ x-carousel {
   --carousel-btn-color: rgba(0, 0, 0, 0.2);
   --carousel-btn-transform: translateY(-50%);
   --carousel-btn-margin: 10px;
+  --carousel-btn-position: 50%;
   --carousel-arrow-width: 3px;
   --carousel-arrow-size: 30%;
   --carousel-arrow-color: rgba(0, 0, 0, 0.5);

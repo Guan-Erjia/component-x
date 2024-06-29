@@ -25,30 +25,52 @@
   justify-content: center;
   align-items: center;
   user-select: none;
-  > div {
-    width: var(--carousel-arrow-size);
-    height: var(--carousel-arrow-size);
-    border-style: solid;
-    border-color: var(--carousel-arrow-color);
-    border-top-width: var(--carousel-arrow-width);
-    border-right-width: var(--carousel-arrow-width);
-    border-left-width: 0;
-    border-bottom-width: 0;
-  }
+  top: var(--carousel-btn-position);
 }
 #left {
   left: var(--carousel-btn-margin);
-  top: 50%;
-  > div {
-    transform: rotate(-135deg);
-  }
 }
 #right {
   right: var(--carousel-btn-margin);
-  top: 50%;
-  > div {
-    transform: rotate(45deg);
+}
+#left-icon,
+#right-icon {
+  width: var(--carousel-arrow-size);
+  height: var(--carousel-arrow-size);
+  border-style: solid;
+  border-color: var(--carousel-arrow-color);
+  border-top-width: var(--carousel-arrow-width);
+  border-right-width: var(--carousel-arrow-width);
+  border-left-width: 0;
+  border-bottom-width: 0;
+}
+#left-icon {
+  transform: rotate(-135deg);
+}
+#right-icon {
+  transform: rotate(45deg);
+}
+.dot {
+  background-color: gray;
+  width: 20px;
+  height: 5px;
+  margin: 0 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: gainsboro;
   }
+}
+
+.dot[aria-current] {
+  background-color: gainsboro;
+}
+
+#dots {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  display: flex;
+  transform: translateX(-50%);
 }
 </style>
 <template>
@@ -56,11 +78,16 @@
     <slot></slot>
   </div>
   <div id="left">
-    <div></div>
+    <slot name="left-icon">
+      <div id="left-icon"></div>
+    </slot>
   </div>
   <div id="right">
-    <div></div>
+    <slot name="right-icon">
+      <div id="right-icon"></div>
+    </slot>
   </div>
+  <div id="dots"></div>
 </template>
 
 <script lang="ts">
@@ -78,8 +105,7 @@ export class XCarosel extends XComponent {
   itemList: XCarouselItem[];
   curIndex: number;
   timeout: number;
-  root?: HTMLElement;
-  hover: boolean;
+  dots: HTMLElement | null | undefined;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -90,7 +116,6 @@ export class XCarosel extends XComponent {
     this.itemList = [];
     this.curIndex = 0;
     this.timeout = 0;
-    this.hover = false;
   }
 
   initListener(e: any) {
@@ -100,49 +125,56 @@ export class XCarosel extends XComponent {
       return console.warn(`x-carousel-item 的 ariaValueText 属性有重复`);
     }
     this.itemList.push(payload);
-    console.log(this.itemList)
+    const dot = document.createElement("div");
+    dot.className = "dot";
+    dot.ariaValueText = payload.ariaValueText;
     if (payload.ariaValueText === this.ariaValueText) {
       payload.ariaCurrent = "";
+      dot.ariaCurrent = "";
+      payload.scrollIntoView();
     }
+    dot.onclick = () => {
+      clearTimeout(this.timeout);
+      this.ariaValueText = payload.ariaValueText;
+    };
+    this.dots?.appendChild(dot);
   }
 
-  switchNext() {
+  switchIndex(type: "next" | "prev") {
     clearTimeout(this.timeout);
-    this.curIndex += 1;
-    if (this.itemList.length === this.curIndex) {
-      this.curIndex = 0;
+    let index;
+    if (type === "next") {
+      index = this.curIndex + 1;
+      if (this.itemList.length === index) {
+        index = 0;
+      }
+    } else {
+      index = this.curIndex - 1;
+      if (index < 0) {
+        index = this.itemList.length - 1;
+      }
     }
-    this.ariaValueText = this.itemList[this.curIndex].ariaValueText;
-  }
-
-  switchPrev() {
-    clearTimeout(this.timeout);
-    this.curIndex -= 1;
-    if (this.curIndex < 0) {
-      this.curIndex = this.itemList.length - 1;
-    }
-    this.ariaValueText = this.itemList[this.curIndex].ariaValueText;
+    this.ariaValueText = this.itemList[index].ariaValueText;
   }
 
   connectedCallback() {
+    this.dots = this.shadowRoot?.querySelector("#dots");
     this.addEventListener("XCarouselItemInit", this.initListener);
     const leftBtn = this.shadowRoot?.querySelector("#left") as HTMLElement;
     const rightBtn = this.shadowRoot?.querySelector("#right") as HTMLElement;
-    leftBtn.onclick = () => this.switchPrev();
-    rightBtn.onclick = () => this.switchNext();
+    leftBtn.onclick = () => this.switchIndex("prev");
+    rightBtn.onclick = () => this.switchIndex("next");
 
     this.onmouseover = () => {
       if (this.ariaValueNow === null) {
         return;
       }
       clearTimeout(this.timeout);
-      this.hover = true;
     };
     this.onmouseleave = () => {
       if (this.ariaValueNow === null) {
         return;
       }
-      this.hover = false;
       this.attributeChangedCallback();
     };
   }
@@ -154,18 +186,24 @@ export class XCarosel extends XComponent {
   }
 
   attributeChangedCallback() {
-    this.itemList.forEach((tabItem) => {
+    if (this.ariaValueText) {
+      this.dots?.childNodes.forEach((dot: any) => {
+        dot.ariaCurrent = dot.ariaValueText === this.ariaValueText ? "" : null;
+      });
+    }
+    this.itemList.forEach((tabItem, index) => {
       if (tabItem.ariaValueText === this.ariaValueText) {
         tabItem.ariaCurrent = "";
         tabItem.scrollIntoView({ behavior: "smooth" });
+        this.curIndex = index;
       } else {
         tabItem.ariaCurrent = null;
       }
     });
-    if (this.ariaValueNow && this.ariaValueNow !== null) {
+    if (this.ariaValueNow !== null) {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
-        this.switchNext();
+        this.switchIndex("next");
       }, +this.ariaValueNow);
     }
   }

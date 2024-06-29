@@ -9,13 +9,13 @@
   cursor: pointer;
   flex-shrink: 0;
 }
-#inner {
+#image {
   height: 80%;
 }
 </style>
 
 <template>
-  <img id="inner" src="" alt="" />
+  <slot><img id="image" alt="" /></slot>
 </template>
 
 <script lang="ts">
@@ -36,7 +36,6 @@ export class XCarouselItem extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
-    console.log(this.ariaPlaceholder);
   }
 
   connectedCallback() {
@@ -47,8 +46,11 @@ export class XCarouselItem extends XComponent {
   }
 
   attributeChangedCallback() {
-    if (this.root) {
-      this.root.src = this.ariaPlaceholder || "";
+    if (this.ariaPlaceholder) {
+      const img = this.root?.querySelector("#image") as HTMLImageElement;
+      if (img) {
+        img.src = this.ariaPlaceholder;
+      }
     }
   }
 }
