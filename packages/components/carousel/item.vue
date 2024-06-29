@@ -10,7 +10,8 @@
   flex-shrink: 0;
 }
 #image {
-  height: var(--carousel-image-height);
+  max-width: var(--carousel-item-size);
+  max-height: var(--carousel-item-size);
 }
 </style>
 

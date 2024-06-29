@@ -2,18 +2,18 @@ x-carousel {
   --carousel-btn-size: 32px;
   --carousel-btn-radius: 100%;
   --carousel-btn-color: rgba(0, 0, 0, 0.2);
-  --carousel-btn-transform: translateY(-50%);
   --carousel-btn-margin: 10px;
   --carousel-btn-position: 50%;
   --carousel-arrow-width: 3px;
   --carousel-arrow-size: 30%;
   --carousel-arrow-color: rgba(0, 0, 0, 0.5);
-  --carousel-dots-padding: 10px 2px;
-  --carousel-dots-gap: 5px;
-  --carousel-dots-offset: 0px;
-  --carousel-dots-width: 70%;
-  --carousel-dots-height: 5px;
-  --carousel-dots-color: gray;
-  --carousel-dots-active: gainsboro;
-  --carousel-image-height: 80%;
+  --carousel-dot-inline: 2px;
+  --carousel-dot-block: 10px;
+  --carousel-dot-gap: 5px;
+  --carousel-dot-offset: 0px;
+  --carousel-dot-color: gray;
+  --carousel-dot-active: gainsboro;
+  --carousel-dot-length: 5px;
+  --carousel-dots-length: 70%;
+  --carousel-item-size: 80%;
 }

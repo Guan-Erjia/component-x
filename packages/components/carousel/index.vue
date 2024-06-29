@@ -1,21 +1,19 @@
 <style lang="scss">
 :host {
-  display: flex;
+  display: inline-flex;
   border-radius: var(--control-radius);
   position: relative;
   height: fit-content;
 }
 #content {
   display: flex;
-  overflow-x: hidden;
   height: 100%;
   width: 100%;
 }
 
-#left,
-#right {
+#prev,
+#next {
   position: absolute;
-  transform: var(--carousel-btn-transform);
   background-color: var(--carousel-btn-color);
   border-radius: var(--carousel-btn-radius);
   width: var(--carousel-btn-size);
@@ -25,16 +23,9 @@
   justify-content: center;
   align-items: center;
   user-select: none;
-  top: var(--carousel-btn-position);
 }
-#left {
-  left: var(--carousel-btn-margin);
-}
-#right {
-  right: var(--carousel-btn-margin);
-}
-#left-icon,
-#right-icon {
+#prev-icon,
+#next-icon {
   width: var(--carousel-arrow-size);
   height: var(--carousel-arrow-size);
   border-style: solid;
@@ -44,32 +35,25 @@
   border-left-width: 0;
   border-bottom-width: 0;
 }
-#left-icon {
-  transform: rotate(-135deg);
-}
-#right-icon {
-  transform: rotate(45deg);
-}
+
 #dots {
   position: absolute;
-  bottom: var(--carousel-dots-offset);
-  left: 50%;
   display: flex;
-  transform: translateX(-50%);
-  gap: var(--carousel-dots-gap);
-  width: var(--carousel-dots-width);
+  gap: var(--carousel-dot-gap);
+  width: var(--carousel-dots-length);
   justify-content: space-between;
 }
+
 .dot {
-  padding: var(--carousel-dots-padding);
+  padding: var(--carousel-dot-block) var(--carousel-dot-inline);
   cursor: pointer;
   flex-grow: 1;
   > div {
-    background-color: var(--carousel-dots-color);
-    height: var(--carousel-dots-height);
+    background-color: var(--carousel-dot-color);
+    height: var(--carousel-dot-length);
     border-radius: var(--control-radius);
     &:hover {
-      background-color: var(--carousel-dots-active);
+      background-color: var(--carousel-dot-active);
     }
   }
 }
@@ -77,19 +61,85 @@
 .dot[aria-current] > div {
   background-color: gainsboro;
 }
+
+:host(:not([vertical])) {
+  #content {
+    overflow-x: hidden;
+  }
+  #prev,
+  #next {
+    top: var(--carousel-btn-position);
+    transform: translateY(-50%);
+  }
+  #prev {
+    left: var(--carousel-btn-margin);
+  }
+  #next {
+    right: var(--carousel-btn-margin);
+  }
+  #prev-icon {
+    transform: rotate(-135deg);
+  }
+  #next-icon {
+    transform: rotate(45deg);
+  }
+  #dots {
+    bottom: var(--carousel-dot-offset);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+:host([vertical]) {
+  #content {
+    overflow-y: hidden;
+    flex-direction: column;
+  }
+  #dots {
+    left: var(--carousel-dot-offset);
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    height: var(--carousel-dots-length);
+  }
+  #prev,
+  #next {
+    left: var(--carousel-btn-position);
+    transform: translateX(-50%);
+  }
+  #prev {
+    top: var(--carousel-btn-margin);
+  }
+  #next {
+    bottom: var(--carousel-btn-margin);
+  }
+  #prev-icon {
+    transform: rotate(-45deg);
+  }
+  #next-icon {
+    transform: rotate(135deg);
+  }
+  .dot {
+    padding: var(--carousel-dot-inline) var(--carousel-dot-block);
+    > div {
+      width: var(--carousel-dot-length);
+      height: 100%;
+    }
+  }
+}
 </style>
 <template>
   <div id="content">
     <slot></slot>
   </div>
-  <div id="left">
-    <slot name="left-icon">
-      <div id="left-icon"></div>
+  <div id="prev">
+    <slot name="prev-icon">
+      <div id="prev-icon"></div>
     </slot>
   </div>
-  <div id="right">
-    <slot name="right-icon">
-      <div id="right-icon"></div>
+  <div id="next">
+    <slot name="next-icon">
+      <div id="next-icon"></div>
     </slot>
   </div>
   <div id="dots"></div>
@@ -161,10 +211,10 @@ export class XCarosel extends XComponent {
   connectedCallback() {
     this.dots = this.shadowRoot?.querySelector("#dots");
     this.addEventListener("XCarouselItemInit", this.initListener);
-    const leftBtn = this.shadowRoot?.querySelector("#left") as HTMLElement;
-    const rightBtn = this.shadowRoot?.querySelector("#right") as HTMLElement;
-    leftBtn.onclick = () => this.switchIndex("prev");
-    rightBtn.onclick = () => this.switchIndex("next");
+    const prevBtn = this.shadowRoot?.querySelector("#prev") as HTMLElement;
+    const nextBtn = this.shadowRoot?.querySelector("#next") as HTMLElement;
+    prevBtn.onclick = () => this.switchIndex("prev");
+    nextBtn.onclick = () => this.switchIndex("next");
 
     this.onmouseover = () => {
       if (this.ariaValueNow === null) {
