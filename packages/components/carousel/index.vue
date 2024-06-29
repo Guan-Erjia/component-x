@@ -50,27 +50,32 @@
 #right-icon {
   transform: rotate(45deg);
 }
-.dot {
-  background-color: gray;
-  width: 20px;
-  height: 5px;
-  margin: 0 10px;
-  cursor: pointer;
-  &:hover {
-    background-color: gainsboro;
-  }
-}
-
-.dot[aria-current] {
-  background-color: gainsboro;
-}
-
 #dots {
   position: absolute;
-  bottom: 5%;
+  bottom: var(--carousel-dots-offset);
   left: 50%;
   display: flex;
   transform: translateX(-50%);
+  gap: var(--carousel-dots-gap);
+  width: var(--carousel-dots-width);
+  justify-content: space-between;
+}
+.dot {
+  padding: var(--carousel-dots-padding);
+  cursor: pointer;
+  flex-grow: 1;
+  > div {
+    background-color: var(--carousel-dots-color);
+    height: var(--carousel-dots-height);
+    border-radius: var(--control-radius);
+    &:hover {
+      background-color: var(--carousel-dots-active);
+    }
+  }
+}
+
+.dot[aria-current] > div {
+  background-color: gainsboro;
 }
 </style>
 <template>
@@ -127,6 +132,7 @@ export class XCarosel extends XComponent {
     this.itemList.push(payload);
     const dot = document.createElement("div");
     dot.className = "dot";
+    dot.innerHTML = `<div></div>`;
     dot.ariaValueText = payload.ariaValueText;
     if (payload.ariaValueText === this.ariaValueText) {
       payload.ariaCurrent = "";
@@ -142,17 +148,12 @@ export class XCarosel extends XComponent {
 
   switchIndex(type: "next" | "prev") {
     clearTimeout(this.timeout);
-    let index;
-    if (type === "next") {
-      index = this.curIndex + 1;
-      if (this.itemList.length === index) {
-        index = 0;
-      }
-    } else {
-      index = this.curIndex - 1;
-      if (index < 0) {
-        index = this.itemList.length - 1;
-      }
+    let index = type === "next" ? this.curIndex + 1 : this.curIndex - 1;
+    if (this.itemList.length === index) {
+      index = 0;
+    }
+    if (index < 0) {
+      index = this.itemList.length - 1;
     }
     this.ariaValueText = this.itemList[index].ariaValueText;
   }

@@ -10,7 +10,7 @@
   flex-shrink: 0;
 }
 #image {
-  height: 80%;
+  height: var(--carousel-image-height);
 }
 </style>
 

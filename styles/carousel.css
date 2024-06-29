@@ -8,4 +8,12 @@ x-carousel {
   --carousel-arrow-width: 3px;
   --carousel-arrow-size: 30%;
   --carousel-arrow-color: rgba(0, 0, 0, 0.5);
+  --carousel-dots-padding: 10px 2px;
+  --carousel-dots-gap: 5px;
+  --carousel-dots-offset: 0px;
+  --carousel-dots-width: 70%;
+  --carousel-dots-height: 5px;
+  --carousel-dots-color: gray;
+  --carousel-dots-active: gainsboro;
+  --carousel-image-height: 80%;
 }
