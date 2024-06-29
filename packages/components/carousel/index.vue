@@ -127,6 +127,19 @@
     }
   }
 }
+
+:host([hide-arrow]) {
+  #prev,
+  #next {
+    display: none;
+  }
+}
+
+:host([hide-control]) {
+  #dots {
+    display: none;
+  }
+}
 </style>
 <template>
   <div id="content">
