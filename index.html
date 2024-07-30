@@ -22,6 +22,15 @@
       </x-button>
       <x-button aria-busy success>success</x-button>
       <x-button aria-busy>default</x-button>
+
+      <x-radio-group aria-valuetext="3">
+        <x-radio-button plain aria-valuetext="1">
+          <span>radio1</span>
+        </x-radio-button>
+        <x-radio-button aria-valuetext="2"> radio2 </x-radio-button>
+        <x-radio-button plain aria-valuetext="3"> radio3 </x-radio-button>
+        <x-radio-button plain aria-valuetext="4"> radio4 </x-radio-button>
+      </x-radio-group>
     </div>
 
     <div class="mt-3">
@@ -45,6 +54,10 @@
         onclick="document.querySelector('#xDrawer2').ariaHasPopup = ''"
         >开启蒙层抽屉</x-button-plain
       >
+
+      <x-busy></x-busy>
+      <x-busy aria-setsize="28px"></x-busy>
+      <x-busy aria-setsize="68px"></x-busy>
     </div>
 
     <x-dialog
@@ -113,6 +126,14 @@
           <span>check4</span>
         </x-checkbox>
       </x-checkbox-group>
+
+      <x-switch primary aria-busy></x-switch>
+      <x-switch primary aria-disabled aria-checked></x-switch>
+      <x-switch danger aria-checked>
+        <span slot="checked">yes</span>
+        <span slot="unchecked">no</span>
+      </x-switch>
+      <x-switch warning aria-busy aria-checked></x-switch>
     </div>
 
     <div class="mt-3">
@@ -130,97 +151,6 @@
           <span>radio4</span>
         </x-radio>
       </x-radio-group>
-    </div>
-
-    <div class="mt-3">
-      <x-radio-group aria-valuetext="3">
-        <x-radio-button plain aria-valuetext="1">
-          <span>radio1</span>
-        </x-radio-button>
-        <x-radio-button aria-valuetext="2"> radio2 </x-radio-button>
-        <x-radio-button plain aria-valuetext="3"> radio3 </x-radio-button>
-        <x-radio-button plain aria-valuetext="4"> radio4 </x-radio-button>
-      </x-radio-group>
-
-      <x-busy></x-busy>
-      <x-busy aria-setsize="28px"></x-busy>
-      <x-busy aria-setsize="68px"></x-busy>
-    </div>
-
-    <div class="mt-3 flex">
-      <x-tabs aria-valuetext="2" class="w-60 mr-10">
-        <div slot="title">
-          <x-tabs-title aria-valuetext="1">
-            <span>title1</span>
-          </x-tabs-title>
-          <x-tabs-title aria-valuetext="2">
-            <span>title2</span>
-          </x-tabs-title>
-          <x-tabs-title aria-valuetext="3">
-            <span>title3</span>
-          </x-tabs-title>
-        </div>
-        <x-tabs-item aria-valuetext="1">
-          <div class="bg-green-200 h-36">第一个</div>
-        </x-tabs-item>
-        <x-tabs-item aria-valuetext="2">
-          <div class="bg-cyan-200 h-36">第二个</div>
-        </x-tabs-item>
-        <x-tabs-item aria-valuetext="3">
-          <div class="bg-yellow-300 h-36">第三个</div>
-        </x-tabs-item>
-      </x-tabs>
-      <x-menu class="w-120 inline-block" aria-valuetext="子菜单2-1">
-        <x-menu-item aria-label="菜单1" aria-valuetext="菜单1" aria-haspopup>
-          <x-menu-item
-            aria-valuetext="子菜单1-1"
-            aria-label="子菜单1-1"
-          ></x-menu-item>
-          <x-menu-item
-            aria-valuetext="子菜单1-2"
-            aria-label="子菜单1-2"
-          ></x-menu-item>
-          <x-menu-item
-            aria-valuetext="子菜单1-3"
-            aria-label="子菜单1-3"
-          ></x-menu-item>
-        </x-menu-item>
-        <x-menu-item aria-label="菜单2" aria-valuetext="菜单2">
-          <x-menu-item aria-label="子菜单2-1" aria-valuetext="子菜单2-1">
-            <x-menu-item
-              aria-label="子菜单2-1-1"
-              aria-valuetext="子菜单2-1-1"
-            ></x-menu-item>
-            <x-menu-item
-              aria-label="子菜单2-1-2"
-              aria-valuetext="子菜单2-1-2"
-            ></x-menu-item>
-            <x-menu-item
-              aria-valuetext="子菜单2-1-3"
-              aria-label="子菜单2-1-3"
-            ></x-menu-item>
-          </x-menu-item>
-          <x-menu-item
-            aria-valuetext="子菜单2-2"
-            aria-label="子菜单2-2"
-            aria-disabled
-          ></x-menu-item>
-          <x-menu-item
-            aria-valuetext="子菜单2-3"
-            aria-label="子菜单2-3"
-          ></x-menu-item>
-        </x-menu-item>
-      </x-menu>
-    </div>
-
-    <div class="mt-3">
-      <x-switch primary aria-busy></x-switch>
-      <x-switch primary aria-disabled aria-checked></x-switch>
-      <x-switch danger aria-checked>
-        <span slot="checked">yes</span>
-        <span slot="unchecked">no</span>
-      </x-switch>
-      <x-switch warning aria-busy aria-checked></x-switch>
 
       <x-popup no-arrow>
         <x-button success plain> noArrow </x-button>
@@ -264,39 +194,70 @@
       </x-popup>
     </div>
 
-    <div class="mt-3">
+    <div class="mt-3 flex">
+      <x-tabs aria-valuetext="2" class="w-60 mr-10">
+        <div slot="title">
+          <x-tabs-title aria-valuetext="1">
+            <span>title1</span>
+          </x-tabs-title>
+          <x-tabs-title aria-valuetext="2">
+            <span>title2</span>
+          </x-tabs-title>
+          <x-tabs-title aria-valuetext="3">
+            <span>title3</span>
+          </x-tabs-title>
+        </div>
+        <x-tabs-item aria-valuetext="1">
+          <div class="bg-green-200 h-10">第一个</div>
+        </x-tabs-item>
+        <x-tabs-item aria-valuetext="2">
+          <div class="bg-cyan-200 h-10">第二个</div>
+        </x-tabs-item>
+        <x-tabs-item aria-valuetext="3">
+          <div class="bg-yellow-300 h-10">第三个</div>
+        </x-tabs-item>
+      </x-tabs>
+      <x-menu class="w-120 inline-block" aria-valuetext="子菜单2-1">
+        <x-menu-item aria-label="菜单1" aria-valuetext="菜单1" aria-haspopup>
+          <x-menu-item
+            aria-valuetext="子菜单1-1"
+            aria-label="子菜单1-1"
+          ></x-menu-item>
+          <x-menu-item
+            aria-valuetext="子菜单1-2"
+            aria-label="子菜单1-2"
+          ></x-menu-item>
+        </x-menu-item>
+        <x-menu-item aria-label="菜单2" aria-valuetext="菜单2">
+          <x-menu-item aria-label="子菜单2-1" aria-valuetext="子菜单2-1">
+            <x-menu-item
+              aria-label="子菜单2-1-1"
+              aria-valuetext="子菜单2-1-1"
+            ></x-menu-item>
+            <x-menu-item
+              aria-label="子菜单2-1-2"
+              aria-valuetext="子菜单2-1-2"
+            ></x-menu-item>
+            <x-menu-item
+              aria-valuetext="子菜单2-1-3"
+              aria-label="子菜单2-1-3"
+            ></x-menu-item>
+          </x-menu-item>
+          <x-menu-item
+            aria-valuetext="子菜单2-2"
+            aria-label="子菜单2-2"
+            aria-disabled
+          ></x-menu-item>
+          <x-menu-item
+            aria-valuetext="子菜单2-3"
+            aria-label="子菜单2-3"
+          ></x-menu-item>
+        </x-menu-item>
+      </x-menu>
       <x-carousel
-        class="w-[300px] h-[200px] border-gray-300 border-solid"
+        class="w-[200px] h-[150px] border-gray-300 border-solid ml-5"
         aria-valuenow="3000"
         aria-valuetext="2"
-      >
-        <x-carousel-item
-          aria-valuetext="1"
-          aria-placeholder="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-        ></x-carousel-item>
-        <x-carousel-item
-          aria-valuetext="2"
-          aria-placeholder="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
-        ></x-carousel-item>
-        <x-carousel-item
-          aria-valuetext="3"
-          aria-placeholder="https://pinia.vuejs.org/logo.svg"
-        ></x-carousel-item>
-        <x-carousel-item
-          aria-valuetext="4"
-          aria-placeholder="https://v2.cn.vuejs.org/images/logo.svg"
-        ></x-carousel-item>
-        <x-carousel-item
-          aria-valuetext="5"
-          aria-placeholder="https://lingjing-online.cdn.bcebos.com/v1/lingjing-online/appavatar/2024-06-09/755fb338-a7c7-4d1a-b668-ab0ce42be97e.jpg"
-        ></x-carousel-item>
-      </x-carousel>
-
-      <x-carousel
-        class="w-[300px] h-[200px] border-gray-300 border-solid"
-        aria-valuenow="3000"
-        aria-valuetext="2"
-        vertical
       >
         <x-carousel-item
           aria-valuetext="1"
@@ -320,6 +281,11 @@
         ></x-carousel-item>
       </x-carousel>
     </div>
+
+    <div
+      id="slate-remark"
+      class="w-1/2 border-[1px] border-solid border-red-500"
+    ></div>
 
     <script>
       document
