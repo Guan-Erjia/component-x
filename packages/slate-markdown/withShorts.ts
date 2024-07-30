@@ -23,7 +23,7 @@ export const withShortcuts = (editor: ReactEditor): ReactEditor => {
       const start = Editor.start(editor, path);
       const range = { anchor, focus: start };
       const beforeText = Editor.string(editor, range) + text.slice(0, -1);
-      const type = SHORTCUTS[beforeText];
+      const type = SHORTCUTS[beforeText as keyof typeof SHORTCUTS];
 
       if (type) {
         Transforms.select(editor, range);
@@ -32,13 +32,13 @@ export const withShortcuts = (editor: ReactEditor): ReactEditor => {
           Transforms.delete(editor);
         }
 
-        const newProperties: Partial<SlateElement> = {
+        const newProperties: Record<string, any> = {
           type,
         };
         if (type === "heading") {
           newProperties.depth = beforeText.length;
         }
-        Transforms.setNodes<SlateElement>(editor, newProperties, {
+        Transforms.setNodes<SlateElement>(editor, newProperties as any, {
           match: (n) => SlateElement.isElement(n) && Editor.isBlock(editor, n),
         });
 
@@ -48,12 +48,12 @@ export const withShortcuts = (editor: ReactEditor): ReactEditor => {
             {
               type: "list",
               children: [],
-            },
+            } as any,
             {
               match: (n) =>
                 !Editor.isEditor(n) &&
                 SlateElement.isElement(n) &&
-                n.type === "listItem",
+                (n as any).type === "listItem",
             }
           );
         }
@@ -80,20 +80,20 @@ export const withShortcuts = (editor: ReactEditor): ReactEditor => {
         if (
           !Editor.isEditor(block) &&
           SlateElement.isElement(block) &&
-          block.type !== "paragraph" &&
+          (block as any).type !== "paragraph" &&
           Point.equals(selection.anchor, start)
         ) {
-          const newProperties: Partial<SlateElement> = {
+          const newProperties = {
             type: "paragraph",
           };
-          Transforms.setNodes(editor, newProperties);
+          Transforms.setNodes(editor, newProperties as any);
 
-          if (block.type === "listItem") {
+          if ((block as any).type === "listItem") {
             Transforms.unwrapNodes(editor, {
               match: (n) =>
                 !Editor.isEditor(n) &&
                 SlateElement.isElement(n) &&
-                n.type === "list",
+                (n as any).type === "list",
               split: true,
             });
           }
