@@ -32,12 +32,16 @@ export const isBlockActive = (
     Editor.nodes(editor, {
       at: Editor.unhangRange(editor, selection),
       match: (n) => {
-        if (!Editor.isEditor(n) && Element.isElement(n) && n.type === format) {
-          switch (n.type) {
+        if (
+          !Editor.isEditor(n) &&
+          Element.isElement(n) &&
+          (n as any).type === format
+        ) {
+          switch ((n as any).type) {
             case "heading":
-              return n.depth === options.depth;
+              return (n as any).depth === options.depth;
             case "list":
-              return n.ordered === options.ordered;
+              return (n as any).ordered === options.ordered;
             default:
               return true;
           }
@@ -63,7 +67,11 @@ export const toggleBlock = (
 
   Transforms.unwrapNodes(editor, {
     match: (n) => {
-      if (!Editor.isEditor(n) && Element.isElement(n) && n.type === "list") {
+      if (
+        !Editor.isEditor(n) &&
+        Element.isElement(n) &&
+        (n as any).type === "list"
+      ) {
         return true;
       } else {
         return false;
@@ -77,7 +85,7 @@ export const toggleBlock = (
     ordered: isActive ? undefined : options.ordered,
     depth: options.depth,
   };
-  Transforms.setNodes<Element>(editor, newProperties);
+  Transforms.setNodes<Element>(editor, newProperties as any);
 
   if (!isActive && isList) {
     const block = {
