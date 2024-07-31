@@ -19,7 +19,7 @@ import {
   XDrawer,
   XCarosel,
   XCarouselItem,
-  CreateSlateRemark,
+  XRemark,
 } from "./packages/main";
 
 XBusy.register();
@@ -41,5 +41,4 @@ XMenuItem.register();
 XDrawer.register();
 XCarosel.register();
 XCarouselItem.register();
-
-CreateSlateRemark("slate-remark");
+XRemark.register();

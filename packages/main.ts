@@ -18,3 +18,4 @@ export { XMenuItem } from "./components/menu/item.vue";
 export { XCarosel } from "./components/carousel/index.vue";
 export { XCarouselItem } from "./components/carousel/item.vue";
 export { CreateSlateRemark } from "./slate-markdown";
+export { XRemark } from "./components/remark/index.vue";

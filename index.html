@@ -282,14 +282,14 @@
       </x-carousel>
     </div>
 
-    <div
-      id="slate-remark"
-      class="w-1/2 border-[1px] border-solid border-red-500"
-    ></div>
+    <x-remark id="remark" class="w-[600px]"></x-remark>
 
     <script>
       document
         .querySelector("#xCheckbox")
+        .addEventListener("change", (e) => console.log(e.detail));
+      document
+        .querySelector("#remark")
         .addEventListener("change", (e) => console.log(e.detail));
     </script>
     <style>
