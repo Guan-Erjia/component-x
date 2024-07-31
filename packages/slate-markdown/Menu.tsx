@@ -82,12 +82,10 @@ const BlockButton = (props: {
 }) => {
   const editor = useSlate();
 
-  const active =
-    props.format === "list" ||
-    isBlockActive(editor, props.format, {
-      depth: props.depth,
-      ordered: props.ordered,
-    });
+  const active = isBlockActive(editor, props.format, {
+    depth: props.depth,
+    ordered: props.ordered,
+  });
   return (
     <Button
       active={active}
