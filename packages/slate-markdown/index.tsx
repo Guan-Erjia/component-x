@@ -1,12 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { useCallback, useMemo } from "react";
-import {
-  createEditor,
-  Editor,
-  Element as SlateElement,
-  Node as SlateNode,
-} from "slate";
+import { createEditor, Editor, Element, Node } from "slate";
 import { withHistory } from "slate-history";
 import { Editable, ReactEditor, Slate, withReact } from "slate-react";
 import { remarkToSlate, slateToRemark } from "remark-slate-transformer";
@@ -35,7 +30,7 @@ function SlateMarkdown() {
           return false;
         }
 
-        const { text } = SlateNode.leaf(editor, path);
+        const { text } = Node.leaf(editor, path);
         const beforeText = text.slice(0, diff.start) + diff.text.slice(0, -1);
         if (!(beforeText in SHORTCUTS)) {
           return;
@@ -43,7 +38,7 @@ function SlateMarkdown() {
 
         const blockEntry = Editor.above(editor, {
           at: path,
-          match: (n) => SlateElement.isElement(n) && Editor.isBlock(editor, n),
+          match: (n) => Element.isElement(n) && Editor.isBlock(editor, n),
         });
         if (!blockEntry) {
           return false;
@@ -63,16 +58,16 @@ function SlateMarkdown() {
     <Slate
       editor={editor}
       initialValue={initialValue}
-      onValueChange={(value) => {
+      onValueChange={(descendant) => {
         try {
-          const result = slateToRemark(value);
-          const file = unified().use(remarkStringify).stringify(result);
-          console.log(file);
+          const result = slateToRemark(descendant);
+          const remarkString = unified().use(remarkStringify).stringify(result);
+          console.log(remarkString);
 
           const processor = unified().use(remarkParse).use(remarkToSlate);
 
-          const value1 = processor.processSync(file).result;
-          console.log(value1);
+          const slateDescendant = processor.processSync(remarkString).result;
+          console.log(slateDescendant);
         } catch (error) {
           console.error(error);
         }
