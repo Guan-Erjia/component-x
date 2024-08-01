@@ -22,4 +22,5 @@ declare module "*.vue" {
   export const XCarosel;
   export const XCarouselItem;
   export const XDrawer;
+  export const XRemark;
 }
