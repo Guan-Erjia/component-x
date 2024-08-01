@@ -9,7 +9,7 @@ import renderLeaf from "./RenderLeaf";
 import Menu from "./Menu";
 import { SHORTCUTS } from "./utils";
 import { withShortcuts } from "./withShorts";
-import { initialValue } from "@/slate-markdown/initValue";
+import renderPlaceholder from "./RenderPlaceholder";
 
 export interface SlateRemarkProps {
   onValueChange?: (descendant: Descendant[]) => void;
@@ -65,7 +65,15 @@ function SlateRemark(props: SlateRemarkProps) {
   return (
     <Slate
       editor={editor}
-      initialValue={initialValue}
+      initialValue={[
+        {
+          children: [
+            {
+              text: "aaaaaaaa",
+            },
+          ],
+        },
+      ]}
       onValueChange={props.onValueChange}
     >
       <Menu />
@@ -73,10 +81,13 @@ function SlateRemark(props: SlateRemarkProps) {
         style={{
           flexGrow: 1,
           overflowY: "auto",
+          border: "none",
+          borderRadius: 0,
         }}
         onDOMBeforeInput={handleDOMBeforeInput}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
+        renderPlaceholder={renderPlaceholder}
         placeholder="Write some markdown..."
         spellCheck
         autoFocus

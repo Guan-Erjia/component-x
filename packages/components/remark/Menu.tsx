@@ -109,11 +109,14 @@ export default function Menu() {
       style={{
         position: "relative",
         padding: "5px 10px",
-        borderBottom: "2px solid #eee",
+        borderBottomWidth: "var(--control-width)",
+        borderBottomColor: "var(--default-color)",
+        borderBottomStyle: "solid",
         width: "100%",
         display: "flex",
         gap: "10px",
         boxSizing: "border-box",
+        alignItems: "center",
         flexShrink: 0,
         flexGrow: 0,
       }}

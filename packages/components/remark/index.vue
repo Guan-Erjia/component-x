@@ -1,11 +1,30 @@
 <style lang="scss">
 :host {
-  border: 1px solid red;
   display: inline-block;
+  border-width: var(--control-width);
+  border-color: var(--default-color);
+  border-style: solid;
 }
 
 * {
   line-height: normal;
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--default-color);
+    border-radius: var(--control-radius);
+  }
+
+  [contenteditable] {
+    outline: none;
+    border-radius: 0;
+    width: 100%;
+  }
+
+  [contenteditable]:focus {
+    border-radius: 3px;
+  }
 }
 
 p {
@@ -15,7 +34,7 @@ p {
 </style>
 
 <template>
-  <div style="height: 100%;display: flex; flex-direction: column;"></div>
+  <div style="height: 100%; display: flex; flex-direction: column"></div>
 </template>
 
 <script lang="ts">
@@ -33,7 +52,7 @@ import remarkParse from "remark-parse";
 export class XRemark extends XComponent {
   static name: string = "x-remark";
   root?: HTMLButtonElement;
-  editor?: ReactEditor
+  editor?: ReactEditor;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -56,29 +75,36 @@ export class XRemark extends XComponent {
     const processor = unified().use(remarkParse).use(remarkToSlate);
     const slateDescendant = processor.processSync(text).result;
     queueMicrotask(() => {
-      this.clear()
-      this.editor && Transforms.insertNodes(
-        this.editor, slateDescendant
-      )
+      if (!this.editor) {
+        return;
+      }
+      this.clear();
+      Transforms.removeNodes(this.editor, {
+        at: {
+          anchor: Editor.start(this.editor, []),
+          focus: Editor.end(this.editor, []),
+        },
+      });
+      this.editor && Transforms.insertNodes(this.editor, slateDescendant);
     });
   }
 
   clear() {
     if (!this.editor) {
-      return
+      return;
     }
     Transforms.delete(this.editor, {
       at: {
         anchor: Editor.start(this.editor, []),
         focus: Editor.end(this.editor, []),
       },
-    })
+    });
   }
 
   onEditorConnected(editor: ReactEditor) {
-    this.editor = editor
+    this.editor = editor;
     if (this.ariaValueText) {
-      this.setRemarkValue(this.ariaValueText)
+      this.setRemarkValue(this.ariaValueText);
     }
   }
   connectedCallback() {
