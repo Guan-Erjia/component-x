@@ -31,9 +31,6 @@ import remarkParse from "remark-parse";
 
 @XRegister
 export class XRemark extends XComponent {
-  static get observedAttributes() {
-    return [];
-  }
   static name: string = "x-remark";
   root?: HTMLButtonElement;
   editor?: ReactEditor
@@ -55,19 +52,17 @@ export class XRemark extends XComponent {
     });
   }
 
-  onEditorConnected(editor: ReactEditor) {
-    this.editor = editor
-    if (this.ariaValueText) {
-      const processor = unified().use(remarkParse).use(remarkToSlate);
-      const slateDescendant = processor.processSync(this.ariaValueText).result;
-      queueMicrotask(() => {
-        this.clear()
-        this.editor && Transforms.insertNodes(
-          this.editor, slateDescendant
-        )
-      });
-    }
+  setRemarkValue(text: string) {
+    const processor = unified().use(remarkParse).use(remarkToSlate);
+    const slateDescendant = processor.processSync(text).result;
+    queueMicrotask(() => {
+      this.clear()
+      this.editor && Transforms.insertNodes(
+        this.editor, slateDescendant
+      )
+    });
   }
+
   clear() {
     if (!this.editor) {
       return
@@ -78,6 +73,13 @@ export class XRemark extends XComponent {
         focus: Editor.end(this.editor, []),
       },
     })
+  }
+
+  onEditorConnected(editor: ReactEditor) {
+    this.editor = editor
+    if (this.ariaValueText) {
+      this.setRemarkValue(this.ariaValueText)
+    }
   }
   connectedCallback() {
     if (!this.root) {
