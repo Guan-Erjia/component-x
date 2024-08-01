@@ -2,27 +2,32 @@
 :host {
   border: 1px solid red;
   display: inline-block;
-  overflow-y: auto;
 }
+
 * {
   line-height: normal;
+}
+
+p {
+  line-height: normal;
+  margin: 0;
 }
 </style>
 
 <template>
-  <div style="height: 100%"></div>
+  <div style="height: 100%;display: flex; flex-direction: column;"></div>
 </template>
 
 <script lang="ts">
 import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 import { CreateSlateRemark } from "./index";
-import { Descendant } from "slate";
-import { slateToRemark } from "remark-slate-transformer";
-// import { remarkToSlate } from "remark-slate-transformer";
-// import remarkParse from "remark-parse";
+import { Descendant, Editor, Transforms } from "slate";
+import { remarkToSlate, slateToRemark } from "remark-slate-transformer";
 import { unified } from "unified";
 import remarkStringify from "remark-stringify";
+import { ReactEditor } from "slate-react";
+import remarkParse from "remark-parse";
 
 @XRegister
 export class XRemark extends XComponent {
@@ -31,6 +36,7 @@ export class XRemark extends XComponent {
   }
   static name: string = "x-remark";
   root?: HTMLButtonElement;
+  editor?: ReactEditor
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -43,14 +49,36 @@ export class XRemark extends XComponent {
   onValueChange(descendant: Descendant[]) {
     const result = slateToRemark(descendant);
     const remarkString = unified().use(remarkStringify).stringify(result);
-    // const processor = unified().use(remarkParse).use(remarkToSlate);
-    // const slateDescendant = processor.processSync(remarkString).result;
     XDispatch.call(this, "change", {
       text: remarkString,
       descendant,
     });
   }
 
+  onEditorConnected(editor: ReactEditor) {
+    this.editor = editor
+    if (this.ariaValueText) {
+      const processor = unified().use(remarkParse).use(remarkToSlate);
+      const slateDescendant = processor.processSync(this.ariaValueText).result;
+      queueMicrotask(() => {
+        this.clear()
+        this.editor && Transforms.insertNodes(
+          this.editor, slateDescendant
+        )
+      });
+    }
+  }
+  clear() {
+    if (!this.editor) {
+      return
+    }
+    Transforms.delete(this.editor, {
+      at: {
+        anchor: Editor.start(this.editor, []),
+        focus: Editor.end(this.editor, []),
+      },
+    })
+  }
   connectedCallback() {
     if (!this.root) {
       return;
@@ -58,6 +86,7 @@ export class XRemark extends XComponent {
     CreateSlateRemark(this.root, {
       // 直接传入上下文会报错
       onValueChange: (descendant) => this.onValueChange(descendant),
+      onEditorConnected: (editor) => this.onEditorConnected(editor),
     });
   }
 }

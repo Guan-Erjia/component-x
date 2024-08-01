@@ -114,6 +114,8 @@ export default function Menu() {
         display: "flex",
         gap: "10px",
         boxSizing: "border-box",
+        flexShrink: 0,
+        flexGrow: 0,
       }}
     >
       <MarkButton

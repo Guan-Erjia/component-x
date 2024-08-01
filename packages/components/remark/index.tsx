@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { useCallback, useMemo } from "react";
 import { createEditor, Descendant, Editor, Element, Node } from "slate";
@@ -9,10 +9,11 @@ import renderLeaf from "./RenderLeaf";
 import Menu from "./Menu";
 import { SHORTCUTS } from "./utils";
 import { withShortcuts } from "./withShorts";
-import { initialValue } from "./initValue";
+import { initialValue } from "@/slate-markdown/initValue";
 
 export interface SlateRemarkProps {
   onValueChange?: (descendant: Descendant[]) => void;
+  onEditorConnected?: (editor: ReactEditor) => void;
 }
 
 function SlateRemark(props: SlateRemarkProps) {
@@ -20,6 +21,10 @@ function SlateRemark(props: SlateRemarkProps) {
     () => withShortcuts(withReact(withHistory(createEditor()))),
     []
   );
+
+  useEffect(() => {
+    props.onEditorConnected?.(editor);
+  }, []);
 
   const handleDOMBeforeInput = useCallback(() => {
     queueMicrotask(() => {
@@ -44,8 +49,11 @@ function SlateRemark(props: SlateRemarkProps) {
           return false;
         }
 
-        const [, blockPath] = blockEntry;
-        return Editor.isStart(editor, Editor.start(editor, path), blockPath);
+        return Editor.isStart(
+          editor,
+          Editor.start(editor, path),
+          blockEntry[1]
+        );
       });
 
       if (scheduleFlush) {
@@ -62,6 +70,10 @@ function SlateRemark(props: SlateRemarkProps) {
     >
       <Menu />
       <Editable
+        style={{
+          flexGrow: 1,
+          overflowY: "auto",
+        }}
         onDOMBeforeInput={handleDOMBeforeInput}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
