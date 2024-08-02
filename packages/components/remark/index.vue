@@ -27,9 +27,9 @@
     border-radius: 3px;
   }
 }
-
-p {
-  line-height: normal;
+li {
+  display: flex;
+  align-items: center;
 }
 </style>
 

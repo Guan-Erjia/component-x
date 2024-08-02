@@ -41,7 +41,20 @@ export function renderElement(props: RenderElementProps): JSX.Element {
           return <p {...attributes}>{children}</p>;
       }
     case "listItem":
-      return <li {...attributes}>{children}</li>;
+      return (
+        <li {...attributes}>
+          {element.checked !== undefined && (
+            <input
+              style={{
+                marginRight: 4,
+              }}
+              type="checkbox"
+              defaultChecked={element.checked}
+            />
+          )}
+          {children}
+        </li>
+      );
     case "image":
       return <img src={element.url} />;
     case "code":
@@ -52,8 +65,17 @@ export function renderElement(props: RenderElementProps): JSX.Element {
           {children}
         </a>
       );
+    case "table":
+      return (
+        <table {...attributes}>
+          <tbody>{children}</tbody>
+        </table>
+      );
+    case "tableRow":
+      return <tr {...attributes}>{children}</tr>;
+    case "tableCell":
+      return <td {...attributes}>{children}</td>;
     default:
-      console.log(element.type);
       return <p {...attributes}>{children}</p>;
   }
 }
