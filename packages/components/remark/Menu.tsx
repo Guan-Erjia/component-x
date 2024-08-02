@@ -1,26 +1,42 @@
-import { MouseEventHandler, ReactNode } from "react";
+import { MouseEventHandler } from "react";
 import { BaseEditor, Editor, Transforms } from "slate";
 import { useSlate, useSlateStatic } from "slate-react";
 import imageExtensions from "image-extensions";
 import { isBlockActive, toggleBlock } from "./utils";
+import Blockquote from "@/assets/blockquote.svg";
+import Bold from "@/assets/bold.svg";
+import Code from "@/assets/code.svg";
+import Delete from "@/assets/delete.svg";
+import Img from "@/assets/img.svg";
+import Italic from "@/assets/italic.svg";
+import Ol from "@/assets/ol.svg";
+import Ul from "@/assets/ul.svg";
+import Underline from "@/assets/underline.svg";
+import H1 from "@/assets/h1.svg";
+import H2 from "@/assets/h2.svg";
+import H3 from "@/assets/h3.svg";
+import H4 from "@/assets/h4.svg";
+import H5 from "@/assets/h5.svg";
+import H6 from "@/assets/h6.svg";
 
 const Button = (props: {
   onMouseDown: MouseEventHandler;
   active?: boolean;
-  children?: ReactNode;
+  icon: string;
 }) => (
-  <span
+  <img
     onMouseDown={props.onMouseDown}
     style={{
       cursor: "pointer",
-      color: props.active ? "black" : "#ccc",
+      width: 20,
+      height: 20,
+      filter: props.active ? "" : "opacity(25%)",
     }}
-  >
-    {props.children}
-  </span>
+    src={props.icon}
+  />
 );
 
-const MarkButton = (props: { format: string; icon: ReactNode }) => {
+const MarkButton = (props: { format: string; icon: string }) => {
   const editor = useSlate();
   const marks = Editor.marks(editor) as Record<string, boolean>;
   const isMarkActive = marks ? marks[props.format] === true : false;
@@ -36,9 +52,8 @@ const MarkButton = (props: { format: string; icon: ReactNode }) => {
           Editor.addMark(editor, props.format, true);
         }
       }}
-    >
-      {props.icon}
-    </Button>
+      icon={props.icon}
+    />
   );
 };
 
@@ -60,6 +75,7 @@ const InsertImageButton = () => {
   return (
     <Button
       active
+      icon={Img}
       onMouseDown={(event) => {
         event.preventDefault();
         const url = window.prompt("Enter the URL of the image:");
@@ -69,14 +85,12 @@ const InsertImageButton = () => {
         }
         url && insertImage(editor, url);
       }}
-    >
-      <span className="material-icons"></span>
-    </Button>
+    />
   );
 };
 const BlockButton = (props: {
   format: string;
-  icon: ReactNode;
+  icon: string;
   depth?: number;
   ordered?: boolean;
 }) => {
@@ -96,9 +110,8 @@ const BlockButton = (props: {
           ordered: props.ordered,
         });
       }}
-    >
-      <span className="material-icons"> {props.icon}</span>
-    </Button>
+      icon={props.icon}
+    />
   );
 };
 
@@ -121,41 +134,20 @@ export default function Menu() {
         flexGrow: 0,
       }}
     >
-      <MarkButton
-        format="bold"
-        icon={<span className="font-semibold">B</span>}
-      />
-      <MarkButton
-        format="italic"
-        icon={
-          <span
-            style={{
-              fontStyle: "italic",
-            }}
-          >
-            I
-          </span>
-        }
-      />
-      <MarkButton
-        format="underline"
-        icon={
-          <span
-            style={{
-              textDecoration: "underline",
-            }}
-          >
-            U
-          </span>
-        }
-      />
-      <MarkButton format="code" icon={<span>{"< >"}</span>} />
-      <BlockButton format="heading" depth={1} icon={<span>h1</span>} />
-      <BlockButton format="heading" depth={2} icon={<span>h2</span>} />
-      <BlockButton format="heading" depth={3} icon={<span>h3</span>} />
-      <BlockButton format="blockquote" icon={<span>”</span>} />
-      <BlockButton format="list" ordered={true} icon={<span>Ol</span>} />
-      <BlockButton format="list" ordered={false} icon={<span>Ul</span>} />
+      <MarkButton format="bold" icon={Bold} />
+      <MarkButton format="italic" icon={Italic} />
+      <MarkButton format="underline" icon={Underline} />
+      <MarkButton format="deleteline" icon={Delete} />
+      <MarkButton format="code" icon={Code} />
+      <BlockButton format="heading" depth={1} icon={H1} />
+      <BlockButton format="heading" depth={2} icon={H2} />
+      <BlockButton format="heading" depth={3} icon={H3} />
+      <BlockButton format="heading" depth={4} icon={H4} />
+      <BlockButton format="heading" depth={5} icon={H5} />
+      <BlockButton format="heading" depth={6} icon={H6} />
+      <BlockButton format="blockquote" icon={Blockquote} />
+      <BlockButton format="list" ordered={true} icon={Ol} />
+      <BlockButton format="list" ordered={false} icon={Ul} />
       <InsertImageButton />
     </div>
   );
