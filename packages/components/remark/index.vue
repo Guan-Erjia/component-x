@@ -8,6 +8,7 @@
 
 * {
   line-height: normal;
+  margin: 0;
   ::-webkit-scrollbar {
     width: 4px;
   }
@@ -29,7 +30,6 @@
 
 p {
   line-height: normal;
-  margin: 0;
 }
 </style>
 
@@ -45,6 +45,7 @@ import { Descendant, Editor, Transforms } from "slate";
 import { remarkToSlate, slateToRemark } from "remark-slate-transformer";
 import { unified } from "unified";
 import remarkStringify from "remark-stringify";
+import remarkGfm from "remark-gfm";
 import { ReactEditor } from "slate-react";
 import remarkParse from "remark-parse";
 
@@ -64,7 +65,10 @@ export class XRemark extends XComponent {
 
   onValueChange(descendant: Descendant[]) {
     const result = slateToRemark(descendant);
-    const remarkString = unified().use(remarkStringify).stringify(result);
+    const remarkString = unified()
+      .use(remarkGfm)
+      .use(remarkStringify)
+      .stringify(result);
     XDispatch.call(this, "change", {
       text: remarkString,
       descendant,
@@ -72,7 +76,10 @@ export class XRemark extends XComponent {
   }
 
   setRemarkValue(text: string) {
-    const processor = unified().use(remarkParse).use(remarkToSlate);
+    const processor = unified()
+      .use(remarkParse)
+      .use(remarkGfm)
+      .use(remarkToSlate);
     const slateDescendant = processor.processSync(text).result;
     queueMicrotask(() => {
       if (!this.editor) {

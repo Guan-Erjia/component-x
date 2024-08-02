@@ -282,33 +282,7 @@
       </x-carousel>
     </div>
 
-    <x-remark
-      id="remark"
-      class="w-[600px] h-[300px]"
-      aria-valuetext="# heading 1
-
-## heading 2
-
-### heading 3
-
-aaaaaaaa**bold***emphasis*
-
-1. ordered list2
-
-2. ordered list3
-
-3. ordered list4
-
-This is .
-
-This is .
-
-> quote
-> quote
-> quote
-> quote
-    "
-    ></x-remark>
+    <x-remark id="remark" class="w-[600px] h-[300px]"></x-remark>
 
     <script>
       document
@@ -317,6 +291,35 @@ This is .
       document
         .querySelector("#remark")
         .addEventListener("change", (e) => console.log(e.detail));
+      setTimeout(() => {
+        document.querySelector("#remark").setRemarkValue(`
+# GFM
+
+## Autolink literals
+
+www.example.com, https://example.com, and contact@example.com.
+
+## Footnote
+
+A note[^1]
+
+[^1]: Big note.
+
+## Strikethrough
+
+~one~ or ~~two~~ tildes.
+
+## Table
+
+| a | b  |  c |  d  |
+| - | :- | -: | :-: |
+
+## Tasklist
+
+* [ ] to do
+* [x] done
+      `);
+      }, 1000);
     </script>
     <style>
       ::backdrop {
