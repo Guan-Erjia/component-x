@@ -31,6 +31,27 @@ li {
   display: flex;
   align-items: center;
 }
+ul {
+  padding-left: 20px;
+}
+
+hr {
+  margin-top: 12px;
+  margin-bottom: 24px;
+  height: var(--control-line);
+  border: none;
+  background-color: gray;
+}
+
+table {
+  border-collapse: collapse;
+}
+td {
+  border-style: solid;
+  border-width: var(--control-line);
+  border-color: #dc143c #1e90ff orange #32cd32;
+  padding: 5px 12px;
+}
 </style>
 
 <template>
@@ -81,19 +102,17 @@ export class XRemark extends XComponent {
       .use(remarkGfm)
       .use(remarkToSlate);
     const slateDescendant = processor.processSync(text).result;
-    queueMicrotask(() => {
-      if (!this.editor) {
-        return;
-      }
-      this.clear();
-      Transforms.removeNodes(this.editor, {
-        at: {
-          anchor: Editor.start(this.editor, []),
-          focus: Editor.end(this.editor, []),
-        },
-      });
-      this.editor && Transforms.insertNodes(this.editor, slateDescendant);
+    if (!this.editor) {
+      return;
+    }
+    this.clear();
+    Transforms.removeNodes(this.editor, {
+      at: {
+        anchor: Editor.start(this.editor, []),
+        focus: Editor.end(this.editor, []),
+      },
     });
+    this.editor && Transforms.insertNodes(this.editor, slateDescendant);
   }
 
   clear() {
@@ -108,11 +127,11 @@ export class XRemark extends XComponent {
     });
   }
 
-  onEditorConnected(editor: ReactEditor) {
+  onEditorReady(editor: ReactEditor) {
     this.editor = editor;
-    if (this.ariaValueText) {
-      this.setRemarkValue(this.ariaValueText);
-    }
+    queueMicrotask(() => {
+      this.ariaValueText && this.setRemarkValue(this.ariaValueText);
+    });
   }
   connectedCallback() {
     if (!this.root) {
@@ -121,7 +140,7 @@ export class XRemark extends XComponent {
     CreateSlateRemark(this.root, {
       // 直接传入上下文会报错
       onValueChange: (descendant) => this.onValueChange(descendant),
-      onEditorConnected: (editor) => this.onEditorConnected(editor),
+      onEditorReady: (editor) => this.onEditorReady(editor),
     });
   }
 }

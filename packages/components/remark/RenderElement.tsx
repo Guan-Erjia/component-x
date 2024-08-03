@@ -67,7 +67,7 @@ export function renderElement(props: RenderElementProps): JSX.Element {
       );
     case "table":
       return (
-        <table {...attributes}>
+        <table border={2} cellSpacing={10} {...attributes}>
           <tbody>{children}</tbody>
         </table>
       );
@@ -75,6 +75,8 @@ export function renderElement(props: RenderElementProps): JSX.Element {
       return <tr {...attributes}>{children}</tr>;
     case "tableCell":
       return <td {...attributes}>{children}</td>;
+    case "thematicBreak":
+      return <hr />;
     default:
       return <p {...attributes}>{children}</p>;
   }

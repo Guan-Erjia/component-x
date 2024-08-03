@@ -13,7 +13,7 @@ import renderPlaceholder from "./RenderPlaceholder";
 
 export interface SlateRemarkProps {
   onValueChange?: (descendant: Descendant[]) => void;
-  onEditorConnected?: (editor: ReactEditor) => void;
+  onEditorReady?: (editor: ReactEditor) => void;
 }
 
 function SlateRemark(props: SlateRemarkProps) {
@@ -23,7 +23,7 @@ function SlateRemark(props: SlateRemarkProps) {
   );
 
   useEffect(() => {
-    props.onEditorConnected?.(editor);
+    props.onEditorReady?.(editor);
   }, []);
 
   const handleDOMBeforeInput = useCallback(() => {

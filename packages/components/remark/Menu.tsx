@@ -11,6 +11,7 @@ import Img from "@/assets/img.svg";
 import Italic from "@/assets/italic.svg";
 import Ol from "@/assets/ol.svg";
 import Ul from "@/assets/ul.svg";
+import Task from "@/assets/task.svg";
 import Underline from "@/assets/underline.svg";
 import H1 from "@/assets/h1.svg";
 import H2 from "@/assets/h2.svg";
@@ -137,7 +138,7 @@ export default function Menu() {
       <MarkButton format="bold" icon={Bold} />
       <MarkButton format="italic" icon={Italic} />
       <MarkButton format="underline" icon={Underline} />
-      <MarkButton format="deleteline" icon={Delete} />
+      <MarkButton format="delete" icon={Delete} />
       <MarkButton format="code" icon={Code} />
       <BlockButton format="heading" depth={1} icon={H1} />
       <BlockButton format="heading" depth={2} icon={H2} />
@@ -148,6 +149,7 @@ export default function Menu() {
       <BlockButton format="blockquote" icon={Blockquote} />
       <BlockButton format="list" ordered={true} icon={Ol} />
       <BlockButton format="list" ordered={false} icon={Ul} />
+      <BlockButton format="list" icon={Task} />
       <InsertImageButton />
     </div>
   );
