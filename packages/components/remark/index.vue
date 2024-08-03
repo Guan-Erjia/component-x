@@ -27,17 +27,11 @@
     border-radius: 3px;
   }
 }
-li {
-  display: flex;
-  align-items: center;
-}
-ul {
-  padding-left: 20px;
-}
 
+li > p {
+  display: inline-block;
+}
 hr {
-  margin-top: 12px;
-  margin-bottom: 24px;
   height: var(--control-line);
   border: none;
   background-color: gray;
@@ -51,6 +45,14 @@ td {
   border-width: var(--control-line);
   border-color: #dc143c #1e90ff orange #32cd32;
   padding: 5px 12px;
+}
+blockquote {
+  padding-left: 20px;
+}
+img {
+  display: block;
+  width: 200px;
+  border-radius: var(--control-radius);
 }
 </style>
 

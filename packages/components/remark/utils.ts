@@ -15,6 +15,9 @@ export const SHORTCUTS = {
   "#": "heading",
   "##": "heading",
   "###": "heading",
+  "####": "heading",
+  "#####": "heading",
+  "######": "heading",
 };
 
 export const isBlockActive = (

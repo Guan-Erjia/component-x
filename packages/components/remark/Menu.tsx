@@ -1,7 +1,6 @@
 import { MouseEventHandler } from "react";
 import { BaseEditor, Editor, Transforms } from "slate";
 import { useSlate, useSlateStatic } from "slate-react";
-import imageExtensions from "image-extensions";
 import { isBlockActive, toggleBlock } from "./utils";
 import Blockquote from "@/assets/blockquote.svg";
 import Bold from "@/assets/bold.svg";
@@ -58,11 +57,6 @@ const MarkButton = (props: { format: string; icon: string }) => {
   );
 };
 
-const isImageUrl = (url: string | URL) => {
-  if (!url) return false;
-  const ext = new URL(url).pathname.split(".").pop() || "";
-  return imageExtensions.includes(ext);
-};
 const insertImage = (editor: BaseEditor, url: string) => {
   const text = { text: "" };
   const image = { type: "image", url, children: [text] };
@@ -80,10 +74,6 @@ const InsertImageButton = () => {
       onMouseDown={(event) => {
         event.preventDefault();
         const url = window.prompt("Enter the URL of the image:");
-        if (url && !isImageUrl(url)) {
-          alert("URL is not an image");
-          return;
-        }
         url && insertImage(editor, url);
       }}
     />

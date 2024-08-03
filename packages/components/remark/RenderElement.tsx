@@ -44,13 +44,7 @@ export function renderElement(props: RenderElementProps): JSX.Element {
       return (
         <li {...attributes}>
           {element.checked !== undefined && (
-            <input
-              style={{
-                marginRight: 4,
-              }}
-              type="checkbox"
-              defaultChecked={element.checked}
-            />
+            <input type="checkbox" defaultChecked={element.checked} />
           )}
           {children}
         </li>
