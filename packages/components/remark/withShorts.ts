@@ -38,6 +38,10 @@ export const withShortcuts = (editor: ReactEditor): ReactEditor => {
         if (type === "heading") {
           newProperties.depth = beforeText.length;
         }
+        if (type === "listItem") {
+          newProperties.checked = null;
+        }
+        console.log(newProperties);
         Transforms.setNodes<SlateElement>(editor, newProperties as any, {
           match: (n) => SlateElement.isElement(n) && Editor.isBlock(editor, n),
         });

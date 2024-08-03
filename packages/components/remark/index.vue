@@ -28,9 +28,6 @@
   }
 }
 
-li > p {
-  display: inline-block;
-}
 hr {
   height: var(--control-line);
   border: none;
