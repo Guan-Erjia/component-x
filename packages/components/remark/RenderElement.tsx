@@ -1,16 +1,6 @@
-import { Element } from "slate";
-
-interface RenderElementProps {
-  children: any;
-  element: Element & Record<string, any>;
-  attributes: {
-    "data-slate-node": "element";
-    "data-slate-inline"?: true;
-    "data-slate-void"?: true;
-    dir?: "rtl";
-    ref: any;
-  };
-}
+import RenderImage from "./RenderImage";
+import { RenderElementProps } from "./interface";
+import RenderLink from "./RenderLink";
 
 export function renderElement(props: RenderElementProps): JSX.Element {
   const { attributes, children, element } = props;
@@ -50,14 +40,18 @@ export function renderElement(props: RenderElementProps): JSX.Element {
         </li>
       );
     case "image":
-      return <img src={element.url} />;
+      return <RenderImage {...props} />;
     case "code":
-      return <code {...attributes}>{children}</code>;
+      return (
+        <pre>
+          <code {...attributes}>{children}</code>
+        </pre>
+      );
     case "link":
       return (
-        <a {...attributes} href={element.url}>
+        <RenderLink {...props} href={element.url}>
           {children}
-        </a>
+        </RenderLink>
       );
     case "table":
       return (
@@ -71,6 +65,27 @@ export function renderElement(props: RenderElementProps): JSX.Element {
       return <td {...attributes}>{children}</td>;
     case "thematicBreak":
       return <hr />;
+    case "linkReference":
+      return (
+        <span {...attributes} title={element.label}>
+          {children}
+        </span>
+      );
+    case "definition":
+      return <p {...attributes}>{children}</p>;
+    case "footnoteDefinition":
+      return <span {...attributes}>{children}</span>;
+    case "html":
+      return (
+        <div>
+          {element.children.map((child: any, index) => (
+            <div
+              dangerouslySetInnerHTML={{ __html: child.text }}
+              key={child.text + index}
+            ></div>
+          ))}
+        </div>
+      );
     default:
       return <p {...attributes}>{children}</p>;
   }

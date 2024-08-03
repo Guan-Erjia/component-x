@@ -291,34 +291,96 @@
       document
         .querySelector("#remark")
         .addEventListener("change", (e) => console.log(e.detail));
-      document.querySelector("#remark").ariaValueText = `
-# GFM
-## Autolink literals
-www.example.com, https://example.com, and contact@example.com.
-***
-
- ![](https://gimg3.baidu.com/search/src=http%3A%2F%2Fpics2.baidu.com%2Ffeed%2F5d6034a85edf8db169b269647a9eb45a574e7459.jpeg%40f_auto%3Ftoken%3Da6b167fd4d4b1d478ce3127c431eb634&refer=http%3A%2F%2Fwww.baidu.com&app=2021&size=f360,240&n=0&g=0n&q=75&fmt=auto?sec=1722790800&t=0fe05fc8e674f8653f357c8f786bae1c)
-## Footnote
-
-A note[^1]
-
-## Strikethrough
-
-~one~ or ~~two~~ tildes.
-
-## Table
-
-| a | b  |  c |  d  |
-| - | :- | -: | :-: |
-| a | b  |  c |  d  |
-| - | :- | -: | :-: |
+      document.querySelector(
+        "#remark"
+      ).ariaValueText = `Vditor 是一款**所见即所得**编辑器，支持 *Markdown*。
+* 不熟悉 Markdown 可使用工具栏或快捷键进行排版
+* 熟悉 Markdown 可直接排版，也可切换为分屏预览
+更多细节和用法请参考 [Vditor - 浏览器端的 Markdown 编辑器](https://ld246.com/article/1549638745630)，同时也欢迎向我们提出建议或报告问题，谢谢 ❤️
+## 教程
+这是一篇讲解如何正确使用 **Markdown** 的排版示例，学会这个很有必要，能让你的文章有更佳清晰的排版。
+> 引用文本：Markdown is a text formatting syntax inspired
+## 语法指导
+### 普通内容
+这段内容展示了在内容里面一些排版格式，比如：
+### 有序、无序、任务列表
+#### 无序列表
+- Java
+  - Spring
+    - IoC
+    - AOP
+- Go
+  - gofmt
+  - Wide
+- Node.js
+  - Koa
+  - Express
+#### 有序列表
+1. Node.js
+   1. Express
+   2. Koa
+   3. Sails
+2. Go
+   1. gofmt
+   2. Wide
+3. Java
+   1. Latke
+   2. IDEA
 
 #### 任务列表
 
 - [X] 发布 Sym
 - [X] 发布 Solo
 - [ ] 预约牙医
-      `;
+
+### 表格
+
+如果需要展示数据什么的，可以选择使用表格。
+
+| header 1 | header 2 |
+| -------- | -------- |
+| cell 1   | cell 2   |
+| cell 3   | cell 4   |
+| cell 5   | cell 6   |
+
+### 隐藏细节
+
+<details><summary>这里是摘要部分。</summary>这里是细节部分。</details>
+
+### 段落
+
+空行可以将内容进行分段，便于阅读。（这是第一段）
+
+使用空行在 Markdown 排版中相当重要。（这是第二段）
+
+### 链接引用
+
+[链接文本][foo]
+
+[foo]: https://b3log.org
+
+### 数学公式
+
+多行公式块：
+
+$$\frac{1}{
+  \Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{
+  \frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {
+    1+\frac{e^{-6\pi}}
+    {1+\frac{e^{-8\pi}}{1+\cdots}}
+  }}$$
+
+公式 $a^2 + b^2 = \color{red}c^2$ 是行内。
+### 多媒体
+支持 v.qq.com，youtube.com，youku.com，coub.com，facebook.com/video，dailymotion.com，.mp4，.m4v，.ogg，.ogv，.webm，.mp3，.wav 链接解析
+https://v.qq.com/x/cover/zf2z0xpqcculhcz/y0016tj0qvh.html
+### 脚注
+这里是一个脚注引用[^1]，这里是另一个脚注引用[^bignote]。
+[^1]: 第一个脚注定义。
+## 快捷键
+
+我们的编辑器支持很多快捷键，具体请参考 [键盘快捷键](https://ld246.com/article/1474030007391)（或者按 " "😼）
+`;
     </script>
     <style>
       ::backdrop {
