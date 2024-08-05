@@ -61,7 +61,7 @@ img {
 import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 import { CreateSlateRemark } from "./index";
-import { Descendant, Editor, Transforms } from "slate";
+import { Descendant } from "slate";
 import { remarkToSlate, slateToRemark } from "remark-slate-transformer";
 import { unified } from "unified";
 import remarkStringify from "remark-stringify";
@@ -74,6 +74,7 @@ export class XRemark extends XComponent {
   static name: string = "x-remark";
   root?: HTMLButtonElement;
   editor?: ReactEditor;
+  initialValue?: Descendant[];
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -95,51 +96,57 @@ export class XRemark extends XComponent {
     });
   }
 
-  setRemarkValue(text: string) {
-    const processor = unified()
-      .use(remarkParse)
-      .use(remarkGfm)
-      .use(remarkToSlate);
-    const slateDescendant = processor.processSync(text).result;
-    if (!this.editor) {
-      return;
-    }
-    this.clear();
-    Transforms.removeNodes(this.editor, {
-      at: {
-        anchor: Editor.start(this.editor, []),
-        focus: Editor.end(this.editor, []),
-      },
-    });
-    this.editor && Transforms.insertNodes(this.editor, slateDescendant);
-  }
-
-  clear() {
-    if (!this.editor) {
-      return;
-    }
-    Transforms.delete(this.editor, {
-      at: {
-        anchor: Editor.start(this.editor, []),
-        focus: Editor.end(this.editor, []),
-      },
-    });
-  }
+  // setRemarkValue(text: string) {
+  //   const processor = unified()
+  //     .use(remarkParse)
+  //     .use(remarkGfm)
+  //     .use(remarkToSlate);
+  //   const slateDescendant = processor.processSync(text).result;
+  //   if (!this.editor) {
+  //     return;
+  //   }
+  //   Transforms.removeNodes(this.editor, {
+  //     at: {
+  //       anchor: Editor.start(this.editor, []),
+  //       focus: Editor.end(this.editor, []),
+  //     },
+  //   });
+  //   this.editor && Transforms.insertNodes(this.editor, slateDescendant);
+  // }
 
   onEditorReady(editor: ReactEditor) {
     this.editor = editor;
-    queueMicrotask(() => {
-      this.ariaValueText && this.setRemarkValue(this.ariaValueText);
-    });
   }
+
   connectedCallback() {
     if (!this.root) {
       return;
     }
+    const processor = unified()
+      .use(remarkParse)
+      .use(remarkGfm)
+      .use(remarkToSlate);
+    if (this.ariaValueText) {
+      const slateDescendant = processor.processSync(this.ariaValueText).result;
+      this.initialValue = slateDescendant;
+    }
+
     CreateSlateRemark(this.root, {
       // 直接传入上下文会报错
       onValueChange: (descendant) => this.onValueChange(descendant),
       onEditorReady: (editor) => this.onEditorReady(editor),
+      initialValue:
+        this.initialValue ||
+        ([
+          {
+            type: "paragraph",
+            children: [
+              {
+                text: " ",
+              },
+            ],
+          },
+        ] as any),
     });
   }
 }

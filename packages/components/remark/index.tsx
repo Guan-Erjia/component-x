@@ -14,6 +14,7 @@ import renderPlaceholder from "./RenderPlaceholder";
 export interface SlateRemarkProps {
   onValueChange?: (descendant: Descendant[]) => void;
   onEditorReady?: (editor: ReactEditor) => void;
+  initialValue: Descendant[];
 }
 
 function SlateRemark(props: SlateRemarkProps) {
@@ -65,15 +66,7 @@ function SlateRemark(props: SlateRemarkProps) {
   return (
     <Slate
       editor={editor}
-      initialValue={[
-        {
-          children: [
-            {
-              text: "aaaaaaaa",
-            },
-          ],
-        },
-      ]}
+      initialValue={props.initialValue}
       onValueChange={props.onValueChange}
     >
       <Menu />

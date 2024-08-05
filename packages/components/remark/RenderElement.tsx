@@ -59,6 +59,8 @@ export function renderElement(props: RenderElementProps): JSX.Element {
       );
     case "definition":
       return <p {...attributes}>{children}</p>;
+    case "footnoteReference":
+      return <span {...attributes}>{children}</span>;
     case "footnoteDefinition":
       return <span {...attributes}>{children}</span>;
     case "html":
