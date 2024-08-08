@@ -32,21 +32,31 @@ export const withShortcuts = (editor: ReactEditor): ReactEditor => {
           Transforms.delete(editor);
         }
 
-        const newProperties: Record<string, any> = {
-          type,
-        };
         if (type === "heading") {
-          newProperties.depth = beforeText.length;
+          Transforms.setNodes<SlateElement>(
+            editor,
+            {
+              type,
+              depth: beforeText.length,
+            } as any,
+            {
+              match: (n) =>
+                SlateElement.isElement(n) && Editor.isBlock(editor, n),
+            }
+          );
         }
         if (type === "listItem") {
-          newProperties.checked = null;
-        }
-        console.log(newProperties);
-        Transforms.setNodes<SlateElement>(editor, newProperties as any, {
-          match: (n) => SlateElement.isElement(n) && Editor.isBlock(editor, n),
-        });
-
-        if (type === "listItem") {
+          Transforms.setNodes<SlateElement>(
+            editor,
+            {
+              type,
+              checked: null,
+            } as any,
+            {
+              match: (n) =>
+                SlateElement.isElement(n) && Editor.isBlock(editor, n),
+            }
+          );
           Transforms.wrapNodes(
             editor,
             {
@@ -87,10 +97,7 @@ export const withShortcuts = (editor: ReactEditor): ReactEditor => {
           (block as any).type !== "paragraph" &&
           Point.equals(selection.anchor, start)
         ) {
-          const newProperties = {
-            type: "paragraph",
-          };
-          Transforms.setNodes(editor, newProperties as any);
+          Transforms.setNodes(editor, { type: "paragraph" } as any);
 
           if ((block as any).type === "listItem") {
             Transforms.unwrapNodes(editor, {
