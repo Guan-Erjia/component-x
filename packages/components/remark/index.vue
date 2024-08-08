@@ -9,9 +9,11 @@
 * {
   line-height: normal;
   margin: 0;
+
   ::-webkit-scrollbar {
     width: 4px;
   }
+
   ::-webkit-scrollbar-thumb {
     background-color: var(--default-color);
     border-radius: var(--control-radius);
@@ -37,15 +39,18 @@ hr {
 table {
   border-collapse: collapse;
 }
+
 td {
   border-style: solid;
   border-width: var(--control-line);
   border-color: #dc143c #1e90ff orange #32cd32;
   padding: 5px 12px;
 }
+
 blockquote {
   padding-left: 20px;
 }
+
 img {
   display: block;
   width: 200px;
@@ -68,6 +73,7 @@ import remarkStringify from "remark-stringify";
 import remarkGfm from "remark-gfm";
 import { ReactEditor } from "slate-react";
 import remarkParse from "remark-parse";
+import { remarkListItem } from './utils'
 
 @XRegister
 export class XRemark extends XComponent {
@@ -125,7 +131,8 @@ export class XRemark extends XComponent {
     const processor = unified()
       .use(remarkParse)
       .use(remarkGfm)
-      .use(remarkToSlate);
+      .use(remarkToSlate)
+      .use(remarkListItem);
     if (this.ariaValueText) {
       const slateDescendant = processor.processSync(this.ariaValueText).result;
       this.initialValue = slateDescendant;

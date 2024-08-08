@@ -1,4 +1,5 @@
 import { BaseEditor, Editor, Element, Transforms } from "slate";
+import { visit } from "unist-util-visit";
 
 export interface MarkdownElement {
   type: string;
@@ -98,4 +99,10 @@ export const toggleBlock = (
     };
     Transforms.wrapNodes(editor, block);
   }
+};
+
+export const remarkListItem = () => (tree: any) => {
+  visit(tree, "listItem", function (node) {
+    node.children = node.children[0].children;
+  });
 };
