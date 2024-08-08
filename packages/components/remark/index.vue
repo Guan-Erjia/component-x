@@ -56,6 +56,15 @@ img {
   width: 200px;
   border-radius: var(--control-radius);
 }
+
+li span,
+li>input {
+  vertical-align: middle;
+}
+
+li>input {
+  margin-right: 10px;
+}
 </style>
 
 <template>
