@@ -2,13 +2,6 @@ import { BaseEditor, Editor, Element, Transforms } from "slate";
 import { visit } from "unist-util-visit";
 import { Node } from "unist";
 
-export interface MarkdownElement {
-  type: string;
-  ordered?: boolean;
-  depth?: number;
-  url?: string;
-}
-
 export const SHORTCUTS = {
   "*": "listItem",
   "-": "listItem",
@@ -28,6 +21,7 @@ export const isBlockActive = (
   options: {
     depth?: number;
     ordered?: boolean;
+    checked?: boolean;
   }
 ) => {
   const { selection } = editor;
@@ -42,11 +36,14 @@ export const isBlockActive = (
           Element.isElement(n) &&
           (n as any).type === format
         ) {
-          switch ((n as any).type) {
+          switch (format) {
             case "heading":
               return (n as any).depth === options.depth;
             case "list":
               return (n as any).ordered === options.ordered;
+            case "listItem":
+              /** 任务列表只有 true 和 false */
+              return [true, false].includes((n as any).checked);
             default:
               return true;
           }
@@ -65,33 +62,41 @@ export const toggleBlock = (
   options: {
     depth?: number;
     ordered?: boolean;
+    checked?: boolean;
   }
 ) => {
   const isActive = isBlockActive(editor, format, options);
   const isList = format === "list";
 
-  Transforms.unwrapNodes(editor, {
-    match: (n) => {
-      if (
-        !Editor.isEditor(n) &&
-        Element.isElement(n) &&
-        (n as any).type === "list"
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    split: true,
-  });
+  if (format !== "listItem") {
+    Transforms.unwrapNodes(editor, {
+      match: (n) => {
+        if (
+          !Editor.isEditor(n) &&
+          Element.isElement(n) &&
+          (n as any).type === "list"
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      split: true,
+    });
+  }
 
+  /** 激活，并且非任务列表 */
+  const isParagraph = isActive && format !== "listItem";
   const newProperties = {
-    type: isActive ? "paragraph" : isList ? "listItem" : format,
+    /** 有序无序列表转成 listItem，其他转成format */
+    type: isParagraph ? "paragraph" : isList ? "listItem" : format,
     ordered: isActive ? undefined : options.ordered,
     depth: options.depth,
+    checked: isActive ? undefined : options.checked,
   };
   Transforms.setNodes<Element>(editor, newProperties as any);
 
+  /** 有序无序列表包裹外层列表容器 */
   if (!isActive && isList) {
     const block = {
       type: format,

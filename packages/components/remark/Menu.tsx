@@ -84,12 +84,14 @@ const BlockButton = (props: {
   icon: string;
   depth?: number;
   ordered?: boolean;
+  checked?: boolean;
 }) => {
   const editor = useSlate();
 
   const active = isBlockActive(editor, props.format, {
     depth: props.depth,
     ordered: props.ordered,
+    checked: props.checked,
   });
   return (
     <Button
@@ -99,6 +101,7 @@ const BlockButton = (props: {
         toggleBlock(editor, props.format, {
           depth: props.depth,
           ordered: props.ordered,
+          checked: props.checked,
         });
       }}
       icon={props.icon}
@@ -139,7 +142,7 @@ export default function Menu() {
       <BlockButton format="blockquote" icon={Blockquote} />
       <BlockButton format="list" ordered={true} icon={Ol} />
       <BlockButton format="list" ordered={false} icon={Ul} />
-      <BlockButton format="list" icon={Task} />
+      <BlockButton format="listItem" checked={true} icon={Task} />
       <InsertImageButton />
     </div>
   );
