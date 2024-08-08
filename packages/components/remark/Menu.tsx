@@ -1,7 +1,7 @@
 import { MouseEventHandler } from "react";
 import { BaseEditor, Editor, Transforms } from "slate";
 import { useSlate, useSlateStatic } from "slate-react";
-import { isBlockActive, toggleBlock } from "./utils";
+import { blockActive, toggleBlock } from "./utils";
 import Blockquote from "@/assets/blockquote.svg";
 import Bold from "@/assets/bold.svg";
 import Code from "@/assets/code.svg";
@@ -18,6 +18,8 @@ import H3 from "@/assets/h3.svg";
 import H4 from "@/assets/h4.svg";
 import H5 from "@/assets/h5.svg";
 import H6 from "@/assets/h6.svg";
+import { BlockButtonProps } from "./interface";
+import { omit } from "lodash-es";
 
 const Button = (props: {
   onMouseDown: MouseEventHandler;
@@ -58,8 +60,7 @@ const MarkButton = (props: { format: string; icon: string }) => {
 };
 
 const insertImage = (editor: BaseEditor, url: string) => {
-  const text = { text: "" };
-  const image = { type: "image", url, children: [text] };
+  const image = { type: "image", url, children: [{ text: "" }] };
   Transforms.insertNodes(editor, image);
   const paragraph = { type: "paragraph", children: [{ text: "" }] };
   Transforms.insertNodes(editor, paragraph);
@@ -79,20 +80,15 @@ const InsertImageButton = () => {
     />
   );
 };
-const BlockButton = (props: {
-  format: string;
-  icon: string;
-  depth?: number;
-  ordered?: boolean;
-  checked?: boolean;
-}) => {
-  const editor = useSlate();
 
-  const active = isBlockActive(editor, props.format, {
-    depth: props.depth,
-    ordered: props.ordered,
-    checked: props.checked,
-  });
+const BlockButton = (props: BlockButtonProps) => {
+  const editor = useSlate();
+  const active = blockActive(
+    editor,
+    props.format,
+    omit(props, "format", "icon")
+  );
+
   return (
     <Button
       active={active}

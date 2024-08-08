@@ -11,3 +11,14 @@ export interface RenderElementProps {
     ref: any;
   };
 }
+
+export interface ToggleOption {
+  depth: number;
+  ordered: boolean;
+  checked: boolean;
+}
+
+export interface BlockButtonProps extends Partial<ToggleOption> {
+  format: string;
+  icon: string;
+}
