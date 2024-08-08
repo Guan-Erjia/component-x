@@ -66,7 +66,7 @@ img {
 import { InitComponentTemplate, XDispatch } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
 import { CreateSlateRemark } from "./index";
-import { Descendant } from "slate";
+import { Descendant, Editor, Transforms } from "slate";
 import { remarkToSlate, slateToRemark } from "remark-slate-transformer";
 import { unified } from "unified";
 import remarkStringify from "remark-stringify";
@@ -102,23 +102,24 @@ export class XRemark extends XComponent {
     });
   }
 
-  // setRemarkValue(text: string) {
-  //   const processor = unified()
-  //     .use(remarkParse)
-  //     .use(remarkGfm)
-  //     .use(remarkToSlate);
-  //   const slateDescendant = processor.processSync(text).result;
-  //   if (!this.editor) {
-  //     return;
-  //   }
-  //   Transforms.removeNodes(this.editor, {
-  //     at: {
-  //       anchor: Editor.start(this.editor, []),
-  //       focus: Editor.end(this.editor, []),
-  //     },
-  //   });
-  //   this.editor && Transforms.insertNodes(this.editor, slateDescendant);
-  // }
+  setRemarkValue(text: string) {
+    const processor = unified()
+      .use(remarkParse)
+      .use(remarkGfm)
+      .use(remarkToSlate)
+      .use(remarkListItem);
+    const slateDescendant = processor.processSync(text).result;
+    if (!this.editor) {
+      return;
+    }
+    Transforms.removeNodes(this.editor, {
+      at: {
+        anchor: Editor.start(this.editor, []),
+        focus: Editor.end(this.editor, []),
+      },
+    });
+    this.editor && Transforms.insertNodes(this.editor, slateDescendant);
+  }
 
   onEditorReady(editor: ReactEditor) {
     this.editor = editor;
