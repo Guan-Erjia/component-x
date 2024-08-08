@@ -1,5 +1,6 @@
 import { BaseEditor, Editor, Element, Transforms } from "slate";
 import { visit } from "unist-util-visit";
+import { Node } from "unist";
 
 export interface MarkdownElement {
   type: string;
@@ -101,8 +102,8 @@ export const toggleBlock = (
   }
 };
 
-export const remarkListItem = () => (tree: any) => {
-  visit(tree, "listItem", function (node) {
+export const remarkListItem = () => (tree: Node) => {
+  visit(tree, "listItem", function (node: any) {
     node.children = node.children[0].children;
   });
 };
