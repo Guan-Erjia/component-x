@@ -40,16 +40,13 @@ export class XCarouselItem extends XComponent {
   }
 
   connectedCallback() {
-    if (this.ariaValueText === null) {
-      console.warn("x-carousel-item必须传入 ariaValueText");
-    }
-    XDispatch.call(this, "XCarouselItemInit", this, true);
+    XDispatch.call(this, "XCarouselItemInit", undefined, true);
   }
 
   attributeChangedCallback() {
     if (this.ariaPlaceholder) {
-      const img = this.root?.querySelector("#image") as HTMLImageElement;
-      if (img) {
+      const img = this.root?.querySelector("#image");
+      if (img && "src" in img) {
         img.src = this.ariaPlaceholder;
       }
     }

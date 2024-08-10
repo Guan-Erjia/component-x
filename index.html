@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="icon" type="image/png" href="/icon.webp" />
   </head>
   <body class="bg-slate-100">
     <script src="./index.ts" type="module"></script>
@@ -257,32 +258,50 @@
       <x-carousel
         class="w-[200px] h-[150px] border-gray-300 border-solid ml-5"
         aria-valuenow="3000"
-        aria-valuetext="2"
+        aria-current="2"
       >
         <x-carousel-item
-          aria-valuetext="1"
           aria-placeholder="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
         ></x-carousel-item>
         <x-carousel-item
-          aria-valuetext="2"
           aria-placeholder="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
         ></x-carousel-item>
         <x-carousel-item
-          aria-valuetext="3"
           aria-placeholder="https://pinia.vuejs.org/logo.svg"
         ></x-carousel-item>
         <x-carousel-item
-          aria-valuetext="4"
           aria-placeholder="https://v2.cn.vuejs.org/images/logo.svg"
         ></x-carousel-item>
         <x-carousel-item
-          aria-valuetext="5"
+          aria-placeholder="https://lingjing-online.cdn.bcebos.com/v1/lingjing-online/appavatar/2024-06-09/755fb338-a7c7-4d1a-b668-ab0ce42be97e.jpg"
+        ></x-carousel-item>
+      </x-carousel>
+      <x-carousel
+        class="w-[200px] h-[150px] border-gray-300 border-solid ml-5"
+        aria-valuenow="3000"
+        aria-current="2"
+        vertical
+      >
+        <x-carousel-item
+          aria-placeholder="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        ></x-carousel-item>
+        <x-carousel-item
+          aria-placeholder="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
+        ></x-carousel-item>
+        <x-carousel-item
+          aria-placeholder="https://pinia.vuejs.org/logo.svg"
+        ></x-carousel-item>
+        <x-carousel-item
+          aria-placeholder="https://v2.cn.vuejs.org/images/logo.svg"
+        ></x-carousel-item>
+        <x-carousel-item
           aria-placeholder="https://lingjing-online.cdn.bcebos.com/v1/lingjing-online/appavatar/2024-06-09/755fb338-a7c7-4d1a-b668-ab0ce42be97e.jpg"
         ></x-carousel-item>
       </x-carousel>
     </div>
-
-    <x-remark id="remark" class="w-[600px] h-[300px]"></x-remark>
+    <div class="mt-3">
+      <x-remark id="remark" class="w-[600px] h-[300px]"></x-remark>
+    </div>
 
     <script>
       document

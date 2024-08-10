@@ -9,6 +9,7 @@
   display: flex;
   height: 100%;
   width: 100%;
+  scroll-behavior: smooth;
 }
 
 #prev,
@@ -161,19 +162,18 @@
 <script lang="ts">
 import { InitComponentTemplate } from "@/utils";
 import { XComponent, XRegister } from "@/utils/decorator";
-import { XCarouselItem } from "./item.vue";
 
 @XRegister
 export class XCarosel extends XComponent {
   static name: string = "x-carousel";
   static get observedAttributes() {
-    return ["aria-valuetext"]; // 声明要监听的属性
+    return ["aria-current"]; // 声明要监听的属性
   }
 
-  itemList: XCarouselItem[];
-  curIndex: number;
+  carouselItemCount: number;
   timeout: number;
   dots: HTMLElement | null | undefined;
+  root?: HTMLDivElement;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -181,53 +181,52 @@ export class XCarosel extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
-    this.itemList = [];
-    this.curIndex = 0;
+    this.carouselItemCount = 0;
     this.timeout = 0;
   }
 
-  initListener(e: any) {
-    e.stopPropagation();
-    const payload = e.detail;
-    if (this.itemList.some((i) => i.ariaValueText === payload.ariaValueText)) {
-      return console.warn(`x-carousel-item 的 ariaValueText 属性有重复`);
-    }
-    this.itemList.push(payload);
+  initListener(event: any) {
+    event.stopPropagation();
+    this.carouselItemCount++;
     const dot = document.createElement("div");
     dot.className = "dot";
-    dot.innerHTML = `<div></div>`;
-    dot.ariaValueText = payload.ariaValueText;
-    if (payload.ariaValueText === this.ariaValueText) {
-      payload.ariaCurrent = "";
-      dot.ariaCurrent = "";
-      payload.scrollIntoView();
-    }
+    dot.appendChild(document.createElement("div"));
+    dot.ariaValueText = this.carouselItemCount + "";
     dot.onclick = () => {
       clearTimeout(this.timeout);
-      this.ariaValueText = payload.ariaValueText;
+      this.ariaCurrent = dot.ariaValueText;
     };
     this.dots?.appendChild(dot);
   }
 
+  get getCurrentIndex() {
+    return +(this.ariaCurrent || 0);
+  }
+
   switchIndex(type: "next" | "prev") {
     clearTimeout(this.timeout);
-    let index = type === "next" ? this.curIndex + 1 : this.curIndex - 1;
-    if (this.itemList.length === index) {
+    let index =
+      type === "next" ? this.getCurrentIndex + 1 : this.getCurrentIndex - 1;
+    if (this.carouselItemCount === index) {
       index = 0;
     }
     if (index < 0) {
-      index = this.itemList.length - 1;
+      index = this.carouselItemCount - 1;
     }
-    this.ariaValueText = this.itemList[index].ariaValueText;
+    this.ariaCurrent = index + "";
   }
 
   connectedCallback() {
     this.dots = this.shadowRoot?.querySelector("#dots");
     this.addEventListener("XCarouselItemInit", this.initListener);
-    const prevBtn = this.shadowRoot?.querySelector("#prev") as HTMLElement;
-    const nextBtn = this.shadowRoot?.querySelector("#next") as HTMLElement;
-    prevBtn.onclick = () => this.switchIndex("prev");
-    nextBtn.onclick = () => this.switchIndex("next");
+    const prevBtn = this.shadowRoot?.querySelector("#prev");
+    const nextBtn = this.shadowRoot?.querySelector("#next");
+    if (prevBtn && "onclick" in prevBtn) {
+      prevBtn.onclick = () => this.switchIndex("prev");
+    }
+    if (nextBtn && "onclick" in nextBtn) {
+      nextBtn.onclick = () => this.switchIndex("next");
+    }
 
     this.onmouseover = () => {
       if (this.ariaValueNow === null) {
@@ -245,25 +244,35 @@ export class XCarosel extends XComponent {
 
   disconnectedCallback() {
     this.removeEventListener("XCarouselItemInit", this.initListener);
-    this.onmouseover = null;
-    this.onmouseleave = null;
+  }
+
+  get getContainerWidth() {
+    return this.root ? +getComputedStyle(this.root).width.replace("px", "") : 0;
+  }
+
+  get getContainerHeight() {
+    return this.root
+      ? +getComputedStyle(this.root).height.replace("px", "")
+      : 0;
+  }
+
+  get getScrollToOptions() {
+    return this.getAttribute("vertical") === null
+      ? {
+          left: this.getContainerWidth * this.getCurrentIndex,
+        }
+      : {
+          top: this.getContainerHeight * this.getCurrentIndex,
+        };
   }
 
   attributeChangedCallback() {
-    if (this.ariaValueText) {
-      this.dots?.childNodes.forEach((dot: any) => {
-        dot.ariaCurrent = dot.ariaValueText === this.ariaValueText ? "" : null;
+    if (this.ariaCurrent) {
+      this.dots?.childNodes.forEach((dot: any, index) => {
+        dot.ariaCurrent = this.getCurrentIndex === index ? "" : null;
       });
     }
-    this.itemList.forEach((tabItem, index) => {
-      if (tabItem.ariaValueText === this.ariaValueText) {
-        tabItem.ariaCurrent = "";
-        tabItem.scrollIntoView({ behavior: "smooth" });
-        this.curIndex = index;
-      } else {
-        tabItem.ariaCurrent = null;
-      }
-    });
+    this.root?.scrollTo(this.getScrollToOptions);
     if (this.ariaValueNow !== null) {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
