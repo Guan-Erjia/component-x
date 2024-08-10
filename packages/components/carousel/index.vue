@@ -24,6 +24,7 @@
   justify-content: center;
   align-items: center;
   user-select: none;
+  z-index: 10;
 }
 #prev-icon,
 #next-icon {
@@ -187,7 +188,6 @@ export class XCarosel extends XComponent {
 
   initListener(event: any) {
     event.stopPropagation();
-    this.carouselItemCount++;
     const dot = document.createElement("div");
     dot.className = "dot";
     dot.appendChild(document.createElement("div"));
@@ -196,18 +196,22 @@ export class XCarosel extends XComponent {
       clearTimeout(this.timeout);
       this.ariaCurrent = dot.ariaValueText;
     };
+    if (this.carouselItemCount === this.currentIndex) {
+      dot.ariaCurrent = "";
+      this.root?.scrollTo({ ...this.scrollToOptions, behavior: "instant" });
+    }
     this.dots?.appendChild(dot);
+    this.carouselItemCount++;
   }
 
-  get getCurrentIndex() {
+  get currentIndex() {
     return +(this.ariaCurrent || 0);
   }
 
   switchIndex(type: "next" | "prev") {
     clearTimeout(this.timeout);
-    let index =
-      type === "next" ? this.getCurrentIndex + 1 : this.getCurrentIndex - 1;
-    if (this.carouselItemCount === index) {
+    let index = type === "next" ? this.currentIndex + 1 : this.currentIndex - 1;
+    if (this.carouselItemCount <= index) {
       index = 0;
     }
     if (index < 0) {
@@ -246,33 +250,33 @@ export class XCarosel extends XComponent {
     this.removeEventListener("XCarouselItemInit", this.initListener);
   }
 
-  get getContainerWidth() {
+  get containerWidth() {
     return this.root ? +getComputedStyle(this.root).width.replace("px", "") : 0;
   }
 
-  get getContainerHeight() {
+  get containerHeight() {
     return this.root
       ? +getComputedStyle(this.root).height.replace("px", "")
       : 0;
   }
 
-  get getScrollToOptions() {
+  get scrollToOptions() {
     return this.getAttribute("vertical") === null
       ? {
-          left: this.getContainerWidth * this.getCurrentIndex,
+          left: this.containerWidth * this.currentIndex,
         }
       : {
-          top: this.getContainerHeight * this.getCurrentIndex,
+          top: this.containerHeight * this.currentIndex,
         };
   }
 
   attributeChangedCallback() {
     if (this.ariaCurrent) {
       this.dots?.childNodes.forEach((dot: any, index) => {
-        dot.ariaCurrent = this.getCurrentIndex === index ? "" : null;
+        dot.ariaCurrent = this.currentIndex === index ? "" : null;
       });
     }
-    this.root?.scrollTo(this.getScrollToOptions);
+    this.root?.scrollTo(this.scrollToOptions);
     if (this.ariaValueNow !== null) {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
