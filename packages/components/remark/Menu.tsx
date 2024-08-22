@@ -3,7 +3,7 @@ import { BaseEditor, Editor, Transforms } from "slate";
 import { useSlate, useSlateStatic } from "slate-react";
 import { blockActive, toggleBlock } from "./utils";
 import Blockquote from "@/assets/blockquote.svg";
-import Bold from "@/assets/bold.svg";
+import Strong from "@/assets/Strong.svg";
 import Code from "@/assets/code.svg";
 import Delete from "@/assets/delete.svg";
 import Img from "@/assets/img.svg";
@@ -124,7 +124,7 @@ export default function Menu() {
         flexGrow: 0,
       }}
     >
-      <MarkButton format="bold" icon={Bold} />
+      <MarkButton format="strong" icon={Strong} />
       <MarkButton format="italic" icon={Italic} />
       <MarkButton format="emphasis" icon={Emphasis} />
       <MarkButton format="delete" icon={Delete} />
