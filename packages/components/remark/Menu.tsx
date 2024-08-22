@@ -3,7 +3,7 @@ import { BaseEditor, Editor, Transforms } from "slate";
 import { useSlate, useSlateStatic } from "slate-react";
 import { blockActive, toggleBlock } from "./utils";
 import Blockquote from "@/assets/blockquote.svg";
-import Strong from "@/assets/Strong.svg";
+import Strong from "@/assets/strong.svg";
 import Code from "@/assets/code.svg";
 import Delete from "@/assets/delete.svg";
 import Img from "@/assets/img.svg";
