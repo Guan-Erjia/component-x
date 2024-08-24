@@ -12,7 +12,6 @@
 @tailwind utilities;
 * {
   line-height: 100%;
-  margin: 0;
 
   --default-color: rgb(115, 115, 115); /* 默认按钮背景色*/
   --default-hover: rgb(183, 182, 182);
@@ -36,7 +35,9 @@
   --control-size: 14px;
   --control-weight: 500;
 }
-
+body {
+  margin: 0;
+}
 h1 {
   font-size: 32px;
 }

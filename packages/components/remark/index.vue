@@ -8,8 +8,6 @@
 
 * {
   line-height: normal;
-  margin: 0;
-
   ::-webkit-scrollbar {
     width: 4px;
   }
@@ -23,17 +21,32 @@
     outline: none;
     border-radius: 0;
     width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
   }
+}
 
-  [contenteditable]:focus {
-    border-radius: 3px;
-  }
+blockquote {
+  padding-left: 10px;
+  border-left-width: 5px;
+  border-left-color: var(--default-color);
+  border-left-style: solid;
 }
 
 hr {
   height: var(--control-line);
   border: none;
   background-color: gray;
+}
+img {
+  display: block;
+  width: 200px;
+  border-radius: var(--control-radius);
+}
+
+li > input {
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 table {
@@ -45,21 +58,6 @@ td {
   border-width: var(--control-line);
   border-color: #dc143c #1e90ff orange #32cd32;
   padding: 5px 12px;
-}
-
-blockquote {
-  padding-left: 20px;
-}
-
-img {
-  display: block;
-  width: 200px;
-  border-radius: var(--control-radius);
-}
-
-li>input {
-  vertical-align: middle;
-  margin-right: 10px;
 }
 </style>
 
@@ -78,7 +76,7 @@ import remarkStringify from "remark-stringify";
 import remarkGfm from "remark-gfm";
 import { ReactEditor } from "slate-react";
 import remarkParse from "remark-parse";
-import { remarkListItem } from './utils'
+import { remarkListItem } from "./utils";
 
 @XRegister
 export class XRemark extends XComponent {
