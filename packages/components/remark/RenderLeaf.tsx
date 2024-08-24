@@ -1,3 +1,4 @@
+import { useMemo, CSSProperties, createElement } from "react";
 import { RenderLeafProps } from "slate-react";
 
 interface CustomLeafProps extends RenderLeafProps {
@@ -13,27 +14,25 @@ interface CustomLeafProps extends RenderLeafProps {
 
 export default function renderLeaf(props: CustomLeafProps) {
   const { attributes, children, leaf } = props;
-  return (
-    <span {...attributes}>
-      {leaf.strong ? (
-        <strong>{children}</strong>
-      ) : leaf.code ? (
-        <code>{children}</code>
-      ) : leaf.italic ? (
-        <em>{children}</em>
-      ) : leaf.emphasis ? (
-        <u>{children}</u>
-      ) : leaf.delete ? (
-        <span
-          style={{
-            textDecoration: "line-through",
-          }}
-        >
-          {children}
-        </span>
-      ) : (
-        children
-      )}
-    </span>
+  const style = useMemo(() => {
+    const style: CSSProperties = {};
+    if (leaf.strong) {
+      style.fontWeight = "bold";
+    }
+    if (leaf.italic) {
+      style.fontStyle = "italic";
+    }
+    if (leaf.emphasis) {
+      style.textDecoration = "underline";
+    }
+    if (leaf.delete) {
+      style.textDecoration = "line-through";
+    }
+    return style;
+  }, [leaf]);
+  return createElement(
+    leaf.code ? "code" : "span",
+    { ...attributes, style },
+    children
   );
 }
