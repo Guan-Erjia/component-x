@@ -23,7 +23,7 @@ export default function renderLeaf(props: CustomLeafProps) {
       style.fontStyle = "italic";
     }
     if (leaf.emphasis) {
-      style.textDecoration = "underline";
+      style.borderBottom = "1px solid black";
     }
     if (leaf.delete) {
       style.textDecoration = "line-through";
