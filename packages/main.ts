@@ -19,3 +19,4 @@ export { XCarosel } from "./components/carousel/index.vue";
 export { XCarouselItem } from "./components/carousel/item.vue";
 export { CreateSlateRemark } from "./components/remark/index";
 export { XRemark } from "./components/remark/index.vue";
+export { XScrollbar } from "./components/scrollbar/index.vue";

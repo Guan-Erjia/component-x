@@ -8,6 +8,7 @@
 @import url("./popup.css");
 @import url("./menu.css");
 @import url("./carousel.css");
+@import url("./scrollbar.css");
 @tailwind components;
 @tailwind utilities;
 * {

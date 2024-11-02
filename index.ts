@@ -20,6 +20,7 @@ import {
   XCarosel,
   XCarouselItem,
   XRemark,
+  XScrollbar
 } from "./packages/main";
 
 XBusy.register();
@@ -42,3 +43,4 @@ XDrawer.register();
 XCarosel.register();
 XCarouselItem.register();
 XRemark.register();
+XScrollbar.register();

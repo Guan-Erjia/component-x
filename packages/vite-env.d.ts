@@ -23,4 +23,5 @@ declare module "*.vue" {
   export const XCarouselItem;
   export const XDrawer;
   export const XRemark;
+  export const XScrollbar;
 }
