@@ -1,6 +1,7 @@
 <style lang="scss">
 :host {
-  display: flex;
+  display: block;
+  position: relative;
 
   > slot {
     display: block;
@@ -24,21 +25,25 @@
 }
 
 .x-track {
-  background-color: var(--scrollbar-track-background);
-  height: 100%;
-  flex-shrink: 0;
-  overflow: auto;
-  padding: var(--scrollbar-track-padding);
-  box-sizing: border-box;
+  background-color: rgba(255, 0, 0, 0);
+  height: calc(100% - var(--scrollbar-track-padding) * 2);
+  overflow-y: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: calc(var(--scrollbar-track-width) + 1px);
+  margin-top: var(--scrollbar-track-padding);
+  margin-bottom: var(--scrollbar-track-padding);
   &::-webkit-scrollbar {
-    width: 0;
+    width: var(--scrollbar-track-width);
+    background-color: var(--scrollbar-track-background);
   }
-}
-.x-thumb {
-  width: var(--scrollbar-thumb-width);
-  height: var(--scrollbar-thumb-height);
-  border-radius: var(--scrollbar-thumb-radius);
-  background-color: var(--scrollbar-thumb-background);
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-background);
+    border-radius: var(--control-radius);
+    width: var(--scrollbar-track-width);
+    height: var(--scrollbar-thumb-height);
+  }
 }
 </style>
 <template>
@@ -59,8 +64,7 @@ export class XScrollbar extends XComponent {
   static get observedAttributes() {
     return ["aria-valuetext"]; // 声明要监听的属性
   }
-  scrollPercent: number;
-  trackHeight: number;
+  inTrack: boolean;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -68,30 +72,41 @@ export class XScrollbar extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
-    this.scrollPercent = 0;
-    this.trackHeight = 0;
+    this.inTrack = false;
   }
   connectedCallback() {
     const track = this.shadowRoot?.querySelector(".x-track") as HTMLDivElement;
     const thumb = this.shadowRoot?.querySelector(".x-thumb") as HTMLDivElement;
-    const scrollContainer = this.shadowRoot?.children[0];
-    if (!track || !scrollContainer || !thumb) {
+    const container = this.shadowRoot?.children[0];
+    if (!track || !container || !thumb) {
       return;
     }
-    track.style.marginLeft = -track.clientWidth + "px";
 
-    const trackStyle = getComputedStyle(track);
-    this.trackHeight =
-      this.clientHeight -
-      +trackStyle.paddingTop.slice(0, -2) -
-      +trackStyle.paddingBottom.slice(0, -2);
+    thumb.style.height = container.scrollHeight + "px";
 
-    scrollContainer?.addEventListener("scroll", () => {
-      this.scrollPercent =
-        scrollContainer.scrollTop /
-        (scrollContainer.scrollHeight - this.scrollHeight);
-      thumb.style.marginTop =
-        (this.trackHeight - thumb.clientHeight) * this.scrollPercent + "px";
+    track.addEventListener("mouseenter", () => {
+      this.inTrack = true;
+    });
+    track.addEventListener("mouseleave", () => {
+      this.inTrack = false;
+    });
+
+    track.addEventListener("scroll", () => {
+      if (!this.inTrack) {
+        return;
+      }
+      const percent =
+        track.scrollTop / (track.scrollHeight - track.clientHeight);
+      container.scrollTop =
+        (container.scrollHeight - container.clientHeight) * percent;
+    });
+    container.addEventListener("scroll", () => {
+      if (this.inTrack) {
+        return;
+      }
+      const percent =
+        container.scrollTop / (container.scrollHeight - container.clientHeight);
+      track.scrollTop = (track.scrollHeight - track.clientHeight) * percent;
     });
   }
 }

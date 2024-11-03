@@ -1,8 +1,8 @@
 x-scrollbar {
-  --scrollbar-thumb-width: 8px;
-  --scrollbar-thumb-height: 20px;
+  --scrollbar-track-width: 8px;
+  --scrollbar-thumb-height: unset;
   --scrollbar-thumb-radius: 4px;
-  --scrollbar-thumb-background: hsl(262, 100%, 50%);
-  --scrollbar-track-padding: 20px 4px;
+  --scrollbar-thumb-background: hsl(262, 85%, 69%);
+  --scrollbar-track-padding: 10px;
   --scrollbar-track-background: #00000025;
 }
