@@ -82,7 +82,7 @@ export class XScrollbar extends XComponent {
       return;
     }
 
-    thumb.style.height = container.scrollHeight + "px";
+    thumb.style.height = container.scrollHeight - container.clientHeight + "px";
 
     track.addEventListener("mouseenter", () => {
       this.inTrack = true;
