@@ -3,6 +3,5 @@ x-scrollbar {
   --scrollbar-thumb-height: unset;
   --scrollbar-thumb-radius: 4px;
   --scrollbar-thumb-background: hsl(262, 85%, 69%);
-  --scrollbar-track-padding: 10px;
-  --scrollbar-track-background: #00000025;
+  --scrollbar-track-background: rgba(0, 0, 0, 0.07);
 }

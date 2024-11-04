@@ -1,48 +1,44 @@
 <style lang="scss">
 :host {
-  display: block;
   position: relative;
+  display: block;
 
   > slot {
-    display: block;
     overflow: auto;
     height: 100%;
-    flex-grow: 1;
+    display: block;
     &::-webkit-scrollbar {
-      background-color: transparent;
       width: 0;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #d9d9d9;
-      border-radius: 5px;
-    }
-    &.scrollbar-hidden {
-      &::-webkit-scrollbar-thumb {
-        background-color: transparent;
-      }
     }
   }
 }
 
 .x-track {
-  background-color: rgba(255, 0, 0, 0);
-  height: calc(100% - var(--scrollbar-track-padding) * 2);
-  overflow-y: auto;
   position: absolute;
   right: 0;
   top: 0;
+  height: 100%;
+  overflow-y: auto;
   width: calc(var(--scrollbar-track-width) + 1px);
-  margin-top: var(--scrollbar-track-padding);
-  margin-bottom: var(--scrollbar-track-padding);
   &::-webkit-scrollbar {
     width: var(--scrollbar-track-width);
     background-color: var(--scrollbar-track-background);
+    padding: 2px;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb-background);
-    border-radius: var(--control-radius);
     width: var(--scrollbar-track-width);
     height: var(--scrollbar-thumb-height);
+    background-color: var(--scrollbar-thumb-background);
+    border-radius: var(--control-radius);
+  }
+
+  &.x-scrollbar-thumb-hidden::-webkit-scrollbar-thumb {
+    background-color: rgba(#000000, 0);
+  }
+}
+:host([aria-hidden="true"]) {
+  .x-track::-webkit-scrollbar {
+    background-color: rgba(#000000, 0);
   }
 }
 </style>
@@ -65,6 +61,9 @@ export class XScrollbar extends XComponent {
     return ["aria-valuetext"]; // 声明要监听的属性
   }
   inTrack: boolean;
+  track: HTMLDivElement | null;
+  timer: number;
+  delay: number;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -73,7 +72,27 @@ export class XScrollbar extends XComponent {
       __X_COMPONENT_STYLE_CODE__
     );
     this.inTrack = false;
+    this.timer = 0;
+    this.track = null;
+    this.delay = 3000;
   }
+
+  handleHidden() {
+    if (this.ariaHidden) {
+      this.track?.classList.remove("x-scrollbar-thumb-hidden");
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
+      this.timer = setTimeout(() => {
+        if (!this.inTrack) {
+          this.track?.classList.add("x-scrollbar-thumb-hidden");
+        } else {
+          this.handleHidden();
+        }
+      }, this.delay);
+    }
+  }
+
   connectedCallback() {
     const track = this.shadowRoot?.querySelector(".x-track") as HTMLDivElement;
     const thumb = this.shadowRoot?.querySelector(".x-thumb") as HTMLDivElement;
@@ -81,8 +100,8 @@ export class XScrollbar extends XComponent {
     if (!track || !container || !thumb) {
       return;
     }
-
-    thumb.style.height = container.scrollHeight - container.clientHeight + "px";
+    this.track = track;
+    thumb.style.height = container.scrollHeight + "px";
 
     track.addEventListener("mouseenter", () => {
       this.inTrack = true;
@@ -95,18 +114,18 @@ export class XScrollbar extends XComponent {
       if (!this.inTrack) {
         return;
       }
-      const percent =
-        track.scrollTop / (track.scrollHeight - track.clientHeight);
-      container.scrollTop =
-        (container.scrollHeight - container.clientHeight) * percent;
+      const percent = track.scrollTop / track.scrollHeight;
+      container.scrollTop = container.scrollHeight * percent;
+      this.handleHidden();
     });
+
     container.addEventListener("scroll", () => {
       if (this.inTrack) {
         return;
       }
-      const percent =
-        container.scrollTop / (container.scrollHeight - container.clientHeight);
-      track.scrollTop = (track.scrollHeight - track.clientHeight) * percent;
+      const percent = container.scrollTop / container.scrollHeight;
+      track.scrollTop = track.scrollHeight * percent;
+      this.handleHidden();
     });
   }
 }
