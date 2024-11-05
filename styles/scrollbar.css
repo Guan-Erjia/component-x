@@ -1,6 +1,6 @@
 x-scrollbar {
   --scrollbar-track-width: 8px;
-  --scrollbar-thumb-height: unset;
+  --scrollbar-thumb-length: unset;
   --scrollbar-thumb-radius: 4px;
   --scrollbar-thumb-background: hsl(262, 85%, 69%);
   --scrollbar-track-background: rgba(0, 0, 0, 0.07);

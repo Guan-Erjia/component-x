@@ -293,10 +293,9 @@
         ></x-carousel-item>
       </x-carousel>
     </div>
-    <div class="mt-3 flex">
-      <x-remark id="remark" class="w-[600px] h-[300px]"></x-remark>
-      <x-scrollbar class="w-80 h-48 inline-block ml-10">
-        <div class="bg-orange-200 h-20"></div>
+    <div class="mt-3">
+      <x-scrollbar class="w-80 h-48 inline-block">
+        <div class="bg-orange-200 h-20 w-[600px]"></div>
         <div class="bg-red-200 h-20"></div>
         <div class="bg-yellow-200 h-20"></div>
         <div class="bg-green-200 h-20"></div>
@@ -305,6 +304,9 @@
       <x-scrollbar class="w-80 h-48 inline-block ml-10" aria-hidden="true">
         <div class="bg-orange-200 h-96"></div>
       </x-scrollbar>
+    </div>
+    <div class="mt-3">
+      <x-remark id="remark" class="w-[600px] h-[300px]"></x-remark>
     </div>
 
     <script>
