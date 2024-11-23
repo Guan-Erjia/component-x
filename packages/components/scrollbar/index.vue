@@ -2,78 +2,14 @@
 :host {
   position: relative;
   display: block;
-
-  > slot {
-    overflow: auto;
-    height: 100%;
-    display: block;
-    &::-webkit-scrollbar {
-      width: 0;
-    }
-  }
-}
-
-.track-y {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  overflow-y: auto;
-  width: calc(var(--scrollbar-track-width) + 1px);
+  overflow: auto;
   &::-webkit-scrollbar {
-    width: var(--scrollbar-track-width);
-    background-color: var(--scrollbar-track-background);
-    padding: 2px;
-  }
-  &::-webkit-scrollbar-thumb {
-    width: var(--scrollbar-track-width);
-    height: var(--scrollbar-thumb-length);
-    background-color: var(--scrollbar-thumb-background);
-    border-radius: var(--control-radius);
-  }
-}
-
-.track-x {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  overflow-x: auto;
-  height: calc(var(--scrollbar-track-width) + 1px);
-  &::-webkit-scrollbar {
-    height: var(--scrollbar-track-width);
-    background-color: var(--scrollbar-track-background);
-    padding: 2px;
-  }
-  &::-webkit-scrollbar-thumb {
-    width: var(--scrollbar-track-width);
-    height: var(--scrollbar-thumb-length);
-    background-color: var(--scrollbar-thumb-background);
-    border-radius: var(--control-radius);
-  }
-}
-
-.scrollbar-hidden::-webkit-scrollbar-thumb {
-  background-color: rgba(#000000, 0);
-}
-
-:host([aria-hidden="true"]) {
-  .track-x::-webkit-scrollbar {
-    background-color: rgba(#000000, 0);
-  }
-  .track-y::-webkit-scrollbar {
-    background-color: rgba(#000000, 0);
+    display: none;
   }
 }
 </style>
 <template>
   <slot></slot>
-  <div class="track-x">
-    <div class="thumb-x"></div>
-  </div>
-  <div class="track-y">
-    <div class="thumb-y"></div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -87,11 +23,12 @@ export class XScrollbar extends XComponent {
   static get observedAttributes() {
     return [];
   }
-  inTrackX: boolean;
-  inTrackY: boolean;
-  timerX: number;
-  timerY: number;
+  inTrack: boolean;
+  timer: number;
   delay: number;
+  trackX?: HTMLDivElement;
+  trackY?: HTMLDivElement;
+  resizeObserver?: ResizeObserver;
   constructor() {
     super();
     InitComponentTemplate.call(
@@ -99,82 +36,105 @@ export class XScrollbar extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
-    this.inTrackX = false;
-    this.inTrackY = false;
-    this.timerX = 0;
-    this.timerY = 0;
+    this.inTrack = false;
+    this.timer = 0;
     this.delay = 3000;
   }
 
-  handleHidden(track: HTMLDivElement, vertical: boolean) {
+  handleHidden() {
     if (!this.ariaHidden) {
       return;
     }
-
-    track?.classList.remove("scrollbar-hidden");
-    const timerKey = vertical ? "timerY" : "timerX";
-    if (this[timerKey]) {
-      clearTimeout(this[timerKey]);
+    this.trackX?.classList.remove("scrollbar-hidden");
+    this.trackY?.classList.remove("scrollbar-hidden");
+    if (this.timer) {
+      clearTimeout(this.timer);
     }
-    const inTrackKey = vertical ? "inTrackY" : "inTrackX";
-    this[timerKey] = setTimeout(() => {
-      if (this[inTrackKey]) {
-        this.handleHidden(track, vertical);
+    this.timer = setTimeout(() => {
+      if (this.inTrack) {
+        this.handleHidden();
       } else {
-        track?.classList.add("scrollbar-hidden");
+        this.trackX?.classList.add("scrollbar-hidden");
+        this.trackY?.classList.add("scrollbar-hidden");
       }
     }, this.delay);
   }
 
   handleTrackScroll(track: HTMLDivElement, vertical: boolean) {
-    const container = this.shadowRoot?.children[0] as HTMLDivElement;
-
-    const inTrackKey = vertical ? "inTrackY" : "inTrackX";
     track.addEventListener("mouseenter", () => {
-      this[inTrackKey] = true;
+      this.inTrack = true;
     });
     track.addEventListener("mouseleave", () => {
-      this[inTrackKey] = false;
+      this.inTrack = false;
     });
 
     const offsetKey = vertical ? "scrollTop" : "scrollLeft";
     const lengthKey = vertical ? "scrollHeight" : "scrollWidth";
+
     track.addEventListener("scroll", () => {
-      const inTrack = vertical ? this.inTrackY : this.inTrackX;
-      if (!inTrack) {
+      if (!this.inTrack) {
         return;
       }
       const percent = track[offsetKey] / track[lengthKey];
-      container[offsetKey] = container[lengthKey] * percent;
-      this.handleHidden(track, vertical);
+      this[offsetKey] = this[lengthKey] * percent;
+      this.handleHidden();
     });
   }
 
+  calcTrackStyle() {
+    if (!this.trackX || !this.trackY) {
+      return;
+    }
+    const rect = this.getBoundingClientRect();
+    const rectY = this.trackY.getBoundingClientRect();
+    this.trackY.style.transform = `translate(${
+      rect.right - rectY.right + "px"
+    },${rectY.top - rect.top + "px"})`;
+
+    const rectX = this.trackX.getBoundingClientRect();
+    this.trackX.style.transform = `translate(${
+      rect.right - rectX.right + "px"
+    },${rect.bottom - rectX.bottom + "px"})`;
+  }
+
   connectedCallback() {
-    const trackX = this.shadowRoot?.querySelector(".track-x") as HTMLDivElement;
-    const thumbX = this.shadowRoot?.querySelector(".thumb-x") as HTMLDivElement;
-    const trackY = this.shadowRoot?.querySelector(".track-y") as HTMLDivElement;
-    const thumbY = this.shadowRoot?.querySelector(".thumb-y") as HTMLDivElement;
-    const container = this.shadowRoot?.children[0] as HTMLDivElement;
+    this.trackX = document.createElement("div");
+    this.trackY = document.createElement("div");
+    this.trackX.style.width = this.clientWidth + "px";
+    this.trackX.classList.add("x-scrollbar-track-x");
+    this.trackY.classList.add("x-scrollbar-track-y");
+    this.trackY.style.height = this.clientHeight + "px";
+    this.parentElement?.appendChild(this.trackX);
+    this.parentElement?.appendChild(this.trackY);
+    this.resizeObserver = new ResizeObserver(() => {
+      this.calcTrackStyle();
+    });
+    this.resizeObserver.observe(this);
 
-    thumbX.style.width = container.scrollWidth + "px";
-    thumbY.style.height = container.scrollHeight + "px";
+    const thumbX = this.trackX.appendChild(document.createElement("div"));
+    const thumbY = this.trackY.appendChild(document.createElement("div"));
+    thumbX.style.width = this.scrollWidth + "px";
+    thumbY.style.height = this.scrollHeight + "px";
+    thumbY.style.width = "0";
 
-    this.handleTrackScroll(trackX, false);
-    this.handleTrackScroll(trackY, true);
+    this.handleTrackScroll(this.trackX, false);
+    this.handleTrackScroll(this.trackY, true);
 
-    container.addEventListener("scroll", () => {
-      if (this.inTrackX || this.inTrackY) {
+    this.addEventListener("scroll", () => {
+      if (this.inTrack || !this.trackX || !this.trackY) {
         return;
       }
-      const percentX = container.scrollLeft / container.scrollWidth;
-      const percentY = container.scrollTop / container.scrollHeight;
-      trackX.scrollLeft = trackX.scrollWidth * percentX;
-      trackY.scrollTop = trackY.scrollHeight * percentY;
-
-      this.handleHidden(trackX, false);
-      this.handleHidden(trackY, true);
+      const percentX = this.scrollLeft / this.scrollWidth;
+      const percentY = this.scrollTop / this.scrollHeight;
+      this.trackX.scrollLeft = this.trackX.scrollWidth * percentX;
+      this.trackY.scrollTop = this.trackY.scrollHeight * percentY;
+      this.handleHidden();
     });
+  }
+  disconnectedCallback() {
+    this.resizeObserver?.disconnect();
+    this.trackX?.parentElement?.removeChild(this.trackX);
+    this.trackY?.parentElement?.removeChild(this.trackY);
   }
 }
 </script>

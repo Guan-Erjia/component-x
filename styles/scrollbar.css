@@ -1,7 +1,38 @@
-x-scrollbar {
+* {
   --scrollbar-track-width: 8px;
   --scrollbar-thumb-length: unset;
   --scrollbar-thumb-radius: 4px;
   --scrollbar-thumb-background: hsl(262, 85%, 69%);
   --scrollbar-track-background: rgba(0, 0, 0, 0.07);
+}
+.x-scrollbar-track-y {
+  width: calc(var(--scrollbar-track-width) + 1px);
+  &::-webkit-scrollbar {
+    width: var(--scrollbar-track-width);
+  }
+}
+
+.x-scrollbar-track-x {
+  height: calc(var(--scrollbar-track-width) + 1px);
+  &::-webkit-scrollbar {
+    height: var(--scrollbar-track-width);
+  }
+}
+.x-scrollbar-track-x,
+.x-scrollbar-track-y {
+  overflow: auto;
+  position: absolute;
+  &::-webkit-scrollbar {
+    background-color: var(--scrollbar-track-background);
+  }
+  &::-webkit-scrollbar-thumb {
+    width: var(--scrollbar-track-width);
+    height: var(--scrollbar-thumb-length);
+    background-color: var(--scrollbar-thumb-background);
+    border-radius: var(--control-radius);
+  }
+}
+
+.scrollbar-hidden {
+  visibility: hidden;
 }
