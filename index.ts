@@ -1,4 +1,4 @@
-import "./styles/index.css";
+import "@/styles/index.css";
 import {
   XBusy,
   XButton,
@@ -21,7 +21,7 @@ import {
   XCarouselItem,
   XRemark,
   XScrollbar
-} from "./packages/main";
+} from "@/components/main";
 
 XBusy.register();
 XButton.register();

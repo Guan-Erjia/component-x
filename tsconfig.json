@@ -20,9 +20,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/*": ["./packages/*"]
+      "@/*": ["./src/*"]
     },
     "experimentalDecorators": true
   },
-  "include": ["packages", "src"]
 }

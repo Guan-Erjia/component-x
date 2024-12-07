@@ -4,14 +4,14 @@ import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 import React from "@vitejs/plugin-react";
 
-export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
+export default defineConfig(({ command, mode }) => {
   console.log(command, mode);
   const config = {
     build: {},
     base: "/component-x/",
     resolve: {
       alias: {
-        "@": "/packages",
+        "@": "/src",
       },
     },
     css: {
@@ -25,14 +25,5 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
     },
     plugins: [ComponentXSfcLoader(), React()],
   };
-  if (mode === "lib") {
-    config.build = {
-      lib: {
-        entry: "./packages/main.ts",
-        name: "ComponentX",
-        fileName: "ComponentX",
-      },
-    };
-  }
   return config;
 });
