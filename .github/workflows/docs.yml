@@ -20,7 +20,7 @@ jobs:
    - name: 安装 PNPM
      run: npm i -g pnpm
    - name: 安装依赖
-     run: pnpm install --no-frozen-lockfile
+     run: pnpm install
    - name: 构建
      run: pnpm build
    - name: 发布到Github Pages
