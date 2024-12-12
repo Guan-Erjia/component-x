@@ -1,0 +1,39 @@
+openapi: 3.0.1
+info:
+  title: 谷歌图搜
+  description: 图片链接搜索工具，可以通过关键词获取图片链接列表
+  version: "v1"
+servers:
+  - url: http://image-search-f3q0oy8si-guan-erjias-projects.vercel.app:443
+paths:
+  /search:
+    get:
+      description: 返回搜索到的所有图片链接
+      operationId: getImageWithGoogle
+      summary: 通过关键词进行谷歌图片搜索
+      parameters:
+        - in: path
+          name: q
+          required: true
+          schema:
+            type: string
+          description: 搜索关键词
+      responses:
+        "200":
+          description: 图片搜索成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/imageList"
+      x-return-raw:
+        description: 图片链接列表
+        mediaType: application/json
+        name: data
+        type: array
+components:
+  schemas:
+    imageList:
+      type: array
+      items:
+        type: string
+      description: 图片链接列表
