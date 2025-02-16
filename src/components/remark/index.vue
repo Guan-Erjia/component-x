@@ -91,6 +91,7 @@ export class XRemark extends XComponent {
       __X_COMPONENT_HTML_CODE__,
       __X_COMPONENT_STYLE_CODE__
     );
+    console.log(3214124)
   }
 
   onValueChange(descendant: Descendant[]) {
